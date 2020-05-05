@@ -9,6 +9,8 @@ import Ventanas.Login;
 import Ventanas.MenuDirector;
 import Ventanas.Tutores;
 import Ventanas.buscarEmpresa;
+import Ventanas.Opciones;
+import Ventanas.Empresa;
 import model.Modelo;
 
 
@@ -25,6 +27,7 @@ public class Main {
 		AsignarEmpresa asgEmpresa = new AsignarEmpresa();
 		Alumno alumno = new Alumno();
 		buscarEmpresa buscEmpresa = new buscarEmpresa();
+		Empresa empresa = new Empresa();
 
 		miControlador.setModelo(miModelo);
 		miControlador.setLogin(miLogin);
@@ -36,6 +39,8 @@ public class Main {
 		miControlador.setBusqueda(miBusqueda);
 		miControlador.setTutores(tutores);
 		miControlador.setBuscarEmpresa(buscEmpresa);
+		miControlador.setEmpresa(empresa);
+	
 
 		miModelo.setLogin(miLogin);
 		miModelo.setAlumno(alumno);
@@ -46,7 +51,10 @@ public class Main {
 		miModelo.setMiBusqueda(miBusqueda);
 		miModelo.setTutores(tutores);
 		miModelo.setBuscarEmpresa(buscEmpresa);
-
+		miModelo.setEmpresa(empresa);
+		
+		empresa.setControlador(miControlador);
+		empresa.setModelo(miModelo);
 		miLogin.setControlador(miControlador);
 		miLogin.setModelo(miModelo);
 		menuTutor.setControlador(miControlador);
