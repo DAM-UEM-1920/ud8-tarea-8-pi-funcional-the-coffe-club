@@ -7,9 +7,11 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -30,16 +32,21 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.channels.SelectableChannel;
+import java.sql.SQLException;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.sound.*;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JCheckBox;
 import javax.swing.border.SoftBevelBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login {
 
@@ -95,6 +102,38 @@ public class Login {
 		frame.getContentPane().add(lblrespuesta);
 
 		passwordField = new JPasswordField();
+		passwordField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.login();
+			}
+		});
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				//Cambiamos el Focus al login
+				if(e.getKeyCode()==KeyEvent.VK_ENTER){	
+					
+					if (checkbox.isSelected()==true) {
+						miControlador.setSonidos(true);
+
+						miControlador.SoundSobreBoton();
+						 
+
+					}else {
+						miControlador.setSonidos(false);
+					}
+				}
+					
+                
+                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                	 JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+                    System.exit(0);
+                }
+				
+				
+			}
+		});
 		passwordField.setCaretColor(Color.CYAN);
 		passwordField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,6 +151,21 @@ public class Login {
 		frame.getContentPane().add(passwordField);
 
 		txtUsuario = new JTextField();
+		txtUsuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				//Cambiamos el Focus al campo selecionado
+				if(e.getKeyCode()==KeyEvent.VK_ENTER){		
+					passwordField.requestFocus();
+					
+                }
+                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                	JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+                    System.exit(0);
+                }
+				
+			}
+		});
 		txtUsuario.setCaretColor(Color.CYAN);
 		txtUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -127,6 +181,15 @@ public class Login {
 		txtUsuario.setColumns(10);
 
 		JButton btnLogin = new JButton("Login");
+		btnLogin.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+	            if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
+                	JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+                    System.exit(0);
+                }
+			}
+		});
 		btnLogin.addMouseMotionListener(new MouseMotionAdapter() {
 
 		});
@@ -143,7 +206,10 @@ public class Login {
 				}else {
 					miControlador.setSonidos(false);
 				}
+				
+					
 			}
+			
 
 		});
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -184,22 +250,22 @@ public class Login {
 		checkbox.setBounds(534, 354, 76, 22);
 		frame.getContentPane().add(checkbox);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-		// Boton de Opciones (Proximamente)
-//		JButton lblOpciones = new JButton("");
-//		lblOpciones.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				miControlador.Opciones();
-//			}
-//		});
-//		lblOpciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//		lblOpciones.setContentAreaFilled(false);
-//		lblOpciones.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-//		lblOpciones.setBorderPainted(false);
-//		lblOpciones.setOpaque(false);
-//		lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblOpciones.setIcon(new ImageIcon(Login.class.getResource("/Img/rueda.png")));
-//		lblOpciones.setBounds(555, 306, 49, 48);
-//		frame.getContentPane().add(lblOpciones);
+//		 Boton de Opciones (Proximamente)
+		JButton lblOpciones = new JButton("");
+		lblOpciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.Opciones();
+			}
+		});
+		lblOpciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblOpciones.setContentAreaFilled(false);
+		lblOpciones.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		lblOpciones.setBorderPainted(false);
+		lblOpciones.setOpaque(false);
+		lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOpciones.setIcon(new ImageIcon(Login.class.getResource("/Img/rueda.png")));
+		lblOpciones.setBounds(555, 306, 49, 48);
+		frame.getContentPane().add(lblOpciones);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 		JLabel lblbackground = new JLabel("");
 		lblbackground.setIcon(new ImageIcon(Login.class.getResource("/Img/Fondogrande.jpg")));
@@ -207,6 +273,21 @@ public class Login {
 		frame.getContentPane().add(lblbackground);
 		frame.setBounds(550, 250, 632, 421);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				
+				
+				
+				if (miControlador.getBoxselect()) {
+					checkbox.setSelected(true);
+					
+					
+				}else
+					checkbox.setSelected(false);
+					
+			}
+		});
 
 	}
 
@@ -227,6 +308,7 @@ public class Login {
 	}
 
 	public void actualaizar() {
+	
 		String resultado = miModelo.getResultado();
 		String user = getUsr();
 		if (resultado.equals("TUTOR")) {
@@ -245,6 +327,7 @@ public class Login {
 			System.exit(0);
 
 		}
+
 	}
 
 	public void setVisible(boolean b) {

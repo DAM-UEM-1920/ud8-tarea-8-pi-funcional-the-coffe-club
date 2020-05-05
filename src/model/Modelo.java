@@ -35,6 +35,7 @@ import Ventanas.Login;
 import Ventanas.MenuDirector;
 import Ventanas.Tutores;
 import Ventanas.buscarEmpresa;
+import java.sql.SQLException;
 
 public class Modelo {
 	private Login miLogin;
@@ -64,13 +65,10 @@ public class Modelo {
 			System.out.println("-> Conexión con ORACLE establecida");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver JDBC No encontrado");
-			e.printStackTrace();
 		} catch (SQLException e) {
 			System.out.println("Error al conectarse a la BD");
-			e.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("Error general de Conexión");
-			e.printStackTrace();
 		}
 	}
 
@@ -78,7 +76,6 @@ public class Modelo {
 		try {
 			conexion.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -105,7 +102,7 @@ public class Modelo {
 			rset.close();
 			pstmt.close();
 		} catch (SQLException s) {
-			s.printStackTrace();
+
 		}
 	}
 
@@ -177,7 +174,7 @@ public class Modelo {
 			String rol = rset.getString(1);
 			return rol;
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			return "ERROR";
 		}
 	}
@@ -188,7 +185,6 @@ public class Modelo {
 		int numColumnas = getNumColumnas(tabla);
 		Object[] contenido = new Object[numColumnas];
 		PreparedStatement pstmt;
-
 		try {
 			pstmt = conexion.prepareStatement("SELECT * FROM " + tabla);
 			ResultSet rset = pstmt.executeQuery();
@@ -204,7 +200,7 @@ public class Modelo {
 				miTabla.addRow(contenido);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 		}
 		return miTabla;
 
@@ -218,7 +214,7 @@ public class Modelo {
 			ResultSetMetaData rsmd = rset.getMetaData();
 			num = rsmd.getColumnCount();
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 		}
 		return num;
 	}
@@ -230,7 +226,7 @@ public class Modelo {
 			rset.next();
 			return rset.getString(colum);
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 			return "ERROR";
 		}
 	}
@@ -260,7 +256,7 @@ public class Modelo {
 
 	// Sonido de acceso correcto
 	public void soundAcceso() {
-		
+
 		try {
 			AudioInputStream audio = AudioSystem.getAudioInputStream(new File("src/Sonidos/in7.wav").getAbsoluteFile());
 			Clip sonido = AudioSystem.getClip();
@@ -270,13 +266,13 @@ public class Modelo {
 			sonido.loop(0);
 
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-			System.out.println("Error Acceso");
+			System.out.println("Error de Sonido de Acceso");
 		}
 	}
 
 	// Sonido de acceso incorrecto
 	public void soundErrorAcceso() {
-		
+
 		try {
 			AudioInputStream audio = AudioSystem
 					.getAudioInputStream(new File("src/Sonidos/Error.wav").getAbsoluteFile());
@@ -287,7 +283,7 @@ public class Modelo {
 			sonido.loop(0);
 
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-			System.out.println("Error incorrecto");
+			System.out.println("Error de Sonido de acceso incorrecto");
 		}
 
 	}
@@ -295,19 +291,18 @@ public class Modelo {
 	// Sonido pasar por el boton
 	public void soundSobreBoton() {
 
-			try {
-				AudioInputStream audio = AudioSystem
-						.getAudioInputStream(new File("src/Sonidos/move.wav").getAbsoluteFile());
-				Clip sonido = AudioSystem.getClip();
-				sonido.open(audio);
-				sonido.start();
+		try {
+			AudioInputStream audio = AudioSystem
+					.getAudioInputStream(new File("src/Sonidos/move.wav").getAbsoluteFile());
+			Clip sonido = AudioSystem.getClip();
+			sonido.open(audio);
+			sonido.start();
 //           sonido.loop(Clip.LOOP_CONTINUOUSLY);
-				sonido.loop(0);
+			sonido.loop(0);
 
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-				System.out.println("Error pasar boton");
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+			System.out.println("Error de Sonido de pasar boton por encima");
 
-			
 		}
 	}
 
@@ -323,13 +318,13 @@ public class Modelo {
 			sonido.loop(0);
 
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-			System.out.println("Error logoff");
+			System.out.println("Error de Sonido de logoff o boton de ir atras");
 		}
 	}
 
 	// Sonido ClickBoton
 	public void soundSend() {
-		
+
 		try {
 			AudioInputStream audio = AudioSystem
 					.getAudioInputStream(new File("src/Sonidos/Send.wav").getAbsoluteFile());
@@ -340,7 +335,7 @@ public class Modelo {
 			sonido.loop(0);
 
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-			System.out.println("Error ClickBoton");
+			System.out.println("Error de Sonido de hacer ClickBoton");
 		}
 	}
 
@@ -393,20 +388,17 @@ public class Modelo {
 		lblrespuesta.setText(null);
 
 	}
-	
 
 	public String getEmpresa(String alumno) {
 		try {
 			Statement stmt = conexion.createStatement();
-			ResultSet rset = stmt.executeQuery(
-					"SELECT empresa.nombre FROM empresa, practica, alumno"
+			ResultSet rset = stmt.executeQuery("SELECT empresa.nombre FROM empresa, practica, alumno"
 					+ " WHERE alumno.num_exp = practica.alumno_num_exp AND practica.empresa_cif = empresa.cif "
-					+ "AND alumno.nombre= '"+ alumno + "'");
+					+ "AND alumno.nombre= '" + alumno + "'");
 			rset.next();
 			String rol = rset.getString(1);
 			return rol;
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return "ERROR";
 		}
 	}

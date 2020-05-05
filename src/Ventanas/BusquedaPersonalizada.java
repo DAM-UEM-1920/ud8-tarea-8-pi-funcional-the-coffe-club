@@ -25,6 +25,8 @@ import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class BusquedaPersonalizada {
 
@@ -358,7 +360,6 @@ public class BusquedaPersonalizada {
 		frame.getContentPane().add(checkBox_1_8);
 		
 		checkbox = new JCheckBox("Sonido");
-		checkbox.setSelected(true);
 		checkbox.setOpaque(false);
 		checkbox.setHorizontalAlignment(SwingConstants.CENTER);
 		checkbox.setForeground(Color.WHITE);
@@ -374,6 +375,18 @@ public class BusquedaPersonalizada {
 		frame.setBackground(Color.ORANGE);
 		frame.setBounds(550, 250, 740, 547);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				if (miControlador.getBoxselect()) {
+					checkbox.setSelected(true);
+					
+					
+				}else
+					checkbox.setSelected(false);
+					
+			}
+		});
 	}
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;

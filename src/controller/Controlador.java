@@ -39,7 +39,7 @@ public class Controlador {
 	private JTextField text;
 	private Empresa empresa;
 	private Opciones opciones;
-	private boolean activo=false;
+	private boolean activo = true;
 
 	public void setModelo(Modelo miModelo) {
 		this.miModelo = miModelo;
@@ -226,8 +226,6 @@ public class Controlador {
 
 	}
 
-
-
 	public void EmpresaAtras() {
 		empresa.setVisible(false);
 		buscEmpresa.setVisible(true);
@@ -240,13 +238,12 @@ public class Controlador {
 		empresa.setVisible(true);
 	}
 
-
-	
 	public void Opciones() {
 		miLogin.setVisible(false);
 		opciones.setVisible(true);
 
 	}
+
 	public void OpcionesAtras() {
 		miLogin.setVisible(false);
 		opciones.setVisible(true);
@@ -272,13 +269,11 @@ public class Controlador {
 		}
 	}
 
-
 	public void SoundError() {
 		if (activo == true) {
 			miModelo.soundErrorAcceso();
 		}
 	}
-	
 
 	public void SoundSend() {
 		if (activo == true) {
@@ -290,6 +285,11 @@ public class Controlador {
 		if (activo == true) {
 			miModelo.soundLogAtras();
 		}
+	}
+
+	public boolean getBoxselect() {
+		return activo;
+
 	}
 
 }
