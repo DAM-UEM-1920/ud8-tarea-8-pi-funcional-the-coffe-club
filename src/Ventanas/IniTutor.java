@@ -1,0 +1,471 @@
+package Ventanas;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.SpringLayout;
+
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JTextArea;
+import java.awt.Font;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import controller.Controlador;
+import model.Modelo;
+
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.border.BevelBorder;
+import java.awt.Toolkit;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.SwingConstants;
+
+public class IniTutor {
+
+	private JFrame frame;
+	private JTable table;
+	private JTable table_1;
+	private JButton btnLogOut;
+	private JScrollPane scrollPane;
+	private JLabel lblNewLabel;
+	private Controlador miControlador;
+	private Modelo miModelo;
+	private JButton btnNewButton_1;
+	private JLabel lblFondo;
+	private JTextField textFieldDni;
+	private JTextField textFieldNombre;
+	private JTextField textFieldApellidos;
+	private JTextField textFieldEmpresa;
+	private JButton btnAadir;
+	private JButton btnEliminar;
+	private JButton btnGuardarCambios;
+	private JLabel lblLogoBoton;
+	private JTextField textField;
+	private Login miLogin;
+	private String user;
+
+	/**
+	 * Create the application.
+	 */
+
+	public IniTutor() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+
+		frame = new JFrame();
+
+		frame.setTitle("P\u00E1gina Principal");
+		frame.setResizable(false);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IniTutor.class.getResource("/Img/UEM-simbolo.jpg")));
+		frame.getContentPane().setBackground(Color.ORANGE);
+		frame.getContentPane().setLayout(null);
+		
+				lblNewLabel = new JLabel();
+				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNewLabel.setForeground(Color.WHITE);
+				lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 28));
+				lblNewLabel.setBounds(193, 11, 293, 72);
+				frame.getContentPane().add(lblNewLabel);
+
+		lblLogoBoton = new JLabel("");
+		lblLogoBoton.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/LoUEBoton.png")));
+		lblLogoBoton.setToolTipText("Volver al menu principal");
+		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY,
+				Color.LIGHT_GRAY));
+		lblLogoBoton.setBounds(39, 36, 110, 110);
+		frame.getContentPane().add(lblLogoBoton);
+
+		table_1 = new JTable();
+		table_1.setBounds(0, 0, 0, 0);
+		frame.getContentPane().add(table_1);
+
+		btnLogOut = new JButton("Logout");
+		btnLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miModelo.soundLogAtras();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miModelo.soundSobreBoton();
+			}
+		});
+		btnLogOut.setToolTipText("Desconectarse de la sesion");
+		btnLogOut.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnLogOut.setBounds(581, 13, 83, 28);
+		btnLogOut.setForeground(Color.WHITE);
+		btnLogOut.setBackground(Color.BLACK);
+		frame.getContentPane().add(btnLogOut);
+		btnLogOut.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				miControlador.salirTutor();
+			}
+
+		});
+
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miModelo.soundSend();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miModelo.soundSobreBoton();
+			}
+		});
+		btnEliminar.setEnabled(false);
+		btnEliminar.setForeground(Color.WHITE);
+		btnEliminar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnEliminar.setBackground(Color.BLACK);
+		btnEliminar.setBounds(507, 422, 117, 35);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
+				tabla.removeRow(table.getSelectedRow());
+				miControlador.limpiar(textFieldDni);
+				miControlador.limpiar(textFieldNombre);
+				miControlador.limpiar(textFieldApellidos);
+				miControlador.limpiar(textFieldEmpresa);
+				btnEliminar.setEnabled(false);
+				btnGuardarCambios.setEnabled(false);
+				btnAadir.setEnabled(false);
+			}
+		});
+		frame.getContentPane().add(btnEliminar);
+
+		btnGuardarCambios = new JButton("Guardar Cambios");
+		btnGuardarCambios.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miModelo.soundSend();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miModelo.soundSobreBoton();
+			}
+		});
+		btnGuardarCambios.setEnabled(false);
+		btnGuardarCambios.setForeground(Color.WHITE);
+		btnGuardarCambios
+				.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnGuardarCambios.setBackground(Color.BLACK);
+		btnGuardarCambios.setBounds(280, 422, 168, 35);
+		btnGuardarCambios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int fila = table.getSelectedRow();
+				table.setValueAt(textFieldDni.getText(), fila, 0);
+				table.setValueAt(textFieldNombre.getText(), fila, 1);
+				table.setValueAt(textFieldApellidos.getText(), fila, 2);
+				table.setValueAt(textFieldEmpresa.getText(), fila, 3);
+				miControlador.limpiar(textFieldDni);
+				miControlador.limpiar(textFieldNombre);
+				miControlador.limpiar(textFieldApellidos);
+				miControlador.limpiar(textFieldEmpresa);
+				btnGuardarCambios.setEnabled(false);
+				btnAadir.setEnabled(false);
+				btnEliminar.setEnabled(false);
+			}
+		});
+		frame.getContentPane().add(btnGuardarCambios);
+
+		textFieldNombre = new JTextField();
+		textFieldNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldNombre
+				.setBorder(new TitledBorder(
+						new TitledBorder(
+								new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
+										new Color(160, 160, 160)),
+								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
+						"Nombre", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldNombre.setForeground(Color.WHITE);
+		textFieldNombre.setOpaque(false);
+		textFieldNombre.setToolTipText("Introduzca el nombre del alumno");
+		textFieldNombre.setColumns(10);
+		textFieldNombre.setBounds(170, 356, 114, 48);
+		frame.getContentPane().add(textFieldNombre);
+		textFieldNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
+
+		textFieldApellidos = new JTextField();
+		textFieldApellidos.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldApellidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldApellidos
+				.setBorder(new TitledBorder(
+						new TitledBorder(
+								new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
+										new Color(160, 160, 160)),
+								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
+						"Apellidos", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldApellidos.setForeground(Color.WHITE);
+		textFieldApellidos.setOpaque(false);
+		textFieldApellidos.setToolTipText("Introduzca los apellidos del alumno");
+		textFieldApellidos.setColumns(10);
+		textFieldApellidos.setBounds(294, 356, 217, 48);
+		frame.getContentPane().add(textFieldApellidos);
+		textFieldApellidos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
+
+		textFieldEmpresa = new JTextField();
+		textFieldEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldEmpresa.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldEmpresa
+				.setBorder(new TitledBorder(
+						new TitledBorder(
+								new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
+										new Color(160, 160, 160)),
+								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
+						"Empresa", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldEmpresa.setForeground(Color.WHITE);
+		textFieldEmpresa.setOpaque(false);
+		textFieldEmpresa.setToolTipText("Introduzca en nombre de la empresa");
+		textFieldEmpresa.setColumns(10);
+		textFieldEmpresa.setBounds(521, 356, 157, 48);
+		frame.getContentPane().add(textFieldEmpresa);
+		textFieldEmpresa.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
+
+		textFieldDni = new JTextField();
+		textFieldDni.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDni.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldDni.setOpaque(false);
+		textFieldDni
+				.setBorder(new TitledBorder(
+						new TitledBorder(
+								new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
+										new Color(160, 160, 160)),
+								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
+						"DNI", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldDni.setForeground(Color.WHITE);
+		textFieldDni.setToolTipText("Introduzca el numero de expediente del alumno");
+		textFieldDni.setBounds(10, 355, 150, 49);
+		frame.getContentPane().add(textFieldDni);
+		textFieldDni.setColumns(10);
+		textFieldDni.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
+
+		btnAadir = new JButton("Agregar");
+		btnAadir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miModelo.soundSend();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miModelo.soundSobreBoton();
+			}
+		});
+		btnAadir.setEnabled(false);
+		btnAadir.setForeground(Color.WHITE);
+		btnAadir.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnAadir.setBackground(Color.BLACK);
+		btnAadir.setBounds(97, 421, 117, 37);
+		btnAadir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
+				tabla.addRow(new String[] { textFieldDni.getText(), textFieldNombre.getText(),
+						textFieldApellidos.getText(), textFieldEmpresa.getText() });
+				miControlador.limpiar(textFieldDni);
+				miControlador.limpiar(textFieldNombre);
+				miControlador.limpiar(textFieldApellidos);
+				miControlador.limpiar(textFieldEmpresa);
+				btnAadir.setEnabled(false);
+				btnEliminar.setEnabled(false);
+				btnGuardarCambios.setEnabled(false);
+			}
+		});
+		frame.getContentPane().add(btnAadir);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(62, 193, 582, 135);
+		frame.getContentPane().add(scrollPane);
+
+		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		scrollPane.setViewportView(table);
+
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int fila = table.getSelectedRow();
+				textFieldDni.setText((String) table.getValueAt(fila, 0));
+				textFieldNombre.setText((String) table.getValueAt(fila, 1));
+				textFieldApellidos.setText((String) table.getValueAt(fila, 2));
+				textFieldEmpresa.setText(miModelo.getEmpresa(textFieldNombre.getText()));
+				textField.setText((String) table.getValueAt(fila, 3));
+				updateEliminar();
+			}
+		});
+
+		JLabel lblGrupo = new JLabel("Mi Grupo:");
+		lblGrupo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGrupo.setForeground(Color.WHITE);
+		lblGrupo.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblGrupo.setBounds(236, 157, 160, 25);
+		frame.getContentPane().add(lblGrupo);
+
+		JButton btnAlumno = new JButton("Buscar");
+		btnAlumno.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miModelo.soundSend();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miModelo.soundSobreBoton();
+			}
+		});
+		btnAlumno.setToolTipText("Buscar por numero de expediente del alumno");
+		btnAlumno.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnAlumno.setBackground(Color.BLACK);
+		btnAlumno.setForeground(Color.WHITE);
+		btnAlumno.setBounds(536, 85, 131, 43);
+		frame.getContentPane().add(btnAlumno);
+
+		textField = new JTextField();
+		textField.setCaretColor(Color.CYAN);
+		textField.setToolTipText("Escriba el numero de expediente del alumno");
+		textField.setOpaque(false);
+		textField.setName("");
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setForeground(Color.WHITE);
+		textField.setFont(new Font("Tahoma", Font.BOLD, 16));
+		textField.setColumns(10);
+		textField.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"Introduzca N\u00BA Expediente", TitledBorder.CENTER, TitledBorder.TOP, null,
+				new Color(255, 255, 255)));
+		textField.setBounds(358, 77, 168, 51);
+		frame.getContentPane().add(textField);
+
+		lblFondo = new JLabel("445464H");
+		lblFondo.setForeground(Color.WHITE);
+		lblFondo.setToolTipText("Escriba aqu\u00ED el Numero de Expediente del Alumno a buscar");
+		lblFondo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
+		lblFondo.setBounds(0, 0, 703, 492);
+		frame.getContentPane().add(lblFondo);
+		btnAlumno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String numexp = textField.getText();
+				miControlador.vistaAlumno(numexp);
+			}
+
+		});
+
+		frame.setBounds(550, 250, 710, 510);
+
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				table.setModel(miModelo.getTabla("alumno"));
+				lblNewLabel.setText("Welcome " + user);
+			}
+		});
+
+	}
+
+	protected void updateModificar() {
+		if (textFieldDni.getText().length() == 0 || textFieldNombre.getText().length() == 0
+				|| textFieldApellidos.getText().length() == 0 || textFieldEmpresa.getText().length() == 0
+				|| table.getSelectedRow() == -1) {
+			btnGuardarCambios.setEnabled(false);
+		} else {
+			btnGuardarCambios.setEnabled(true);
+		}
+	}
+
+	private void updateEliminar() {
+		if (table.getSelectedRow() == -1) {
+			btnEliminar.setEnabled(false);
+		} else {
+			btnEliminar.setEnabled(true);
+
+		}
+	}
+
+	private void updateAlta() {
+		if (textFieldDni.getText().length() == 0 || textFieldNombre.getText().length() == 0
+				|| textFieldApellidos.getText().length() == 0 || textFieldEmpresa.getText().length() == 0) {
+			btnAadir.setEnabled(false);
+		} else {
+			btnAadir.setEnabled(true);
+		}
+
+	}
+
+	public void setControlador(Controlador miControlador) {
+		this.miControlador = miControlador;
+	}
+
+	public void setModelo(Modelo miModelo) {
+		this.miModelo = miModelo;
+	}
+
+	public void setVisible(boolean b) {
+		frame.setVisible(b);
+	}
+
+	public void setTutor(String user) {
+		this.user = user;
+		
+	}
+}
