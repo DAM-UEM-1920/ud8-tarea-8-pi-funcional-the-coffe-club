@@ -110,28 +110,25 @@ public class Login {
 		passwordField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
-				//Cambiamos el Focus al login
-				if(e.getKeyCode()==KeyEvent.VK_ENTER){	
-					
-					if (checkbox.isSelected()==true) {
+
+				// Cambiamos el Focus al login
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+					if (checkbox.isSelected() == true) {
 						miControlador.setSonidos(true);
 
 						miControlador.SoundSobreBoton();
-						 
 
-					}else {
+					} else {
 						miControlador.setSonidos(false);
 					}
 				}
-					
-                
-                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                	 JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
-                    System.exit(0);
-                }
-				
-				
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+					System.exit(0);
+				}
+
 			}
 		});
 		passwordField.setCaretColor(Color.CYAN);
@@ -154,16 +151,16 @@ public class Login {
 		txtUsuario.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				//Cambiamos el Focus al campo selecionado
-				if(e.getKeyCode()==KeyEvent.VK_ENTER){		
+				// Cambiamos el Focus al campo selecionado
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					passwordField.requestFocus();
-					
-                }
-                if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                	JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
-                    System.exit(0);
-                }
-				
+
+				}
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+					System.exit(0);
+				}
+
 			}
 		});
 		txtUsuario.setCaretColor(Color.CYAN);
@@ -184,10 +181,11 @@ public class Login {
 		btnLogin.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-	            if(e.getKeyCode()==KeyEvent.VK_ESCAPE){
-                	JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
-                    System.exit(0);
-                }
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+					System.exit(0);
+				}
 			}
 		});
 		btnLogin.addMouseMotionListener(new MouseMotionAdapter() {
@@ -198,18 +196,16 @@ public class Login {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 
-				if (checkbox.isSelected()==true) {
+				if (checkbox.isSelected() == true) {
 					miControlador.setSonidos(true);
 
 					miControlador.SoundSobreBoton();
 
-				}else {
+				} else {
 					miControlador.setSonidos(false);
 				}
-				
-					
+
 			}
-			
 
 		});
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -238,6 +234,39 @@ public class Login {
 		frame.getContentPane().add(lblusrimg);
 
 		checkbox = new JCheckBox("Sonido");
+		checkbox.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// Cambiamos la seleccion del check
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (checkbox.isSelected()) {
+						checkbox.setSelected(false);
+					}else
+					checkbox.setSelected(true);
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+					System.exit(0);
+				}
+
+			}
+			
+		});
+		checkbox.addActionListener(new ActionListener() {
+
+			// Esto comprueba que el checbox este activo o no
+
+			public void actionPerformed(ActionEvent e) {
+
+				checkbox.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						miControlador.setSonidos(checkbox.isSelected());
+					}
+				});
+
+			}
+		});
 		checkbox.addMouseListener(new MouseAdapter() {
 		});
 		checkbox.setSelected(true);
@@ -247,11 +276,27 @@ public class Login {
 		checkbox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		checkbox.setOpaque(false);
 		checkbox.setHorizontalAlignment(SwingConstants.CENTER);
-		checkbox.setBounds(534, 354, 76, 22);
+		checkbox.setBounds(0, 363, 76, 22);
 		frame.getContentPane().add(checkbox);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //		 Boton de Opciones (Proximamente)
 		JButton lblOpciones = new JButton("");
+		lblOpciones.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+				// Cambiamos el Focus y entramos en opciones
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.Opciones();
+				}
+				//salimos de la aplicacion
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
+					System.exit(0);
+				}
+
+			}
+		});
 		lblOpciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.Opciones();
@@ -264,7 +309,7 @@ public class Login {
 		lblOpciones.setOpaque(false);
 		lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpciones.setIcon(new ImageIcon(Login.class.getResource("/Img/rueda.png")));
-		lblOpciones.setBounds(555, 306, 49, 48);
+		lblOpciones.setBounds(567, 333, 49, 48);
 		frame.getContentPane().add(lblOpciones);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 		JLabel lblbackground = new JLabel("");
@@ -276,16 +321,13 @@ public class Login {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				
-				
-				
+
 				if (miControlador.getBoxselect()) {
 					checkbox.setSelected(true);
-					
-					
-				}else
+
+				} else
 					checkbox.setSelected(false);
-					
+
 			}
 		});
 
@@ -308,7 +350,7 @@ public class Login {
 	}
 
 	public void actualaizar() {
-	
+
 		String resultado = miModelo.getResultado();
 		String user = getUsr();
 		if (resultado.equals("TUTOR")) {

@@ -35,6 +35,7 @@ import Ventanas.Login;
 import Ventanas.MenuDirector;
 import Ventanas.Tutores;
 import Ventanas.buscarEmpresa;
+import Ventanas.Opciones;
 import java.sql.SQLException;
 
 public class Modelo {
@@ -57,6 +58,7 @@ public class Modelo {
 	private DefaultTableModel miTabla;
 	private Connection conexion;
 	private Checkbox checkbox;
+	private Opciones opciones;
 
 	public Modelo() {
 		try {
@@ -387,6 +389,11 @@ public class Modelo {
 	public void limpiar(JLabel lblrespuesta) {
 		lblrespuesta.setText(null);
 
+	}
+	
+
+	public void setOpciones(Opciones opciones) {
+		this.opciones = opciones;
 	}
 
 	public String getEmpresa(String alumno) {

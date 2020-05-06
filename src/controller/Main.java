@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.Icon;
+
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
 import Ventanas.AsignarGrupo;
@@ -28,6 +30,7 @@ public class Main {
 		Alumno alumno = new Alumno();
 		buscarEmpresa buscEmpresa = new buscarEmpresa();
 		Empresa empresa = new Empresa();
+		Opciones opciones = new Opciones();
 
 		miControlador.setModelo(miModelo);
 		miControlador.setLogin(miLogin);

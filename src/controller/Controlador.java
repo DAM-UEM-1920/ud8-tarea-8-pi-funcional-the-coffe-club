@@ -85,6 +85,11 @@ public class Controlador {
 		this.empresa = empresa;
 	}
 
+
+	public void setOpciones(Opciones opciones) {
+		this.opciones = opciones;
+	}
+
 	public void login() {
 		String usr = miLogin.getUsr();
 		String pwd = miLogin.getPwd();
@@ -214,6 +219,19 @@ public class Controlador {
 		menuAdmin.setVisible(true);
 
 	}
+	
+	public void Opciones() {
+		miLogin.setVisible(false);
+		opciones.setVisible(true);
+
+	}
+
+	public void OpcionesAtras() {
+		opciones.setVisible(false);
+		miLogin.setVisible(true);
+
+	}
+	
 
 	public void asignarGrupoFin() {
 		asgGrupo.setVisible(false);
@@ -238,17 +256,7 @@ public class Controlador {
 		empresa.setVisible(true);
 	}
 
-	public void Opciones() {
-		miLogin.setVisible(false);
-		opciones.setVisible(true);
 
-	}
-
-	public void OpcionesAtras() {
-		miLogin.setVisible(false);
-		opciones.setVisible(true);
-
-	}
 
 	public void setSonidos(boolean activo) {
 		this.activo = activo;

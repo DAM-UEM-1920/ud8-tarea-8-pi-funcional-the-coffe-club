@@ -394,7 +394,7 @@ public class IniTutor {
 		textField.setBounds(358, 77, 168, 51);
 		frame.getContentPane().add(textField);
 
-		lblFondo = new JLabel("445464H");
+		lblFondo = new JLabel("");
 		lblFondo.setForeground(Color.WHITE);
 		lblFondo.setToolTipText("Escriba aqu\u00ED el Numero de Expediente del Alumno a buscar");
 		lblFondo.setFont(new Font("Tahoma", Font.PLAIN, 14));
