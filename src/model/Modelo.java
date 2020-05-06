@@ -61,6 +61,7 @@ public class Modelo {
 	private File fichero;
 	private String[] parts;
 
+	
 	public Modelo() {
 		
 	}
