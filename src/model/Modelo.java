@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.sound.sampled.AudioInputStream;
@@ -265,10 +266,57 @@ public class Modelo {
 		}
 	}
 
+	public String getEmpresa(String alumno) {
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT empresa.nombre FROM empresa, practica, alumno"
+					+ " WHERE alumno.num_exp = practica.alumno_num_exp AND practica.empresa_cif = empresa.cif "
+					+ "AND alumno.nombre= '" + alumno + "'");
+			rset.next();
+			String rol = rset.getString(1);
+			return rol;
+		} catch (SQLException e) {
+			return "ERROR";
+		}
+	}
+
+	public ArrayList<String> getGrupos(String user) {
+		ArrayList<String> grupos = new ArrayList<String>();
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT grupo.nom_grupo FROM grupo, gestiona, tutor, ejerce, users"
+					+ " WHERE grupo.cod_grupo = gestiona.grupo_cod_grupo AND gestiona.tutor_dni_tutor = tutor.dni_tutor AND "
+					+ "tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr= '" + user
+					+ "'");
+			do {
+				rset.next();
+				grupos.add(rset.getString(1));
+
+			} while (rset.next());
+			return grupos;
+		} catch (SQLException e) {
+			return grupos;
+		}
+
+	}
+	public String getCodigoGrupo (String nomgrupo) {
+		String codigo = null;
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT cod_grupo FROM grupo WHERE nom_grupo = '" + nomgrupo +"'");
+			rset.next();
+			codigo = rset.getString(1);
+			return codigo;
+		} catch (SQLException e) {
+			return codigo;
+		}
+		
+	}
+
 	public int insert(String tabla, String values) {
 		int resultado = 0;
 		try {
-			String qwery = "INSERT INTO COFFEE." + tabla + " VALUES (" + values+ ")";
+			String qwery = "INSERT INTO COFFEE." + tabla + " VALUES (" + values + ")";
 			PreparedStatement pstmt = conexion.prepareStatement(qwery);
 			resultado = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -276,10 +324,6 @@ public class Modelo {
 			System.out.println("error de insertado");
 		}
 		return resultado;
-	}
-
-	public void setLogin(Login miLogin) {
-		this.miLogin = miLogin;
 	}
 
 	public void login(String usr, String pwd) {
@@ -390,6 +434,10 @@ public class Modelo {
 		this.menuTutor = menuTutor;
 	}
 
+	public void setLogin(Login miLogin) {
+		this.miLogin = miLogin;
+	}
+
 	public void setMenuAdmin(MenuDirector menuAdmin) {
 		this.menuAdmin = menuAdmin;
 	}
@@ -436,18 +484,6 @@ public class Modelo {
 
 	}
 
-	public String getEmpresa(String alumno) {
-		try {
-			Statement stmt = conexion.createStatement();
-			ResultSet rset = stmt.executeQuery("SELECT empresa.nombre FROM empresa, practica, alumno"
-					+ " WHERE alumno.num_exp = practica.alumno_num_exp AND practica.empresa_cif = empresa.cif "
-					+ "AND alumno.nombre= '" + alumno + "'");
-			rset.next();
-			String rol = rset.getString(1);
-			return rol;
-		} catch (SQLException e) {
-			return "ERROR";
-		}
-	}
+	
 
 }

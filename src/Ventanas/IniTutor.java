@@ -2,6 +2,7 @@ package Ventanas;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -90,9 +91,8 @@ public class IniTutor {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IniTutor.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
-		
-		JComboBox comboBoxGrupos = new JComboBox();
-		comboBoxGrupos.setModel(new DefaultComboBoxModel(new String[] {"Grupo1", "grupo2"}));
+
+		JComboBox<String> comboBoxGrupos = new JComboBox();
 		comboBoxGrupos.setBackground(Color.WHITE);
 		comboBoxGrupos.setBounds(134, 95, 110, 22);
 		frame.getContentPane().add(comboBoxGrupos);
@@ -401,6 +401,9 @@ public class IniTutor {
 								+ textFieldApellidos.getText() + "', " + textFieldExp.getText() + ", '"
 								+ textFieldNacionalidad.getText() + "', '" + textFieldFechaNacimiento.getText() + "', '"
 								+ textFieldEmail.getText() + "', " + textFieldTelefono.getText());
+				miModelo.insert("pertenece", textFieldExp.getText() + ", " + 
+								miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) 
+								+ ",'2019-2020'" );
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
@@ -492,6 +495,10 @@ public class IniTutor {
 		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
 		lblFondo.setBounds(0, 0, 703, 492);
 		frame.getContentPane().add(lblFondo);
+		
+		JLabel lblNewLabelCod_grupo = new JLabel("New label");
+		lblNewLabelCod_grupo.setBounds(22, 130, 56, 16);
+		frame.getContentPane().add(lblNewLabelCod_grupo);
 		btnAlumno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String numexp = textFieldExp.getText();
@@ -509,6 +516,12 @@ public class IniTutor {
 			public void windowActivated(WindowEvent e) {
 				table.setModel(miModelo.getAlumnosTutor(user));
 				lblNewLabel.setText("Welcome " + user);
+				ArrayList<String> grup = miModelo.getGrupos(user);
+				String[] grupos = new String[grup.size()];
+				for (int i = 0; i < grupos.length; i++) {
+					grupos[i] = grup.get(i);
+				}
+				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(grupos));
 			}
 		});
 
