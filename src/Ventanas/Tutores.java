@@ -69,6 +69,7 @@ public class Tutores {
 	private void initialize() {
 		
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
