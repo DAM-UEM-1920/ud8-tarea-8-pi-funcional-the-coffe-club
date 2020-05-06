@@ -165,8 +165,8 @@ public class Opciones {
 		textNombreUser.setFont(new Font("Tahoma", Font.BOLD, 20));
 		textNombreUser.setColumns(10);
 		textNombreUser.setCaretColor(Color.CYAN);
-		textNombreUser.setBorder(new TitledBorder(
-						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+		textNombreUser.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 						"Nombre de Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
 		textNombreUser.setBounds(414, 116, 189, 47);
 		Opcio.getContentPane().add(textNombreUser);
@@ -178,8 +178,8 @@ public class Opciones {
 		txtPasswordUses.setForeground(Color.WHITE);
 		txtPasswordUses.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtPasswordUses.setCaretColor(Color.CYAN);
-		txtPasswordUses.setBorder(new TitledBorder(
-						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+		txtPasswordUses.setBorder(new TitledBorder(
+						new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 						"Contrase\u00F1a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		txtPasswordUses.setBounds(414, 174, 191, 48);
 		Opcio.getContentPane().add(txtPasswordUses);
@@ -218,9 +218,14 @@ public class Opciones {
 		Opcio.getContentPane().add(lblResultado);
 		
 		txtRutaFichero = new JTextField();
+		txtRutaFichero.setCaretColor(Color.WHITE);
+		txtRutaFichero.setForeground(Color.WHITE);
+		txtRutaFichero.setOpaque(false);
+		txtRutaFichero.setHorizontalAlignment(SwingConstants.CENTER);
+		txtRutaFichero.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Nombre Fichero", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
 		txtRutaFichero.setToolTipText("Inserta la ruta del fichero");
 		txtRutaFichero.setColumns(10);
-		txtRutaFichero.setBounds(169, 141, 235, 14);
+		txtRutaFichero.setBounds(169, 141, 235, 36);
 		Opcio.getContentPane().add(txtRutaFichero);
 		
 		JLabel lblfondo = new JLabel("");
@@ -250,11 +255,11 @@ public class Opciones {
 	private void metodoLectura() {
 		lblResultado.setText("");
 		String texto = "";
-		File file = new File(txtRutaFichero.getText());
-		if (file.exists()) {
+		File fichero = new File(txtRutaFichero.getText());
+		if (fichero.exists()) {
 			textNombreUser.setText("");
 			try {
-				Scanner sc = new Scanner (file);
+				Scanner sc = new Scanner (fichero);
 				while (sc.hasNext())
 					texto += sc.nextLine() + '\n';
 				textNombreUser.setText(texto);
