@@ -57,8 +57,8 @@ public class Opciones {
 	private JLabel lblLogoBoton;
 	private String texto;
 	private String[] parts;
-	private boolean lectura;
 	private JButton btnGuardar;
+	private File fichero;
 	/**
 	 * Create the application.
 	 */
@@ -112,7 +112,7 @@ public class Opciones {
 			}
 		});
 		btnAtrs.setToolTipText("Te lleva a la pantalla anterior");
-		btnAtrs.setBounds(44, 352, 140, 45);
+		btnAtrs.setBounds(33, 376, 140, 45);
 		btnAtrs.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +132,7 @@ public class Opciones {
 		chckbxSonidoTeclas.setForeground(Color.WHITE);
 		chckbxSonidoTeclas.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoTeclas.setContentAreaFilled(false);
-		chckbxSonidoTeclas.setBounds(258, 397, 124, 22);
+		chckbxSonidoTeclas.setBounds(258, 421, 124, 22);
 		Opcio.getContentPane().add(chckbxSonidoTeclas);
 
 		JCheckBox chckbxSonidoTeclas_1 = new JCheckBox("Sonido teclas");
@@ -143,7 +143,7 @@ public class Opciones {
 		chckbxSonidoTeclas_1.setForeground(Color.WHITE);
 		chckbxSonidoTeclas_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoTeclas_1.setContentAreaFilled(false);
-		chckbxSonidoTeclas_1.setBounds(375, 397, 124, 22);
+		chckbxSonidoTeclas_1.setBounds(375, 421, 124, 22);
 		Opcio.getContentPane().add(chckbxSonidoTeclas_1);
 
 		JCheckBox chckbxSonidoMandar = new JCheckBox("Sonido mandar");
@@ -154,7 +154,7 @@ public class Opciones {
 		chckbxSonidoMandar.setForeground(Color.WHITE);
 		chckbxSonidoMandar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoMandar.setContentAreaFilled(false);
-		chckbxSonidoMandar.setBounds(500, 397, 134, 22);
+		chckbxSonidoMandar.setBounds(500, 421, 134, 22);
 		Opcio.getContentPane().add(chckbxSonidoMandar);
 
 		JCheckBox chckbxSonidoVolver = new JCheckBox("Sonido volver");
@@ -165,7 +165,7 @@ public class Opciones {
 		chckbxSonidoVolver.setForeground(Color.WHITE);
 		chckbxSonidoVolver.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoVolver.setContentAreaFilled(false);
-		chckbxSonidoVolver.setBounds(625, 397, 109, 22);
+		chckbxSonidoVolver.setBounds(625, 421, 109, 22);
 		Opcio.getContentPane().add(chckbxSonidoVolver);
 
 		textNombreUser = new JTextField();
@@ -173,7 +173,7 @@ public class Opciones {
 		textNombreUser.setOpaque(false);
 		textNombreUser.setHorizontalAlignment(SwingConstants.CENTER);
 		textNombreUser.setForeground(Color.WHITE);
-		textNombreUser.setFont(new Font("Tahoma", Font.BOLD, 20));
+		textNombreUser.setFont(new Font("Tahoma", Font.BOLD, 17));
 		textNombreUser.setColumns(10);
 		textNombreUser.setCaretColor(Color.CYAN);
 		textNombreUser.setBorder(new TitledBorder(
@@ -189,7 +189,7 @@ public class Opciones {
 		txtPasswordUses.setOpaque(false);
 		txtPasswordUses.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPasswordUses.setForeground(Color.WHITE);
-		txtPasswordUses.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtPasswordUses.setFont(new Font("Tahoma", Font.BOLD, 17));
 		txtPasswordUses.setCaretColor(Color.CYAN);
 		txtPasswordUses.setBorder(new TitledBorder(
 
@@ -204,14 +204,14 @@ public class Opciones {
 		textURLconexion.setOpaque(false);
 		textURLconexion.setHorizontalAlignment(SwingConstants.CENTER);
 		textURLconexion.setForeground(Color.WHITE);
-		textURLconexion.setFont(new Font("Tahoma", Font.BOLD, 20));
+		textURLconexion.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textURLconexion.setColumns(10);
 		textURLconexion.setCaretColor(Color.CYAN);
 		textURLconexion.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Direcci\u00F3n de la Base de Datos", TitledBorder.CENTER, TitledBorder.TOP, null,
 				new Color(255, 255, 255)));
-		textURLconexion.setBounds(379, 257, 355, 47);
+		textURLconexion.setBounds(415, 259, 276, 47);
 		Opcio.getContentPane().add(textURLconexion);
 
 		btnSelecionar = new JButton("Seleccionar");
@@ -226,17 +226,18 @@ public class Opciones {
 		btnSelecionar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnSelecionar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnSelecionar.setBackground(Color.BLACK);
-		btnSelecionar.setBounds(204, 106, 153, 47);
+		btnSelecionar.setBounds(208, 159, 153, 47);
 		Opcio.getContentPane().add(btnSelecionar);
 
 		lblResultado = new JLabel("");
 		lblResultado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResultado.setForeground(Color.RED);
-		lblResultado.setBounds(368, 290, 299, 14);
+		lblResultado.setForeground(Color.GREEN);
+		lblResultado.setBounds(403, 383, 299, 14);
 		Opcio.getContentPane().add(lblResultado);
 
 		txtRutaFichero = new JTextField();
-		txtRutaFichero.setFont(new Font("Tahoma", Font.BOLD, 16));
+		txtRutaFichero.setEditable(false);
+		txtRutaFichero.setFont(new Font("Tahoma", Font.BOLD, 17));
 		txtRutaFichero.setCaretColor(Color.WHITE);
 		txtRutaFichero.setForeground(Color.WHITE);
 		txtRutaFichero.setOpaque(false);
@@ -246,7 +247,7 @@ public class Opciones {
 				"Nombre Fichero", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
 		txtRutaFichero.setToolTipText("Inserta la ruta del fichero");
 		txtRutaFichero.setColumns(10);
-		txtRutaFichero.setBounds(166, 177, 235, 45);
+		txtRutaFichero.setBounds(188, 219, 191, 45);
 		Opcio.getContentPane().add(txtRutaFichero);
 
 		btnGuardar = new JButton("Guardar");
@@ -292,7 +293,7 @@ public class Opciones {
 		
 		lblResultado.setText("");
 		 texto = "";
-		File fichero = new File(txtRutaFichero.getText());
+		 fichero = new File(txtRutaFichero.getText());
 		if (fichero.exists()) {
 			textNombreUser.setText("");
 			try {
@@ -314,13 +315,7 @@ public class Opciones {
 		} else
 			lblResultado.setText("El fichero no existe");
 	}
-	private void metodoEscritura() {
-		
-		File rutaProyecto = new File(System.getProperty("user.dir"));
-		JFileChooser fc = new JFileChooser(rutaProyecto);
-		int seleccion = fc.showSaveDialog(Opcio);
-		if (seleccion == JFileChooser.APPROVE_OPTION) {
-			File fichero = fc.getSelectedFile();
+	private void metodoEscritura() {		
 			try {
 				if (textNombreUser.getText()!=null) {
 					texto=texto.replace(parts[0], textNombreUser.getText());
@@ -333,13 +328,14 @@ public class Opciones {
 				}
 				PrintWriter pw = new PrintWriter(fichero);
 				pw.println(texto);
-				//pw.println(txtPasswordUses.getText());
 				pw.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+			lblResultado.setText("Se ha guardado corrrectamente");
+			
 		}
-	}
+	
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
 	}
