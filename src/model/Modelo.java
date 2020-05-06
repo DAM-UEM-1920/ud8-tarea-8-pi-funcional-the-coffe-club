@@ -205,6 +205,45 @@ public class Modelo {
 		return miTabla;
 
 	}
+	
+	public DefaultTableModel getAlumnosTutor(String user) {
+
+		miTabla = new DefaultTableModel();
+		int numColumnas = getNumColumnas("alumno");
+		Object[] contenido = new Object[numColumnas];
+		PreparedStatement pstmt;
+		try {
+			pstmt = conexion.prepareStatement("SELECT alumno.* FROM alumno " +
+				    "LEFT JOIN pertenece "+
+				    "ON alumno.num_exp = pertenece.alumno_num_exp "+
+				    "LEFT JOIN GRUPO "+
+				    "ON pertenece.grupo_cod_grupo = grupo.cod_grupo "+
+				    "LEFT JOIN GESTIONA "+
+				    "ON grupo.cod_grupo = gestiona.grupo_cod_grupo "+
+				    "LEFT JOIN TUTOR "+
+				    "ON gestiona.tutor_dni_tutor = tutor.dni_tutor "+
+				    "LEFT JOIN EJERCE "+
+				    "ON tutor.dni_tutor = ejerce.e_dni_tutor "+
+				    "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"+user+"')");
+			ResultSet rset = pstmt.executeQuery();
+			ResultSetMetaData rsmd = rset.getMetaData();
+
+			for (int i = 0; i < numColumnas; i++) {
+				miTabla.addColumn(rsmd.getColumnName(i + 1));
+			}
+			while (rset.next()) {
+				for (int col = 1; col <= numColumnas; col++) {
+					contenido[col - 1] = rset.getString(col);
+				}
+				miTabla.addRow(contenido);
+			}
+		} catch (SQLException e) {
+
+		}
+		return miTabla;
+
+	}
+	
 
 	private int getNumColumnas(String tabla) {
 		int num = 0;

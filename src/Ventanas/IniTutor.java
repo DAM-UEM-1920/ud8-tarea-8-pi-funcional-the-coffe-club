@@ -416,7 +416,7 @@ public class IniTutor {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				table.setModel(miModelo.getTabla("alumno"));
+				table.setModel(miModelo.getAlumnosTutor(user));
 				lblNewLabel.setText("Welcome " + user);
 			}
 		});
@@ -465,7 +465,6 @@ public class IniTutor {
 	}
 
 	public void setTutor(String user) {
-		this.user = user;
-		
+		this.user = user;	
 	}
 }
