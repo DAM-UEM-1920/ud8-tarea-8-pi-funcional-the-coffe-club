@@ -128,6 +128,7 @@ public class IniTutor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				miModelo.terminar();
 				miControlador.salirTutor();
 			}
 
