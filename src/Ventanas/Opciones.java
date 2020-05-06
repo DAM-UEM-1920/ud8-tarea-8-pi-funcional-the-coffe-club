@@ -32,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -54,7 +55,10 @@ public class Opciones {
 	private JTextField txtRutaFichero;
 	private JButton btnAtrs;
 	private JLabel lblLogoBoton;
-
+	private String texto;
+	private String[] parts;
+	private boolean lectura;
+	private JButton btnGuardar;
 	/**
 	 * Create the application.
 	 */
@@ -245,7 +249,12 @@ public class Opciones {
 		txtRutaFichero.setBounds(166, 177, 235, 45);
 		Opcio.getContentPane().add(txtRutaFichero);
 
-		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				metodoEscritura();
+			}
+		});
 		btnGuardar.setToolTipText("Guarda los datos introducidos");
 		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -261,6 +270,8 @@ public class Opciones {
 		Opcio.setBackground(Color.ORANGE);
 		Opcio.setBounds(550, 250, 786, 487);
 		Opcio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		btnGuardar.setEnabled(false);
+		
 	}
 
 	private void seleccionaFichero() {
@@ -278,21 +289,24 @@ public class Opciones {
 	}
 
 	private void metodoLectura() {
+		
 		lblResultado.setText("");
-		String texto = "";
+		 texto = "";
 		File fichero = new File(txtRutaFichero.getText());
 		if (fichero.exists()) {
 			textNombreUser.setText("");
 			try {
 				Scanner sc = new Scanner(fichero);
-				while (sc.hasNext())
-					texto += sc.nextLine() + "-";
-				String[] parts = texto.split("-");
+				
+					texto = sc.nextLine();
+				 parts = texto.split("-");
 				textNombreUser.setText(parts[0]);
 				txtPasswordUses.setText(parts[1]);
 				textURLconexion.setText(parts[2]);
 
 				sc.close();
+				
+				btnGuardar.setEnabled(true);
 
 			} catch (IOException e) {
 				lblResultado.setText("Error de Entrada/Salida");
@@ -300,7 +314,32 @@ public class Opciones {
 		} else
 			lblResultado.setText("El fichero no existe");
 	}
-
+	private void metodoEscritura() {
+		
+		File rutaProyecto = new File(System.getProperty("user.dir"));
+		JFileChooser fc = new JFileChooser(rutaProyecto);
+		int seleccion = fc.showSaveDialog(Opcio);
+		if (seleccion == JFileChooser.APPROVE_OPTION) {
+			File fichero = fc.getSelectedFile();
+			try {
+				if (textNombreUser.getText()!=null) {
+					texto=texto.replace(parts[0], textNombreUser.getText());
+				}
+				if (txtPasswordUses.getText()!=null) {
+					texto=texto.replace(parts[1], txtPasswordUses.getText());
+				}
+				if (textURLconexion.getText()!=null) {
+					texto=texto.replace(parts[2],textURLconexion.getText());
+				}
+				PrintWriter pw = new PrintWriter(fichero);
+				pw.println(texto);
+				//pw.println(txtPasswordUses.getText());
+				pw.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
 	}
