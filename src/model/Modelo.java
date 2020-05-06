@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 import java.util.Vector;
 
 import javax.sound.sampled.AudioInputStream;
@@ -51,19 +52,23 @@ public class Modelo {
 	private Alumno alumno;
 	private int fallos;
 	private buscarEmpresa buscEmpresa;
-	private String login = "coffee";
 	private Empresa empresa;
-	private String pwd = "root";
-	private String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	private DefaultTableModel miTabla;
 	private Connection conexion;
 	private Checkbox checkbox;
 	private Opciones opciones;
+	private String texto, usuario, passwd, url;
+	private File fichero;
+	private String[] parts;
 
 	public Modelo() {
+		
+	}
+	public void conexion() {
 		try {
+			
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conexion = DriverManager.getConnection(url, login, pwd);
+			conexion = DriverManager.getConnection(url, usuario, passwd);
 			System.out.println("-> Conexión con ORACLE establecida");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver JDBC No encontrado");
@@ -323,6 +328,8 @@ public class Modelo {
 			System.out.println("Error de Sonido de logoff o boton de ir atras");
 		}
 	}
+	
+	
 
 	// Sonido ClickBoton
 	public void soundSend() {
@@ -340,7 +347,30 @@ public class Modelo {
 			System.out.println("Error de Sonido de hacer ClickBoton");
 		}
 	}
+	public void metodoLectura() {
+		
+		 texto = "";
+		 fichero = new File(System.getProperty("user.dir") + "/Users.ini");
+		if (fichero.exists()) {
+			usuario="";
+			try {
+				Scanner sc = new Scanner(fichero);
+				
+					texto = sc.nextLine();
+				 parts = texto.split("-");
+				usuario=parts[0];
+				passwd=parts[1];
+				url=parts[2];
 
+				sc.close();
+			} catch (IOException e) {
+				System.out.println("Error");
+			}
+		} else
+			System.out.println("El fichero no existe");
+	}
+	
+	
 	public void setMenuTutor(IniTutor menuTutor) {
 		this.menuTutor = menuTutor;
 	}
@@ -409,5 +439,7 @@ public class Modelo {
 			return "ERROR";
 		}
 	}
+	
+	
 
 }

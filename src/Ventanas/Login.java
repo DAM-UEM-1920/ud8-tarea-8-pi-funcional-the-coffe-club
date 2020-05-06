@@ -22,6 +22,7 @@ import javax.swing.border.LineBorder;
 import controller.Controlador;
 import model.Modelo;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SwingConstants;
 import java.awt.Cursor;
@@ -33,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.channels.SelectableChannel;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -44,6 +46,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -58,6 +61,8 @@ public class Login {
 	private JLabel lblrespuesta;
 	private JLabel lblusrimg_1;
 	private JCheckBox checkbox;
+	
+	
 
 	/**
 	 * Create the application.
@@ -216,6 +221,8 @@ public class Login {
 		btnLogin.setToolTipText("Pulse para acceder");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+						miModelo.metodoLectura();
+						miModelo.conexion();
 				miControlador.login();
 			}
 		});
@@ -371,6 +378,7 @@ public class Login {
 		}
 
 	}
+	
 
 	public void setVisible(boolean b) {
 		frame.setVisible(b);

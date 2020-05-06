@@ -285,11 +285,11 @@ public class Opciones {
 			File fichero = fc.getSelectedFile();
 			txtRutaFichero.setText(fichero.getName());
 			metodoLectura();
-//			metodo2();
+
 		}
 	}
 
-	private void metodoLectura() {
+private void metodoLectura() {
 		
 		lblResultado.setText("");
 		 texto = "";
