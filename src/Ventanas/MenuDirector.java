@@ -143,6 +143,7 @@ public class MenuDirector {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				miModelo.terminar();
 				miControlador.salirAdmin();
 			}
 

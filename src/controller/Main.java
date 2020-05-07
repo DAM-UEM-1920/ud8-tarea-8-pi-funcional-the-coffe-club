@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.Icon;
+
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
 import Ventanas.AsignarGrupo;
@@ -28,6 +30,7 @@ public class Main {
 		Alumno alumno = new Alumno();
 		buscarEmpresa buscEmpresa = new buscarEmpresa();
 		Empresa empresa = new Empresa();
+		Opciones opciones = new Opciones();
 
 		miControlador.setModelo(miModelo);
 		miControlador.setLogin(miLogin);
@@ -40,7 +43,7 @@ public class Main {
 		miControlador.setTutores(tutores);
 		miControlador.setBuscarEmpresa(buscEmpresa);
 		miControlador.setEmpresa(empresa);
-	
+		miControlador.setOpciones(opciones);
 
 		miModelo.setLogin(miLogin);
 		miModelo.setAlumno(alumno);
@@ -52,6 +55,7 @@ public class Main {
 		miModelo.setTutores(tutores);
 		miModelo.setBuscarEmpresa(buscEmpresa);
 		miModelo.setEmpresa(empresa);
+		miModelo.setOpciones(opciones);
 		
 		empresa.setControlador(miControlador);
 		empresa.setModelo(miModelo);
@@ -73,9 +77,10 @@ public class Main {
 		alumno.setModelo(miModelo);
 		buscEmpresa.setControlador(miControlador);
 		buscEmpresa.setModelo(miModelo);
-		
+		opciones.setControlador(miControlador);
+		opciones.setModelo(miModelo);
 
 		miLogin.setVisible(true);
-
+		
 	}
 }
