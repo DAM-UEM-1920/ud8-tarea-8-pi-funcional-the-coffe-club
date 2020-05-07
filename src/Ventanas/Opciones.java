@@ -43,8 +43,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JPasswordField;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
 public class Opciones {
 
@@ -251,6 +255,7 @@ public class Opciones {
 		Frame.getContentPane().add(textNombreUser);
 
 		txtPasswordUses = new JPasswordField();
+
 		txtPasswordUses.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -264,6 +269,7 @@ public class Opciones {
 					miControlador.SoundLogAtras();
 					miControlador.OpcionesAtras();
 				}
+
 			}
 		});
 		txtPasswordUses.setToolTipText("Introduza  su contrase\u00F1a de acceso a la aplicacion");
