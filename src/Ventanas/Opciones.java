@@ -40,6 +40,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JPasswordField;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
 public class Opciones {
 
@@ -186,6 +188,14 @@ public class Opciones {
 		Opcio.getContentPane().add(textNombreUser);
 
 		txtPasswordUses = new JPasswordField();
+		txtPasswordUses.addAncestorListener(new AncestorListener() {
+			public void ancestorAdded(AncestorEvent arg0) {
+			}
+			public void ancestorMoved(AncestorEvent arg0) {
+			}
+			public void ancestorRemoved(AncestorEvent event) {
+			}
+		});
 		txtPasswordUses.setToolTipText("Introduza  su contrase\u00F1a de acceso a la aplicacion");
 		txtPasswordUses.setOpaque(false);
 		txtPasswordUses.setHorizontalAlignment(SwingConstants.CENTER);
