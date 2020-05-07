@@ -77,7 +77,7 @@ public class Tutores {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Tutores.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
-		
+
 		textFieldCentro = new JTextField();
 		textFieldCentro.setToolTipText("\u00C1rea academica del tutor");
 		textFieldCentro.setOpaque(false);
@@ -85,7 +85,13 @@ public class Tutores {
 		textFieldCentro.setForeground(Color.WHITE);
 		textFieldCentro.setFont(new Font("Tahoma", Font.BOLD, 16));
 		textFieldCentro.setColumns(10);
-		textFieldCentro.setBorder(new TitledBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)), "Centro", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldCentro
+				.setBorder(new TitledBorder(
+						new TitledBorder(
+								new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255),
+										new Color(160, 160, 160)),
+								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
+						"Centro", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldCentro.setBounds(725, 328, 124, 47);
 		frame.getContentPane().add(textFieldCentro);
 
@@ -119,8 +125,10 @@ public class Tutores {
 		btnAadirTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
-				miModelo.insert("tutor", "'" + txtDniTutor.getText() + "', '" + textNombre.getText() + "', '" + textApellidos.getText() + "', "
-						+ textFieldCentro.getText() + ", '" + textEmail.getText() + "', '" + textArea.getText() + "'");
+				miModelo.insert("tutor",
+						"'" + txtDniTutor.getText() + "', '" + textNombre.getText() + "', '" + textApellidos.getText()
+								+ "', " + textFieldCentro.getText() + ", '" + textEmail.getText() + "', '"
+								+ textArea.getText() + "'");
 				miControlador.limpiar(textNombre);
 				miControlador.limpiar(textApellidos);
 				miControlador.limpiar(textEmail);
@@ -186,10 +194,11 @@ public class Tutores {
 		btnEditarTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = table.getSelectedRow();
-				table.setValueAt(textNombre.getText(), fila, 1);
-				table.setValueAt(textApellidos.getText(), fila, 2);
-				table.setValueAt(textEmail.getText(), fila, 3);
-				table.setValueAt(textArea.getText(), fila, 4);
+				miModelo.update("tutor",
+						"nombre= '" + textNombre.getText() + "' , apellidos= '" + textApellidos.getText()
+								+ "' , e_mail= '" + textEmail.getText() + "' , area= '" + textArea.getText()
+								+ "' ,CENTRO_COD_CENTRO= " + Integer.parseInt(textFieldCentro.getText()),
+						"dni_tutor", "'"+txtDniTutor.getText()+"'");
 				miControlador.limpiar(textNombre);
 				miControlador.limpiar(textApellidos);
 				miControlador.limpiar(textEmail);
@@ -197,7 +206,7 @@ public class Tutores {
 				btnEliminarTutor.setEnabled(false);
 				btnEditarTutor.setEnabled(false);
 				btnAadirTutor.setEnabled(false);
-				;
+
 			}
 		});
 		btnEditarTutor.setBackground(Color.BLACK);
@@ -252,7 +261,7 @@ public class Tutores {
 				textEmail.setText((String) table.getValueAt(fila, 4));
 				textArea.setText((String) table.getValueAt(fila, 5));
 				txtDniTutor.setText((String) table.getValueAt(fila, 0));
-				textFieldCentro.setText((String) table.getValueAt(fila, 3 ));
+				textFieldCentro.setText((String) table.getValueAt(fila, 3));
 				updateBaja();
 
 			}

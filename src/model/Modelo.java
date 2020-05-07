@@ -61,13 +61,13 @@ public class Modelo {
 	private File fichero;
 	private String[] parts;
 
-	
 	public Modelo() {
-		
+
 	}
+
 	public void conexion() {
 		try {
-			
+
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conexion = DriverManager.getConnection(url, usuario, passwd);
 			System.out.println("-> Conexión con ORACLE establecida");
@@ -172,8 +172,10 @@ public class Modelo {
 			return "ERROR";
 		}
 	}
+
 	/**
 	 * Devuelve toda la tabla seleccionada
+	 * 
 	 * @param tabla
 	 * @return
 	 */
@@ -203,8 +205,10 @@ public class Modelo {
 		return miTabla;
 
 	}
+
 	/**
 	 * Devuelve los alumnos que supervisa el usuario
+	 * 
 	 * @param user, usuario logueado
 	 * @return tabla con los alumnos y todos sus datos
 	 */
@@ -254,11 +258,13 @@ public class Modelo {
 		}
 		return num;
 	}
+
 	/**
 	 * Devuelve un dato cualquiera de la base de datos
-	 * @param tabla a la que realizamos la consulta
-	 * @param pk nombre de la Primary Key de la tabla
-	 * @param cod valor de busqueda de la Primary Key
+	 * 
+	 * @param tabla  a la que realizamos la consulta
+	 * @param pk     nombre de la Primary Key de la tabla
+	 * @param cod    valor de busqueda de la Primary Key
 	 * @param colum, columna en la que se encuentra el dato buscado
 	 * @return
 	 */
@@ -273,8 +279,10 @@ public class Modelo {
 			return "ERROR";
 		}
 	}
+
 	/**
 	 * Devuelve la empresa en la que el alumno esta realizando sus practicas
+	 * 
 	 * @param alumno
 	 * @return nombre de empresa
 	 */
@@ -293,7 +301,9 @@ public class Modelo {
 	}
 
 	/**
-	 * devuelve los nombres de los grupos que supervisa el tutos a traves del nombre de usuario
+	 * devuelve los nombres de los grupos que supervisa el tutos a traves del nombre
+	 * de usuario
+	 * 
 	 * @param user
 	 * @return arraylist de nombres de grupos que supervisa un usuario
 	 */
@@ -316,7 +326,7 @@ public class Modelo {
 		}
 
 	}
-	
+
 	public ArrayList<String> getCentros() {
 		ArrayList<String> centro = new ArrayList<String>();
 		try {
@@ -377,6 +387,21 @@ public class Modelo {
 			System.out.println("error de insertado");
 		}
 		return resultado;
+	}
+
+	public void update(String tabla, String valores, String pk, String cod) {
+		int resultado = 0;
+
+		try {
+			String query = "UPDATE " + tabla + " SET " + valores + " WHERE " + pk + " = " + cod;
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			resultado = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(valores);
+			System.out.println("error de update");
+			e.printStackTrace();
+
+		}
 	}
 
 	public void login(String usr, String pwd) {
@@ -465,8 +490,6 @@ public class Modelo {
 			System.out.println("Error de Sonido de logoff o boton de ir atras");
 		}
 	}
-	
-	
 
 	// Sonido ClickBoton
 	public void soundSend() {
@@ -484,20 +507,21 @@ public class Modelo {
 			System.out.println("Error de Sonido de hacer ClickBoton");
 		}
 	}
+
 	public void metodoLectura() {
-		
-		 texto = "";
-		 fichero = new File(System.getProperty("user.dir") + "/Users.ini");
+
+		texto = "";
+		fichero = new File(System.getProperty("user.dir") + "/Users.ini");
 		if (fichero.exists()) {
-			usuario="";
+			usuario = "";
 			try {
 				Scanner sc = new Scanner(fichero);
-				
-					texto = sc.nextLine();
-				 parts = texto.split("-");
-				usuario=parts[0];
-				passwd=parts[1];
-				url=parts[2];
+
+				texto = sc.nextLine();
+				parts = texto.split("-");
+				usuario = parts[0];
+				passwd = parts[1];
+				url = parts[2];
 
 				sc.close();
 			} catch (IOException e) {
@@ -506,8 +530,7 @@ public class Modelo {
 		} else
 			System.out.println("El fichero no existe");
 	}
-	
-	
+
 	public void setMenuTutor(IniTutor menuTutor) {
 		this.menuTutor = menuTutor;
 	}
@@ -561,11 +584,9 @@ public class Modelo {
 		lblrespuesta.setText(null);
 
 	}
-	
 
 	public void setOpciones(Opciones opciones) {
 		this.opciones = opciones;
 	}
-
 
 }
