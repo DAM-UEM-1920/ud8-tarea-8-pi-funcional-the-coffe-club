@@ -507,6 +507,7 @@ public class Opciones {
 				} else {
 					cont++;
 				}
+				
 				PrintWriter pw = new PrintWriter(fichero);
 				pw.println(texto);
 				pw.close();
