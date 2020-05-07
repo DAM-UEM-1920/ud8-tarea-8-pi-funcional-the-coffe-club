@@ -370,8 +370,8 @@ public class Modelo {
 	 * String que introducimos en values ya que se introduce tal cual en la qwery de
 	 * esta funcion.
 	 * 
-	 * @param tabla,  tabla en la que actuamos
-	 * @param values, parte del insert que corresponde a la fila de TODOS los
+	 * @param tabla  tabla en la que actuamos
+	 * @param values parte del insert que corresponde a la fila de TODOS los
 	 *                valores
 	 * 
 	 */
@@ -388,7 +388,14 @@ public class Modelo {
 		}
 		return resultado;
 	}
-
+	/**
+	 * Actualiza en la base de datos en la tabla que se le pase por parámetro y rellena el resto del UPDATE con el resto de parámetros
+	 * 
+	 * @param tabla tabla en la que se actúa
+	 * @param valores el cuerpo del UPDATE, incluye todas las columnas
+	 * @param pk Primary Key de la tabla
+	 * @param cod identificador de la fila en la que queremos actuar, coincide con el campo PK
+	 */
 	public void update(String tabla, String valores, String pk, String cod) {
 		int resultado = 0;
 
