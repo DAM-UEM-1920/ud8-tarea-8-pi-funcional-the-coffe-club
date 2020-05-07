@@ -75,8 +75,8 @@ public class AsignarEmpresa {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 32));
 		frame.getContentPane().setLayout(null);
 
-		JButton btnAtras_1 = new JButton("Asignar Empresa");
-		btnAtras_1.addMouseListener(new MouseAdapter() {
+		JButton btnAsignar = new JButton("Asignar Empresa");
+		btnAsignar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				miModelo.soundSend();
@@ -87,9 +87,10 @@ public class AsignarEmpresa {
 				miModelo.soundSobreBoton();
 			}
 		});
-		btnAtras_1.setToolTipText("Asigna la empresa con el alumno");
-		btnAtras_1.addActionListener(new ActionListener() {
+		btnAsignar.setToolTipText("Asigna la empresa con el alumno");
+		btnAsignar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				miModelo.insert("practica", "");
 				miControlador.terminarAsgEmpresa();
 			}
 		});
@@ -108,12 +109,12 @@ public class AsignarEmpresa {
 				Color.LIGHT_GRAY));
 		lblLogoBoton.setBounds(46, 25, 110, 110);
 		frame.getContentPane().add(lblLogoBoton);
-		btnAtras_1.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnAtras_1.setForeground(Color.WHITE);
-		btnAtras_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnAtras_1.setBackground(Color.BLACK);
-		btnAtras_1.setBounds(329, 486, 414, 45);
-		frame.getContentPane().add(btnAtras_1);
+		btnAsignar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnAsignar.setForeground(Color.WHITE);
+		btnAsignar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnAsignar.setBackground(Color.BLACK);
+		btnAsignar.setBounds(329, 486, 414, 45);
+		frame.getContentPane().add(btnAsignar);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(114, 252, 758, 200);

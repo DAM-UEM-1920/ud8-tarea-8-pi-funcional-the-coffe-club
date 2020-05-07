@@ -194,20 +194,12 @@ public class Login {
 		btnLogin.addMouseMotionListener(new MouseMotionAdapter() {
 
 		});
-		//preguntar a xavi
+		// preguntar a xavi
 		btnLogin.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-
-				if (checkbox.isSelected() == true) {
-					miControlador.setSonidos(true);
-
-					miControlador.SoundSobreBoton();
-
-				} else {
-					miControlador.setSonidos(false);
-				}
+				miControlador.SoundSobreBoton();
 
 			}
 
@@ -220,8 +212,8 @@ public class Login {
 		btnLogin.setToolTipText("Pulse para acceder");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-						miModelo.metodoLectura();
-						miModelo.conexion();
+				miModelo.metodoLectura();
+				miModelo.conexion();
 				miControlador.login();
 			}
 		});
@@ -248,8 +240,8 @@ public class Login {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (checkbox.isSelected()) {
 						checkbox.setSelected(false);
-					}else
-					checkbox.setSelected(true);
+					} else
+						checkbox.setSelected(true);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -258,7 +250,7 @@ public class Login {
 				}
 
 			}
-			
+
 		});
 		checkbox.addActionListener(new ActionListener() {
 
@@ -274,7 +266,7 @@ public class Login {
 
 			}
 		});
-		
+
 		checkbox.setSelected(true);
 		checkbox.setFont(new Font("Tahoma", Font.BOLD, 11));
 		checkbox.setForeground(Color.WHITE);
@@ -295,7 +287,7 @@ public class Login {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					miControlador.Opciones();
 				}
-				//salimos de la aplicacion
+				// salimos de la aplicacion
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
 					System.exit(0);
