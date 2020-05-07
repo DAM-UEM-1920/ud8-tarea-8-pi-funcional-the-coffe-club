@@ -203,9 +203,13 @@ public class Tutores {
 				miControlador.limpiar(textApellidos);
 				miControlador.limpiar(textEmail);
 				miControlador.limpiar(textArea);
+				miControlador.limpiar(textFieldCentro);
+				miControlador.limpiar(txtDniTutor);
 				btnEliminarTutor.setEnabled(false);
 				btnEditarTutor.setEnabled(false);
 				btnAadirTutor.setEnabled(false);
+				
+				table.setModel(miModelo.getTabla("tutor"));
 
 			}
 		});
