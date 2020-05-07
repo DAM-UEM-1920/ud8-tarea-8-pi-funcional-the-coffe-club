@@ -17,12 +17,15 @@ import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 
 import controller.Controlador;
 import model.Modelo;
+import sun.java2d.pipe.TextPipe;
 
 import javax.swing.SwingConstants;
 import java.awt.Toolkit;
@@ -40,10 +43,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JPasswordField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Opciones {
 
-	private JFrame Opcio;
+	private JFrame Frame;
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JCheckBox chckbxSonidoTeclas;
@@ -60,6 +65,7 @@ public class Opciones {
 	private JButton btnGuardar;
 	private File fichero;
 	private boolean check;
+
 	/**
 	 * Create the application.
 	 */
@@ -72,23 +78,56 @@ public class Opciones {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Opcio = new JFrame();
-		Opcio.setTitle("Opciones de la Aplicacion");
+		Frame = new JFrame();
+		Frame.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
+		Frame.setTitle("Opciones de la Aplicacion");
 
-		Opcio.setIconImage(Toolkit.getDefaultToolkit().getImage(Opciones.class.getResource("/Img/UEM-simbolo.jpg")));
-		Opcio.setResizable(false);
-		Opcio.getContentPane().setMinimumSize(new Dimension(75, 23));
-		Opcio.getContentPane().setMaximumSize(new Dimension(75, 23));
-		Opcio.getContentPane().setBackground(Color.ORANGE);
-		Opcio.getContentPane().setLayout(null);
+		Frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Opciones.class.getResource("/Img/UEM-simbolo.jpg")));
+		Frame.setResizable(false);
+		Frame.getContentPane().setMinimumSize(new Dimension(75, 23));
+		Frame.getContentPane().setMaximumSize(new Dimension(75, 23));
+		Frame.getContentPane().setBackground(Color.ORANGE);
+		Frame.getContentPane().setLayout(null);
 
 		lblLogoBoton = new JLabel("");
+		lblLogoBoton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				
+			}
+		});
+		lblLogoBoton.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
 		lblLogoBoton.setIcon(new ImageIcon(Opciones.class.getResource("/Img/LoUEBoton.png")));
 		lblLogoBoton.setToolTipText("Volver al menu principal");
 		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY,
 				Color.LIGHT_GRAY));
 		lblLogoBoton.setBounds(49, 40, 110, 110);
-		Opcio.getContentPane().add(lblLogoBoton);
+		Frame.getContentPane().add(lblLogoBoton);
 
 		JLabel lblOpciones = new JLabel("Opciones");
 		lblOpciones.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -96,20 +135,31 @@ public class Opciones {
 		lblOpciones.setForeground(Color.WHITE);
 		lblOpciones.setBackground(Color.WHITE);
 		lblOpciones.setBounds(321, 11, 221, 84);
-		Opcio.getContentPane().add(lblOpciones);
+		Frame.getContentPane().add(lblOpciones);
 		SpringLayout springLayout = new SpringLayout();
 
 		btnAtrs = new JButton("Volver");
+		btnAtrs.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+				miControlador.OpcionesAtras();
+			}
+		});
 		btnAtrs.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnAtrs.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+
+				miControlador.SoundLogAtras();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAtrs.setToolTipText("Te lleva a la pantalla anterior");
@@ -123,7 +173,7 @@ public class Opciones {
 		});
 		btnAtrs.setForeground(Color.WHITE);
 		btnAtrs.setBackground(Color.BLACK);
-		Opcio.getContentPane().add(btnAtrs);
+		Frame.getContentPane().add(btnAtrs);
 
 		chckbxSonidoTeclas = new JCheckBox("Sonido intros");
 		chckbxSonidoTeclas.setEnabled(false);
@@ -134,7 +184,7 @@ public class Opciones {
 		chckbxSonidoTeclas.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoTeclas.setContentAreaFilled(false);
 		chckbxSonidoTeclas.setBounds(258, 421, 124, 22);
-		Opcio.getContentPane().add(chckbxSonidoTeclas);
+		Frame.getContentPane().add(chckbxSonidoTeclas);
 
 		JCheckBox chckbxSonidoTeclas_1 = new JCheckBox("Sonido teclas");
 		chckbxSonidoTeclas_1.setEnabled(false);
@@ -145,7 +195,7 @@ public class Opciones {
 		chckbxSonidoTeclas_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoTeclas_1.setContentAreaFilled(false);
 		chckbxSonidoTeclas_1.setBounds(375, 421, 124, 22);
-		Opcio.getContentPane().add(chckbxSonidoTeclas_1);
+		Frame.getContentPane().add(chckbxSonidoTeclas_1);
 
 		JCheckBox chckbxSonidoMandar = new JCheckBox("Sonido mandar");
 		chckbxSonidoMandar.setEnabled(false);
@@ -156,7 +206,7 @@ public class Opciones {
 		chckbxSonidoMandar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoMandar.setContentAreaFilled(false);
 		chckbxSonidoMandar.setBounds(500, 421, 134, 22);
-		Opcio.getContentPane().add(chckbxSonidoMandar);
+		Frame.getContentPane().add(chckbxSonidoMandar);
 
 		JCheckBox chckbxSonidoVolver = new JCheckBox("Sonido volver");
 		chckbxSonidoVolver.setEnabled(false);
@@ -167,9 +217,24 @@ public class Opciones {
 		chckbxSonidoVolver.setFont(new Font("Tahoma", Font.BOLD, 11));
 		chckbxSonidoVolver.setContentAreaFilled(false);
 		chckbxSonidoVolver.setBounds(625, 421, 109, 22);
-		Opcio.getContentPane().add(chckbxSonidoVolver);
+		Frame.getContentPane().add(chckbxSonidoVolver);
 
 		textNombreUser = new JTextField();
+		textNombreUser.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+					miControlador.SoundSend();
+					txtPasswordUses.requestFocus();
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
 		textNombreUser.setToolTipText("Introduza  su nombre de acceso a la aplicacion");
 		textNombreUser.setOpaque(false);
 		textNombreUser.setHorizontalAlignment(SwingConstants.CENTER);
@@ -183,9 +248,24 @@ public class Opciones {
 
 				"Nombre de Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
 		textNombreUser.setBounds(459, 116, 191, 47);
-		Opcio.getContentPane().add(textNombreUser);
+		Frame.getContentPane().add(textNombreUser);
 
 		txtPasswordUses = new JPasswordField();
+		txtPasswordUses.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+					miControlador.SoundSend();
+					textURLconexion.requestFocus();
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
 		txtPasswordUses.setToolTipText("Introduza  su contrase\u00F1a de acceso a la aplicacion");
 		txtPasswordUses.setOpaque(false);
 		txtPasswordUses.setHorizontalAlignment(SwingConstants.CENTER);
@@ -198,9 +278,23 @@ public class Opciones {
 
 				"Contrase\u00F1a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		txtPasswordUses.setBounds(459, 185, 191, 48);
-		Opcio.getContentPane().add(txtPasswordUses);
+		Frame.getContentPane().add(txtPasswordUses);
 
 		textURLconexion = new JTextField();
+		textURLconexion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+					miControlador.SoundSend();
+					metodoEscritura();
+				}
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
 		textURLconexion.setToolTipText("Introduzca la URL de conexion a la base de datos");
 		textURLconexion.setOpaque(false);
 		textURLconexion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -213,9 +307,30 @@ public class Opciones {
 				"Direcci\u00F3n de la Base de Datos", TitledBorder.CENTER, TitledBorder.TOP, null,
 				new Color(255, 255, 255)));
 		textURLconexion.setBounds(415, 259, 276, 47);
-		Opcio.getContentPane().add(textURLconexion);
+		Frame.getContentPane().add(textURLconexion);
 
 		btnSelecionar = new JButton("Seleccionar");
+		btnSelecionar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+			}
+		});
+		btnSelecionar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.SoundAcceso();
+					seleccionaFichero();
+				}
+
+			}
+		});
 		btnSelecionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				seleccionaFichero();
@@ -228,15 +343,24 @@ public class Opciones {
 		btnSelecionar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnSelecionar.setBackground(Color.BLACK);
 		btnSelecionar.setBounds(208, 159, 153, 47);
-		Opcio.getContentPane().add(btnSelecionar);
+		Frame.getContentPane().add(btnSelecionar);
 
 		lblResultado = new JLabel("");
 		lblResultado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado.setForeground(Color.GREEN);
 		lblResultado.setBounds(403, 383, 299, 14);
-		Opcio.getContentPane().add(lblResultado);
+		Frame.getContentPane().add(lblResultado);
 
 		txtRutaFichero = new JTextField();
+		txtRutaFichero.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
 		txtRutaFichero.setEditable(false);
 		txtRutaFichero.setFont(new Font("Tahoma", Font.BOLD, 17));
 		txtRutaFichero.setCaretColor(Color.WHITE);
@@ -249,11 +373,32 @@ public class Opciones {
 		txtRutaFichero.setToolTipText("Inserta la ruta del fichero");
 		txtRutaFichero.setColumns(10);
 		txtRutaFichero.setBounds(188, 219, 191, 45);
-		Opcio.getContentPane().add(txtRutaFichero);
+		Frame.getContentPane().add(txtRutaFichero);
 
 		btnGuardar = new JButton("Guardar");
+		btnGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+
+			}
+		});
+		btnGuardar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					metodoEscritura();
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				metodoEscritura();
 			}
 		});
@@ -263,79 +408,93 @@ public class Opciones {
 		btnGuardar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnGuardar.setBackground(Color.BLACK);
 		btnGuardar.setBounds(480, 319, 153, 47);
-		Opcio.getContentPane().add(btnGuardar);
+		Frame.getContentPane().add(btnGuardar);
 
 		JLabel lblfondo = new JLabel("");
+		lblfondo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+			}
+		});
 		lblfondo.setBounds(0, -24, 780, 482);
 		lblfondo.setIcon(new ImageIcon(Opciones.class.getResource("/Img/Fondogrande.jpg")));
-		Opcio.getContentPane().add(lblfondo);
-		Opcio.setBackground(Color.ORANGE);
-		Opcio.setBounds(550, 250, 786, 487);
-		Opcio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Frame.getContentPane().add(lblfondo);
+		Frame.setBackground(Color.ORANGE);
+		Frame.setBounds(550, 250, 786, 487);
+		Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		btnGuardar.setEnabled(true);
-		
+
 	}
 
 	private void seleccionaFichero() {
+		miControlador.SoundAcceso();
 		File rutaProyecto = new File(System.getProperty("user.dir"));
 		JFileChooser fc = new JFileChooser(rutaProyecto);
 		FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.ini", "ini");
 		fc.setFileFilter(filtro);
-		int seleccion = fc.showOpenDialog(Opcio);
+		int seleccion = fc.showOpenDialog(Frame);
 		if (seleccion == JFileChooser.APPROVE_OPTION) {
 			File fichero = fc.getSelectedFile();
 			txtRutaFichero.setText(fichero.getName());
 			metodoLectura();
-				
+
 		}
 	}
 
-private void metodoLectura() {
-		
+	private void metodoLectura() {
+
 		lblResultado.setText("");
-		 texto = "";
-		 fichero = new File(txtRutaFichero.getText());
+		texto = "";
+		fichero = new File(txtRutaFichero.getText());
 		if (fichero.exists()) {
 			textNombreUser.setText("");
 			try {
 				Scanner sc = new Scanner(fichero);
-				
-					texto = sc.nextLine();
-				 parts = texto.split("-");
+
+				texto = sc.nextLine();
+				parts = texto.split("-");
 				textNombreUser.setText(parts[0]);
 				txtPasswordUses.setText(parts[1]);
 				textURLconexion.setText(parts[2]);
 
 				sc.close();
-				
-			
-				check=true;
+
+				check = true;
 			} catch (IOException e) {
 				lblResultado.setText("Error de Entrada/Salida");
 			}
-		} else
+		} else {
 			lblResultado.setText("El fichero no existe");
+			lblResultado.setForeground(Color.RED);
+			miControlador.SoundError();
+		}
+
 	}
-	private void metodoEscritura() {	
+
+	private void metodoEscritura() {
 		Exception e = new Exception("Este es mi propio error.");
-		if (check==true) {
-			
+		if (check == true) {
+
 			try {
-				if (textNombreUser.getText()!=null) {
-					texto=texto.replace(parts[0], textNombreUser.getText());
-				}else {
-					
+				if (textNombreUser.getText() != null) {
+					texto = texto.replace(parts[0], textNombreUser.getText());
+				} else {
+
 					throw e;
 				}
-				if (txtPasswordUses.getText()!=null) {
-					texto=texto.replace(parts[1], txtPasswordUses.getText());
-				}else {
-					
-			         throw e;
+				if (txtPasswordUses.getText() != null) {
+					texto = texto.replace(parts[1], txtPasswordUses.getText());
+				} else {
+
+					throw e;
 				}
-				if (textURLconexion.getText()!=null) {
-					texto=texto.replace(parts[2],textURLconexion.getText());
-				}else {
+				if (textURLconexion.getText() != null) {
+					texto = texto.replace(parts[2], textURLconexion.getText());
+				} else {
 					throw e;
 				}
 				PrintWriter pw = new PrintWriter(fichero);
@@ -343,21 +502,22 @@ private void metodoLectura() {
 				pw.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
-			} catch(Exception excepcion)
-	         {
-		         
-	         }
+			} catch (Exception excepcion) {
+
+			}
 			lblResultado.setForeground(Color.GREEN);
-			lblResultado.setText("Se ha guardado corrrectamente");
-			
-		}else {
+			lblResultado.setText("Se ha guardado correctamente");
+			miControlador.SoundAcceso();
+
+		} else {
 			lblResultado.setForeground(Color.YELLOW);
 			lblResultado.setText("Seleccione Fichero");
-			
+			miControlador.SoundLogAtras();
+
 		}
-		
+
 	}
-	
+
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
 	}
@@ -367,18 +527,8 @@ private void metodoLectura() {
 	}
 
 	public void setVisible(boolean b) {
-		Opcio.setVisible(b);
+		Frame.setVisible(b);
 
 	}
 
-	public boolean SoundActivo() {
-		boolean Activo = true;
-		if (chckbxSonidoTeclas.isSelected()) {
-			Activo = true;
-		} else {
-			Activo = false;
-		}
-		return Activo;
-
-	}
 }

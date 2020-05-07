@@ -263,7 +263,7 @@ public class Controlador {
 
 	}
 
-	public void SoundActivo() {
+	public void SoundAcceso() {
 
 		if (activo == true) {
 			miModelo.soundAcceso();
