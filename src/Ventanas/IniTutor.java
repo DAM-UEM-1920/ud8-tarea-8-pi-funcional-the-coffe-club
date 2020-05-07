@@ -285,6 +285,8 @@ public class IniTutor {
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
 				btnEliminar.setEnabled(false);
+				
+				table.setModel(miModelo.getTabla("alumno"));
 			}
 		});
 		frame.getContentPane().add(btnGuardarCambios);
