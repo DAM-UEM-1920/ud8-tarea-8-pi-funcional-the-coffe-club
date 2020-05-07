@@ -59,6 +59,7 @@ public class Opciones {
 	private String[] parts;
 	private JButton btnGuardar;
 	private File fichero;
+	private boolean check;
 	/**
 	 * Create the application.
 	 */
@@ -271,7 +272,7 @@ public class Opciones {
 		Opcio.setBackground(Color.ORANGE);
 		Opcio.setBounds(550, 250, 786, 487);
 		Opcio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		btnGuardar.setEnabled(false);
+		btnGuardar.setEnabled(true);
 		
 	}
 
@@ -285,7 +286,7 @@ public class Opciones {
 			File fichero = fc.getSelectedFile();
 			txtRutaFichero.setText(fichero.getName());
 			metodoLectura();
-
+				
 		}
 	}
 
@@ -307,34 +308,55 @@ private void metodoLectura() {
 
 				sc.close();
 				
-				btnGuardar.setEnabled(true);
-
+			
+				check=true;
 			} catch (IOException e) {
 				lblResultado.setText("Error de Entrada/Salida");
 			}
 		} else
 			lblResultado.setText("El fichero no existe");
 	}
-	private void metodoEscritura() {		
+	private void metodoEscritura() {	
+		Exception e = new Exception("Este es mi propio error.");
+		if (check==true) {
+			
 			try {
 				if (textNombreUser.getText()!=null) {
 					texto=texto.replace(parts[0], textNombreUser.getText());
+				}else {
+					
+					throw e;
 				}
 				if (txtPasswordUses.getText()!=null) {
 					texto=texto.replace(parts[1], txtPasswordUses.getText());
+				}else {
+					
+			         throw e;
 				}
 				if (textURLconexion.getText()!=null) {
 					texto=texto.replace(parts[2],textURLconexion.getText());
+				}else {
+					throw e;
 				}
 				PrintWriter pw = new PrintWriter(fichero);
 				pw.println(texto);
 				pw.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
-			}
+			} catch(Exception excepcion)
+	         {
+		         
+	         }
+			lblResultado.setForeground(Color.GREEN);
 			lblResultado.setText("Se ha guardado corrrectamente");
 			
+		}else {
+			lblResultado.setForeground(Color.YELLOW);
+			lblResultado.setText("Seleccione Fichero");
+			
 		}
+		
+	}
 	
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
