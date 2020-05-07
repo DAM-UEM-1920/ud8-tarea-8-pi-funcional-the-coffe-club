@@ -98,9 +98,9 @@ public class Controlador {
 	}
 
 	public void menuTutor(String user) {
-		menuTutor.setVisible(true);
-		menuTutor.setTutor(user);
 		miLogin.setVisible(false);
+		menuTutor.setTutor(user);
+		menuTutor.setVisible(true);	
 	}
 
 	public void menuDirector(String user) {

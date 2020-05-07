@@ -61,8 +61,6 @@ public class Login {
 	private JLabel lblrespuesta;
 	private JLabel lblusrimg_1;
 	private JCheckBox checkbox;
-	
-	
 
 	/**
 	 * Create the application.
@@ -196,6 +194,7 @@ public class Login {
 		btnLogin.addMouseMotionListener(new MouseMotionAdapter() {
 
 		});
+		//preguntar a xavi
 		btnLogin.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -241,6 +240,7 @@ public class Login {
 		frame.getContentPane().add(lblusrimg);
 
 		checkbox = new JCheckBox("Sonido");
+
 		checkbox.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -274,8 +274,7 @@ public class Login {
 
 			}
 		});
-		checkbox.addMouseListener(new MouseAdapter() {
-		});
+		
 		checkbox.setSelected(true);
 		checkbox.setFont(new Font("Tahoma", Font.BOLD, 11));
 		checkbox.setForeground(Color.WHITE);
@@ -328,7 +327,6 @@ public class Login {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-
 				if (miControlador.getBoxselect()) {
 					checkbox.setSelected(true);
 
@@ -337,7 +335,6 @@ public class Login {
 
 			}
 		});
-
 	}
 
 	public void setControlador(Controlador miControlador) {
@@ -378,7 +375,6 @@ public class Login {
 		}
 
 	}
-	
 
 	public void setVisible(boolean b) {
 		frame.setVisible(b);

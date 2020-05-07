@@ -13,8 +13,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Vector;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -186,7 +186,11 @@ public class Modelo {
 			return "ERROR";
 		}
 	}
-
+	/**
+	 * Devuelve toda la tabla seleccionada
+	 * @param tabla
+	 * @return
+	 */
 	public DefaultTableModel getTabla(String tabla) {
 
 		miTabla = new DefaultTableModel();
@@ -195,6 +199,44 @@ public class Modelo {
 		PreparedStatement pstmt;
 		try {
 			pstmt = conexion.prepareStatement("SELECT * FROM " + tabla);
+			ResultSet rset = pstmt.executeQuery();
+			ResultSetMetaData rsmd = rset.getMetaData();
+
+			for (int i = 0; i < numColumnas; i++) {
+				miTabla.addColumn(rsmd.getColumnName(i + 1));
+			}
+			while (rset.next()) {
+				for (int col = 1; col <= numColumnas; col++) {
+					contenido[col - 1] = rset.getString(col);
+				}
+				miTabla.addRow(contenido);
+			}
+		} catch (SQLException e) {
+
+		}
+		return miTabla;
+
+	}
+	/**
+	 * Devuelve los alumnos que supervisa el usuario
+	 * @param user, usuario logueado
+	 * @return tabla con los alumnos y todos sus datos
+	 */
+	public DefaultTableModel getAlumnosTutor(String user) {
+
+		miTabla = new DefaultTableModel();
+		int numColumnas = getNumColumnas("alumno");
+		Object[] contenido = new Object[numColumnas];
+		PreparedStatement pstmt;
+		try {
+			pstmt = conexion.prepareStatement("SELECT alumno.* FROM alumno " + "LEFT JOIN pertenece "
+					+ "ON alumno.num_exp = pertenece.alumno_num_exp " + "LEFT JOIN GRUPO "
+					+ "ON pertenece.grupo_cod_grupo = grupo.cod_grupo " + "LEFT JOIN GESTIONA "
+					+ "ON grupo.cod_grupo = gestiona.grupo_cod_grupo " + "LEFT JOIN TUTOR "
+					+ "ON gestiona.tutor_dni_tutor = tutor.dni_tutor " + "LEFT JOIN EJERCE "
+					+ "ON tutor.dni_tutor = ejerce.e_dni_tutor "
+					+ "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
+					+ user + "')");
 			ResultSet rset = pstmt.executeQuery();
 			ResultSetMetaData rsmd = rset.getMetaData();
 
@@ -226,7 +268,14 @@ public class Modelo {
 		}
 		return num;
 	}
-
+	/**
+	 * Devuelve un dato cualquiera de la base de datos
+	 * @param tabla a la que realizamos la consulta
+	 * @param pk nombre de la Primary Key de la tabla
+	 * @param cod valor de busqueda de la Primary Key
+	 * @param colum, columna en la que se encuentra el dato buscado
+	 * @return
+	 */
 	public String getDato(String tabla, String pk, String cod, int colum) {
 		try {
 			Statement stmt = conexion.createStatement();
@@ -238,9 +287,93 @@ public class Modelo {
 			return "ERROR";
 		}
 	}
+	/**
+	 * Devuelve la empresa en la que el alumno esta realizando sus practicas
+	 * @param alumno
+	 * @return nombre de empresa
+	 */
+	public String getEmpresa(String alumno) {
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT empresa.nombre FROM empresa, practica, alumno"
+					+ " WHERE alumno.num_exp = practica.alumno_num_exp AND practica.empresa_cif = empresa.cif "
+					+ "AND alumno.nombre= '" + alumno + "'");
+			rset.next();
+			String rol = rset.getString(1);
+			return rol;
+		} catch (SQLException e) {
+			return "ERROR";
+		}
+	}
 
-	public void setLogin(Login miLogin) {
-		this.miLogin = miLogin;
+	/**
+	 * devuelve los nombres de los grupos que supervisa el tutos a traves del nombre de usuario
+	 * @param user
+	 * @return arraylist de nombres de grupos que supervisa un usuario
+	 */
+	public ArrayList<String> getGrupos(String user) {
+		ArrayList<String> grupos = new ArrayList<String>();
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT grupo.nom_grupo FROM grupo, gestiona, tutor, ejerce, users"
+					+ " WHERE grupo.cod_grupo = gestiona.grupo_cod_grupo AND gestiona.tutor_dni_tutor = tutor.dni_tutor AND "
+					+ "tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr= '" + user
+					+ "'");
+			do {
+				rset.next();
+				grupos.add(rset.getString(1));
+
+			} while (rset.next());
+			return grupos;
+		} catch (SQLException e) {
+			return grupos;
+		}
+
+	}
+
+	/**
+	 * devuelve el codigo del grupo a traves de su nombre
+	 * 
+	 * @param nomgrupo
+	 * @return codigo del grupo
+	 */
+
+	public String getCodigoGrupo(String nomgrupo) {
+		String codigo = null;
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT cod_grupo FROM grupo WHERE nom_grupo = '" + nomgrupo + "'");
+			rset.next();
+			codigo = rset.getString(1);
+			return codigo;
+		} catch (SQLException e) {
+			return codigo;
+		}
+
+	}
+
+	/**
+	 * inserta en la base de datos la fila en la tabla correspondiente, es
+	 * importante que a los valores le pongamos las comillas y los espacios al
+	 * String que introducimos en values ya que se introduce tal cual en la qwery de
+	 * esta funcion.
+	 * 
+	 * @param tabla,  tabla en la que actuamos
+	 * @param values, parte del insert que corresponde a la fila de TODOS los
+	 *                valores
+	 * 
+	 */
+	public int insert(String tabla, String values) {
+		int resultado = 0;
+		try {
+			String qwery = "INSERT INTO COFFEE." + tabla + " VALUES (" + values + ")";
+			PreparedStatement pstmt = conexion.prepareStatement(qwery);
+			resultado = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(values);
+			System.out.println("error de insertado");
+		}
+		return resultado;
 	}
 
 	public void login(String usr, String pwd) {
@@ -376,6 +509,10 @@ public class Modelo {
 		this.menuTutor = menuTutor;
 	}
 
+	public void setLogin(Login miLogin) {
+		this.miLogin = miLogin;
+	}
+
 	public void setMenuAdmin(MenuDirector menuAdmin) {
 		this.menuAdmin = menuAdmin;
 	}
@@ -427,20 +564,5 @@ public class Modelo {
 		this.opciones = opciones;
 	}
 
-	public String getEmpresa(String alumno) {
-		try {
-			Statement stmt = conexion.createStatement();
-			ResultSet rset = stmt.executeQuery("SELECT empresa.nombre FROM empresa, practica, alumno"
-					+ " WHERE alumno.num_exp = practica.alumno_num_exp AND practica.empresa_cif = empresa.cif "
-					+ "AND alumno.nombre= '" + alumno + "'");
-			rset.next();
-			String rol = rset.getString(1);
-			return rol;
-		} catch (SQLException e) {
-			return "ERROR";
-		}
-	}
-	
-	
 
 }
