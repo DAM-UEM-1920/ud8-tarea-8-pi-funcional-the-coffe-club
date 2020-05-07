@@ -179,7 +179,11 @@ public class Modelo {
 			return "ERROR";
 		}
 	}
-
+	/**
+	 * Devuelve toda la tabla seleccionada
+	 * @param tabla
+	 * @return
+	 */
 	public DefaultTableModel getTabla(String tabla) {
 
 		miTabla = new DefaultTableModel();
@@ -206,7 +210,11 @@ public class Modelo {
 		return miTabla;
 
 	}
-
+	/**
+	 * Devuelve los alumnos que supervisa el usuario
+	 * @param user, usuario logueado
+	 * @return tabla con los alumnos y todos sus datos
+	 */
 	public DefaultTableModel getAlumnosTutor(String user) {
 
 		miTabla = new DefaultTableModel();
@@ -253,7 +261,14 @@ public class Modelo {
 		}
 		return num;
 	}
-
+	/**
+	 * Devuelve un dato cualquiera de la base de datos
+	 * @param tabla a la que realizamos la consulta
+	 * @param pk nombre de la Primary Key de la tabla
+	 * @param cod valor de busqueda de la Primary Key
+	 * @param colum, columna en la que se encuentra el dato buscado
+	 * @return
+	 */
 	public String getDato(String tabla, String pk, String cod, int colum) {
 		try {
 			Statement stmt = conexion.createStatement();
@@ -265,7 +280,11 @@ public class Modelo {
 			return "ERROR";
 		}
 	}
-
+	/**
+	 * Devuelve la empresa en la que el alumno esta realizando sus practicas
+	 * @param alumno
+	 * @return nombre de empresa
+	 */
 	public String getEmpresa(String alumno) {
 		try {
 			Statement stmt = conexion.createStatement();
@@ -280,6 +299,11 @@ public class Modelo {
 		}
 	}
 
+	/**
+	 * devuelve los nombres de los grupos que supervisa el tutos a traves del nombre de usuario
+	 * @param user
+	 * @return arraylist de nombres de grupos que supervisa un usuario
+	 */
 	public ArrayList<String> getGrupos(String user) {
 		ArrayList<String> grupos = new ArrayList<String>();
 		try {
@@ -299,20 +323,39 @@ public class Modelo {
 		}
 
 	}
-	public String getCodigoGrupo (String nomgrupo) {
+
+	/**
+	 * devuelve el codigo del grupo a traves de su nombre
+	 * 
+	 * @param nomgrupo
+	 * @return codigo del grupo
+	 */
+
+	public String getCodigoGrupo(String nomgrupo) {
 		String codigo = null;
 		try {
 			Statement stmt = conexion.createStatement();
-			ResultSet rset = stmt.executeQuery("SELECT cod_grupo FROM grupo WHERE nom_grupo = '" + nomgrupo +"'");
+			ResultSet rset = stmt.executeQuery("SELECT cod_grupo FROM grupo WHERE nom_grupo = '" + nomgrupo + "'");
 			rset.next();
 			codigo = rset.getString(1);
 			return codigo;
 		} catch (SQLException e) {
 			return codigo;
 		}
-		
+
 	}
 
+	/**
+	 * inserta en la base de datos la fila en la tabla correspondiente, es
+	 * importante que a los valores le pongamos las comillas y los espacios al
+	 * String que introducimos en values ya que se introduce tal cual en la qwery de
+	 * esta funcion.
+	 * 
+	 * @param tabla,  tabla en la que actuamos
+	 * @param values, parte del insert que corresponde a la fila de TODOS los
+	 *                valores
+	 * 
+	 */
 	public int insert(String tabla, String values) {
 		int resultado = 0;
 		try {
@@ -483,7 +526,5 @@ public class Modelo {
 		lblrespuesta.setText(null);
 
 	}
-
-	
 
 }
