@@ -51,6 +51,9 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
+import java.awt.Cursor;
+import java.awt.ComponentOrientation;
+import javax.swing.DebugGraphics;
 
 public class Registro {
 
@@ -59,7 +62,7 @@ public class Registro {
 	private Modelo miModelo;
 	private JTextField textNombreUser;
 	private JPasswordField txtPasswordUses;
-	private JTextField textURLconexion;
+	private JTextField textEmail;
 	private JLabel lblResultado;
 	private JButton btnAtrs;
 	private JLabel lblLogoBoton;
@@ -69,14 +72,18 @@ public class Registro {
 	private File fichero;
 	private boolean check;
 	private JPasswordField txtPasswordConfirmar;
-	private JTextField textField;
+	private JTextField textFieldDNI;
+	private JLabel lblResultado_DNI;
+	private JLabel lblResultado_Nombre;
+	private JLabel lblResultado_pass;
+	private JLabel lblResultado_ConfirmarPass;
+	private JLabel lblfondo;
 
 	/**
 	 * Create the application.
 	 */
 	public Registro() {
 		initialize();
-
 	}
 
 	/**
@@ -219,7 +226,7 @@ public class Registro {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
 					miControlador.SoundSend();
-					textURLconexion.requestFocus();
+					txtPasswordConfirmar.requestFocus();
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -243,12 +250,12 @@ public class Registro {
 		txtPasswordUses.setBounds(258, 190, 191, 48);
 		Frame.getContentPane().add(txtPasswordUses);
 
-		textURLconexion = new JTextField();
-		textURLconexion.addKeyListener(new KeyAdapter() {
+		textEmail = new JTextField();
+		textEmail.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-
+					btnGuardar.requestFocus();
 					miControlador.SoundSend();
 					
 				}
@@ -258,21 +265,21 @@ public class Registro {
 				}
 			}
 		});
-		textURLconexion.setToolTipText("Introduzca la direccion del correo electronico");
-		textURLconexion.setOpaque(false);
-		textURLconexion.setHorizontalAlignment(SwingConstants.CENTER);
-		textURLconexion.setForeground(Color.WHITE);
-		textURLconexion.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textURLconexion.setColumns(10);
-		textURLconexion.setCaretColor(Color.CYAN);
-		textURLconexion.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Direcci\u00F3n de Correo Electronico", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textURLconexion.setBounds(333, 283, 276, 47);
-		Frame.getContentPane().add(textURLconexion);
+		textEmail.setToolTipText("Introduzca la direccion del correo electronico");
+		textEmail.setOpaque(false);
+		textEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		textEmail.setForeground(Color.WHITE);
+		textEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textEmail.setColumns(10);
+		textEmail.setCaretColor(Color.CYAN);
+		textEmail.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Direcci\u00F3n de Correo Electronico", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textEmail.setBounds(333, 283, 276, 47);
+		Frame.getContentPane().add(textEmail);
 
 		lblResultado = new JLabel("");
 		lblResultado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado.setForeground(Color.GREEN);
-		lblResultado.setBounds(403, 383, 299, 14);
+		lblResultado.setBounds(333, 407, 276, 14);
 		Frame.getContentPane().add(lblResultado);
 
 		btnGuardar = new JButton("Registrar");
@@ -287,6 +294,9 @@ public class Registro {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					
+					
+					miControlador.SoundSend();
 					
 				}
 
@@ -315,6 +325,22 @@ public class Registro {
 		btnGuardar.setEnabled(true);
 		
 		txtPasswordConfirmar = new JPasswordField();
+		txtPasswordConfirmar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+					miControlador.SoundSend();
+					textEmail.requestFocus();
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.OpcionesAtras();
+				}
+				
+			}
+		});
 		txtPasswordConfirmar.setToolTipText("Confirma la contrase\u00F1a de acceso a la aplicacion");
 		txtPasswordConfirmar.setOpaque(false);
 		txtPasswordConfirmar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -325,31 +351,92 @@ public class Registro {
 		txtPasswordConfirmar.setBounds(507, 190, 191, 48);
 		Frame.getContentPane().add(txtPasswordConfirmar);
 				
-				textField = new JTextField();
-				textField.setToolTipText("Introduza  el DNI del usuario que se va registrar");
-				textField.setOpaque(false);
-				textField.setHorizontalAlignment(SwingConstants.CENTER);
-				textField.setForeground(Color.WHITE);
-				textField.setFont(new Font("Tahoma", Font.BOLD, 17));
-				textField.setColumns(10);
-				textField.setCaretColor(Color.CYAN);
-				textField.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DNI del Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-				textField.setBounds(258, 119, 191, 47);
-				Frame.getContentPane().add(textField);
-				
-						JLabel lblfondo = new JLabel("");
-						lblfondo.addKeyListener(new KeyAdapter() {
-							@Override
-							public void keyReleased(KeyEvent e) {
-								if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-									miControlador.SoundLogAtras();
-									miControlador.OpcionesAtras();
-								}
-							}
-						});
-						lblfondo.setBounds(0, -24, 780, 482);
-						lblfondo.setIcon(new ImageIcon(Registro.class.getResource("/Img/Fondogrande.jpg")));
-						Frame.getContentPane().add(lblfondo);
+				textFieldDNI = new JTextField();
+				textFieldDNI.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent e) {
+						
+						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+							if (textFieldDNI.getText().length() == 0) {
+								lblResultado_DNI.setForeground(Color.YELLOW);
+								lblResultado_DNI.setText("Introduce un DNI valido");
+						
+						}else {
+						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+							lblResultado_DNI.setText(null);
+							miControlador.SoundSend();
+							textNombreUser.requestFocus();
+						}
+
+						if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+							miControlador.SoundLogAtras();
+							miControlador.OpcionesAtras();
+						}
+					}}}
+				});
+				textFieldDNI.setToolTipText("Introduza  el DNI del usuario que se va registrar");
+				textFieldDNI.setOpaque(false);
+				textFieldDNI.setHorizontalAlignment(SwingConstants.CENTER);
+				textFieldDNI.setForeground(Color.WHITE);
+				textFieldDNI.setFont(new Font("Tahoma", Font.BOLD, 17));
+				textFieldDNI.setColumns(10);
+				textFieldDNI.setCaretColor(Color.CYAN);
+				textFieldDNI.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DNI del Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+				textFieldDNI.setBounds(258, 119, 191, 47);
+				Frame.getContentPane().add(textFieldDNI);
+						
+						JComboBox comboBoxRol = new JComboBox();
+						comboBoxRol.setFont(new Font("Tahoma", Font.BOLD, 14));
+						comboBoxRol.setForeground(Color.BLACK);
+						comboBoxRol.setBackground(Color.WHITE);
+						comboBoxRol.setLightWeightPopupEnabled(false);
+						comboBoxRol.setToolTipText("Categoria a la que pertenece");
+						comboBoxRol.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+						comboBoxRol.setName("");
+						comboBoxRol.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+						comboBoxRol.setOpaque(false);
+						comboBoxRol.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Elige Rol", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
+						comboBoxRol.setModel(new DefaultComboBoxModel(new String[] {"ADMIN", "TUTOR"}));
+						comboBoxRol.setBounds(64, 232, 153, 45);
+						Frame.getContentPane().add(comboBoxRol);
+								
+								lblResultado_DNI = new JLabel("");
+								lblResultado_DNI.setHorizontalAlignment(SwingConstants.CENTER);
+								lblResultado_DNI.setForeground(Color.WHITE);
+								lblResultado_DNI.setBounds(258, 166, 191, 14);
+								Frame.getContentPane().add(lblResultado_DNI);
+										
+										lblResultado_Nombre = new JLabel("");
+										lblResultado_Nombre.setHorizontalAlignment(SwingConstants.CENTER);
+										lblResultado_Nombre.setForeground(Color.GREEN);
+										lblResultado_Nombre.setBounds(507, 166, 191, 14);
+										Frame.getContentPane().add(lblResultado_Nombre);
+												
+												lblResultado_pass = new JLabel("");
+												lblResultado_pass.setHorizontalAlignment(SwingConstants.CENTER);
+												lblResultado_pass.setForeground(Color.GREEN);
+												lblResultado_pass.setBounds(258, 239, 191, 14);
+												Frame.getContentPane().add(lblResultado_pass);
+												
+												lblResultado_ConfirmarPass = new JLabel("");
+												lblResultado_ConfirmarPass.setHorizontalAlignment(SwingConstants.CENTER);
+												lblResultado_ConfirmarPass.setForeground(Color.GREEN);
+												lblResultado_ConfirmarPass.setBounds(507, 239, 191, 14);
+												Frame.getContentPane().add(lblResultado_ConfirmarPass);
+												
+														lblfondo = new JLabel("");
+														lblfondo.addKeyListener(new KeyAdapter() {
+															@Override
+															public void keyReleased(KeyEvent e) {
+																if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+																	miControlador.SoundLogAtras();
+																	miControlador.OpcionesAtras();
+																}
+															}
+														});
+														lblfondo.setBounds(0, -24, 780, 482);
+														lblfondo.setIcon(new ImageIcon(Registro.class.getResource("/Img/Fondogrande.jpg")));
+														Frame.getContentPane().add(lblfondo);
 
 	}
 
