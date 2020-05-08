@@ -435,7 +435,8 @@ public class Tutores {
 
 	private void updateAlta() {
 		if (textNombre.getText().length() == 0 || textApellidos.getText().length() == 0
-				|| textEmail.getText().length() == 0 || textArea.getText().length() == 0) {
+				|| textEmail.getText().length() == 0 || textArea.getText().length() == 0 
+				|| textFieldCentro.getText().length() == 0 || txtDniTutor.getText().length() == 0) {
 			btnAadirTutor.setEnabled(false);
 		} else {
 			btnAadirTutor.setEnabled(true);
