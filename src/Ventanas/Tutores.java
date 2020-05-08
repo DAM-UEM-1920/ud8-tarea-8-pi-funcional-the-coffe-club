@@ -88,6 +88,13 @@ public class Tutores {
 		textFieldCentro.setBorder(new TitledBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)), "Centro", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldCentro.setBounds(725, 328, 124, 47);
 		frame.getContentPane().add(textFieldCentro);
+		textFieldCentro.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
 
 		lblLogoBoton = new JLabel("");
 		lblLogoBoton.setIcon(new ImageIcon(Tutores.class.getResource("/Img/LoUEBoton.png")));
@@ -227,6 +234,12 @@ public class Tutores {
 		frame.getContentPane().add(btnAtrs);
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				miControlador.limpiar(textNombre);
+				miControlador.limpiar(textApellidos);
+				miControlador.limpiar(textEmail);
+				miControlador.limpiar(textArea);
+				miControlador.limpiar(textFieldCentro);
+				miControlador.limpiar(txtDniTutor);
 				miControlador.atrasTutores();
 			}
 
@@ -370,6 +383,13 @@ public class Tutores {
 		txtDniTutor.setBounds(533, 89, 147, 47);
 		frame.getContentPane().add(txtDniTutor);
 		txtDniTutor.setColumns(10);
+		txtDniTutor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
 
 		JButton btnAsignar = new JButton("Asignar Grupo");
 		btnAsignar.addMouseListener(new MouseAdapter() {
