@@ -287,17 +287,28 @@ public class IniTutor {
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = table.getSelectedRow();
-				table.setValueAt(textFieldDni.getText(), fila, 0);
-				table.setValueAt(textFieldNombre.getText(), fila, 1);
-				table.setValueAt(textFieldApellidos.getText(), fila, 2);
-				table.setValueAt(textFieldEmpresa.getText(), fila, 3);
+				miModelo.update("alumno",
+						"num_exp= '" + textFieldExp.getText() + "' , nombre = '" + textFieldNombre.getText()
+								+ "' , apellidos= '" + textFieldApellidos.getText() + "' , dni= '"
+								+ textFieldDni.getText() + "' , nacionalidad= '" + textFieldNacionalidad.getText()
+								+ "', fecha_nacimiento= '1-1-1', e_mail= '" + textFieldEmail.getText()
+								+ "' , telefono= " + Integer.parseInt(textFieldTelefono.getText()),
+						"num_exp", "'" + textFieldExp.getText() + "'");
+
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
 				miControlador.limpiar(textFieldEmpresa);
+				miControlador.limpiar(textFieldExp);
+				miControlador.limpiar(textFieldFechaNacimiento);
+				miControlador.limpiar(textFieldNacionalidad);
+				miControlador.limpiar(textFieldTelefono);
+
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
 				btnEliminar.setEnabled(false);
+				
+				table.setModel(miModelo.getTabla("alumno"));
 			}
 		});
 		frame.getContentPane().add(btnGuardarCambios);
@@ -528,7 +539,7 @@ public class IniTutor {
 		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
 		lblFondo.setBounds(0, 0, 703, 492);
 		frame.getContentPane().add(lblFondo);
-		
+
 		JLabel lblNewLabelCod_grupo = new JLabel("New label");
 		lblNewLabelCod_grupo.setBounds(22, 130, 56, 16);
 		frame.getContentPane().add(lblNewLabelCod_grupo);

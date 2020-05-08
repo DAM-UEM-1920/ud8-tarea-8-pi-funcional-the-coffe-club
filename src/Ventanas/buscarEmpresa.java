@@ -53,7 +53,6 @@ public class buscarEmpresa {
 	private JTextField textRepresentante;
 	private JTextField textFieldEmail;
 
-
 	/**
 	 * Create the application.
 	 */
@@ -66,7 +65,6 @@ public class buscarEmpresa {
 	 */
 	private void initialize() {
 
-		
 		frame = new JFrame();
 		frame.setResizable(false);
 
@@ -83,7 +81,7 @@ public class buscarEmpresa {
 		frame.setBounds(550, 250, 800, 598);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		textFieldEmail = new JTextField();
 		textFieldEmail.setToolTipText("Ingrese la direcci\u00F3n de la nueva empresa");
 		textFieldEmail.setOpaque(false);
@@ -92,7 +90,9 @@ public class buscarEmpresa {
 		textFieldEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setCaretColor(Color.WHITE);
-		textFieldEmail.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "E-mail", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldEmail.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "E-mail",
+				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldEmail.setBackground(Color.WHITE);
 		textFieldEmail.setBounds(527, 441, 230, 45);
 		frame.getContentPane().add(textFieldEmail);
@@ -154,9 +154,11 @@ public class buscarEmpresa {
 		btnAniadirEmpresa.setToolTipText("A\u00F1ade la empresa con los datos introducidos en los campos");
 		btnAniadirEmpresa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miModelo.insert("empresa", "'" + txtBuscarEmpresa.getText() + "', '" + txtAddEmpNombre.getText() +
-						"', '" + txtAddEmpDireccion.getText() + "', " + txtAddEmpTelefono.getText() +", '" + 
-						 txtAddEmpLocalidad.getText() + "', '" + textFieldEmail.getText() + "', '" + textRepresentante.getText() + "'");
+				miModelo.insert("empresa",
+						"'" + txtBuscarEmpresa.getText() + "', '" + txtAddEmpNombre.getText() + "', '"
+								+ txtAddEmpDireccion.getText() + "', " + txtAddEmpTelefono.getText() + ", '"
+								+ txtAddEmpLocalidad.getText() + "', '" + textFieldEmail.getText() + "', '"
+								+ textRepresentante.getText() + "'");
 				tblEmpresas.setModel(miModelo.getTabla("empresa"));
 				miControlador.limpiar(txtAddEmpNombre);
 				miControlador.limpiar(txtAddEmpDireccion);
@@ -229,17 +231,25 @@ public class buscarEmpresa {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int fila = tblEmpresas.getSelectedRow();
-				tblEmpresas.setValueAt(txtAddEmpNombre.getText(), fila, 1);
-				tblEmpresas.setValueAt(txtAddEmpDireccion.getText(), fila, 2);
-				tblEmpresas.setValueAt(txtAddEmpTelefono.getText(), fila, 3);
-				tblEmpresas.setValueAt(txtAddEmpLocalidad.getText(), fila, 4);
+				miModelo.update("empresa",
+						"cif= '" + txtBuscarEmpresa.getText() + "' , nombre= '" + txtAddEmpNombre.getText()
+								+ "' , direccion= '" + txtAddEmpDireccion.getText() + "' , telefono= "
+								+ txtAddEmpTelefono.getText() + " , localidad= '" + txtAddEmpLocalidad.getText()
+								+ "', e_mail= '" + textFieldEmail.getText() + "', representantes= '"
+								+ textRepresentante.getText() + "'",
+						"cif", "'" + txtBuscarEmpresa.getText() + "'");
 				miControlador.limpiar(txtAddEmpNombre);
 				miControlador.limpiar(txtAddEmpDireccion);
 				miControlador.limpiar(txtAddEmpTelefono);
 				miControlador.limpiar(txtAddEmpLocalidad);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textRepresentante);
 				btnGuardarCambios.setEnabled(false);
 				btnAniadirEmpresa.setEnabled(false);
 				btnEliminarEmpresa.setEnabled(false);
+				tblEmpresas.setModel(miModelo.getTabla("empresa"));
+				
+				
 			}
 		});
 
@@ -272,7 +282,7 @@ public class buscarEmpresa {
 				textRepresentante.setText(tblEmpresas.getValueAt(tblEmpresas.getSelectedRow(), 6).toString());
 				txtBuscarEmpresa.setText(tblEmpresas.getValueAt(tblEmpresas.getSelectedRow(), 0).toString());
 				textFieldEmail.setText(tblEmpresas.getValueAt(tblEmpresas.getSelectedRow(), 5).toString());
-				
+
 			}
 		});
 		scrollPane.setViewportView(tblEmpresas);
@@ -427,7 +437,9 @@ public class buscarEmpresa {
 		textRepresentante.setOpaque(false);
 		textRepresentante.setColumns(10);
 		textRepresentante.setCaretColor(Color.WHITE);
-		textRepresentante.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Representante", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textRepresentante.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"Representante", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textRepresentante.setBounds(48, 441, 180, 45);
 		frame.getContentPane().add(textRepresentante);
 
@@ -461,9 +473,8 @@ public class buscarEmpresa {
 	}
 
 	private void updateAniadir() {
-		if (txtAddEmpDireccion.getText().length() == 0
-				|| txtAddEmpLocalidad.getText().length() == 0 || txtAddEmpNombre.getText().length() == 0
-				|| txtAddEmpTelefono.getText().length() == 0) {
+		if (txtAddEmpDireccion.getText().length() == 0 || txtAddEmpLocalidad.getText().length() == 0
+				|| txtAddEmpNombre.getText().length() == 0 || txtAddEmpTelefono.getText().length() == 0) {
 			btnAniadirEmpresa.setEnabled(false);
 		} else {
 			btnAniadirEmpresa.setEnabled(true);
@@ -471,9 +482,9 @@ public class buscarEmpresa {
 	}
 
 	private void updateModificar() {
-		if (txtAddEmpDireccion.getText().length() == 0
-				|| txtAddEmpLocalidad.getText().length() == 0 || txtAddEmpNombre.getText().length() == 0
-				|| txtAddEmpTelefono.getText().length() == 0 || tblEmpresas.getSelectedRow() == -1) {
+		if (txtAddEmpDireccion.getText().length() == 0 || txtAddEmpLocalidad.getText().length() == 0
+				|| txtAddEmpNombre.getText().length() == 0 || txtAddEmpTelefono.getText().length() == 0
+				|| tblEmpresas.getSelectedRow() == -1) {
 			btnGuardarCambios.setEnabled(false);
 		} else {
 			btnGuardarCambios.setEnabled(true);
