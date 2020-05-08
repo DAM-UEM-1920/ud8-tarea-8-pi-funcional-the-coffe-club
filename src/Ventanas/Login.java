@@ -120,8 +120,8 @@ public class Login {
 				// Salir con la tecla Escape
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
-					System.exit(0);
+					miControlador.SoundLogAtras();
+					txtUsuario.requestFocus();
 				}
 
 			}
@@ -340,8 +340,26 @@ public class Login {
 		frame.getContentPane().add(lblOpciones);
 		
 		btnNuevoUsuario = new JButton("Nuevo Usuario");
+		btnNuevoUsuario.setBorder(null);
+		btnNuevoUsuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.SoundAcceso();
+					miControlador.Registro();
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
+			
+			}
+		});
 		btnNuevoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				miControlador.SoundAcceso();
 				miControlador.Registro();
 			}
 		});

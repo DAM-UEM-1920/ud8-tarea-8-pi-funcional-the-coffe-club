@@ -42,7 +42,6 @@ import java.util.Scanner;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
 import javax.swing.border.EtchedBorder;
 import javax.swing.JPasswordField;
 
@@ -61,7 +60,7 @@ public class Registro {
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JTextField textNombreUser;
-	private JPasswordField txtPasswordUses;
+	private JPasswordField txtPasswordUser;
 	private JTextField textEmail;
 	private JLabel lblResultado;
 	private JButton btnAtrs;
@@ -77,7 +76,11 @@ public class Registro {
 	private JLabel lblResultado_Nombre;
 	private JLabel lblResultado_pass;
 	private JLabel lblResultado_ConfirmarPass;
+	private JLabel lblResultado_Email;
+	private JLabel lblResultado_Procesado;
+	private JLabel lblResultado_Combo;
 	private JLabel lblfondo;
+	private JComboBox comboBoxRol;
 
 	/**
 	 * Create the application.
@@ -113,10 +116,10 @@ public class Registro {
 		lblLogoBoton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
-					miControlador.SoundLogAtras();
-					miControlador.OpcionesAtras();
-				
+
+				miControlador.SoundLogAtras();
+				miControlador.RegistroAtras();
+
 			}
 		});
 		lblLogoBoton.addKeyListener(new KeyAdapter() {
@@ -142,6 +145,11 @@ public class Registro {
 		Frame.getContentPane().add(lblLogoBoton);
 
 		JLabel lblOpciones = new JLabel("Registro Nuevo Usuario");
+		lblOpciones.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
 		lblOpciones.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpciones.setForeground(Color.WHITE);
@@ -156,9 +164,9 @@ public class Registro {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					miControlador.SoundLogAtras();
-					miControlador.OpcionesAtras();
+					miControlador.RegistroAtras();
 				}
-				miControlador.OpcionesAtras();
+				miControlador.RegistroAtras();
 			}
 		});
 		btnAtrs.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -191,15 +199,27 @@ public class Registro {
 		textNombreUser.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-					miControlador.SoundSend();
-					txtPasswordUses.requestFocus();
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (textNombreUser.getText().length() == 0) {
+						lblResultado_Nombre.setForeground(Color.YELLOW);
+						miControlador.SoundLogAtras();
+						lblResultado_Nombre.setText("Introduce un Nombre de usuario");
+
+					} else {
+						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+							lblResultado_Nombre.setText("OK");
+							lblResultado_Nombre.setForeground(Color.GREEN);
+							miControlador.SoundSend();
+							txtPasswordUser.requestFocus();
+						}
+
+					}
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					miControlador.SoundLogAtras();
-					miControlador.OpcionesAtras();
+					textFieldDNI.requestFocus();
 				}
 			}
 		});
@@ -218,50 +238,71 @@ public class Registro {
 		textNombreUser.setBounds(507, 118, 191, 49);
 		Frame.getContentPane().add(textNombreUser);
 
-		txtPasswordUses = new JPasswordField();
+		txtPasswordUser = new JPasswordField();
 
-		txtPasswordUses.addKeyListener(new KeyAdapter() {
+		txtPasswordUser.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (txtPasswordUser.getText().length() == 0) {
+						lblResultado_pass.setForeground(Color.YELLOW);
+						miControlador.SoundLogAtras();
+						lblResultado_pass.setText("Introduce una contraseña valida");
 
-					miControlador.SoundSend();
-					txtPasswordConfirmar.requestFocus();
+					} else {
+						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+							lblResultado_pass.setText("OK");
+							lblResultado_pass.setForeground(Color.GREEN);
+							miControlador.SoundSend();
+							txtPasswordConfirmar.requestFocus();
+						}
+
+					}
 				}
-
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					miControlador.SoundLogAtras();
-					miControlador.OpcionesAtras();
+					textNombreUser.requestFocus();
 				}
-
 			}
 		});
-		txtPasswordUses.setToolTipText("Introduza  su contrase\u00F1a de acceso a la aplicacion");
-		txtPasswordUses.setOpaque(false);
-		txtPasswordUses.setHorizontalAlignment(SwingConstants.CENTER);
-		txtPasswordUses.setForeground(Color.WHITE);
-		txtPasswordUses.setFont(new Font("Tahoma", Font.BOLD, 17));
-		txtPasswordUses.setCaretColor(Color.CYAN);
-		txtPasswordUses.setBorder(new TitledBorder(
+		txtPasswordUser.setToolTipText("Introduza  su contrase\u00F1a de acceso a la aplicacion");
+		txtPasswordUser.setOpaque(false);
+		txtPasswordUser.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPasswordUser.setForeground(Color.WHITE);
+		txtPasswordUser.setFont(new Font("Tahoma", Font.BOLD, 17));
+		txtPasswordUser.setCaretColor(Color.CYAN);
+		txtPasswordUser.setBorder(new TitledBorder(
 
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 
 				"Contrase\u00F1a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		txtPasswordUses.setBounds(258, 190, 191, 48);
-		Frame.getContentPane().add(txtPasswordUses);
+		txtPasswordUser.setBounds(258, 190, 191, 48);
+		Frame.getContentPane().add(txtPasswordUser);
 
 		textEmail = new JTextField();
 		textEmail.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					btnGuardar.requestFocus();
-					miControlador.SoundSend();
-					
+					if (textEmail.getText().length() == 0) {
+						lblResultado_Email.setForeground(Color.YELLOW);
+						miControlador.SoundLogAtras();
+						lblResultado_Email.setText("Introduce un Email valido");
+
+					} else {
+						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+							lblResultado_Email.setText("OK");
+							lblResultado_Email.setForeground(Color.GREEN);
+							miControlador.SoundSend();
+							btnGuardar.requestFocus();
+						}
+
+					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					miControlador.SoundLogAtras();
-					miControlador.OpcionesAtras();
+					txtPasswordConfirmar.requestFocus();
 				}
 			}
 		});
@@ -272,7 +313,10 @@ public class Registro {
 		textEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textEmail.setColumns(10);
 		textEmail.setCaretColor(Color.CYAN);
-		textEmail.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Direcci\u00F3n de Correo Electronico", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textEmail.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"Direcci\u00F3n de Correo Electronico", TitledBorder.CENTER, TitledBorder.TOP, null,
+				new Color(255, 255, 255)));
 		textEmail.setBounds(333, 283, 276, 47);
 		Frame.getContentPane().add(textEmail);
 
@@ -293,23 +337,39 @@ public class Registro {
 		btnGuardar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					
-					
-					miControlador.SoundSend();
-					
-				}
+				if (comboBoxRol.getSelectedItem().toString().equals("ADMIN")
+						|| (comboBoxRol.getSelectedItem().toString().equals("TUTOR"))) {
+						
+					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
+						miControlador.SoundAcceso();
+						lblResultado_Procesado.setForeground(Color.GREEN);
+						lblResultado_Procesado.setText("Procesado");
+						lblResultado_Combo.setText(null);
+						lblResultado_DNI.setText(null);
+						lblResultado_Nombre.setText(null);
+						lblResultado_pass.setText(null);
+						lblResultado_ConfirmarPass.setText(null);
+						lblResultado_Email.setText(null);
+
+						
+
+					}
+				} else {
+					comboBoxRol.requestFocus();
+					lblResultado_Combo.setForeground(Color.YELLOW);
+				lblResultado_Combo.setText("Seleccione un Rol");
+				}
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					miControlador.SoundLogAtras();
-					miControlador.OpcionesAtras();
+					textEmail.requestFocus();
 				}
+
 			}
 		});
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
 			}
 		});
 		btnGuardar.setToolTipText("Guarda los datos introducidos");
@@ -323,22 +383,41 @@ public class Registro {
 		Frame.setBounds(550, 250, 786, 487);
 		Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		btnGuardar.setEnabled(true);
-		
+
 		txtPasswordConfirmar = new JPasswordField();
 		txtPasswordConfirmar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-					miControlador.SoundSend();
-					textEmail.requestFocus();
+					if (txtPasswordUser.getText().equals(txtPasswordConfirmar.getText())) {
+
+						if (txtPasswordConfirmar.getText().length() == 0) {
+							lblResultado_ConfirmarPass.setForeground(Color.YELLOW);
+							miControlador.SoundLogAtras();
+							lblResultado_ConfirmarPass.setText("Introduce una contraseña valida");
+
+						} else {
+							if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+								lblResultado_ConfirmarPass.setText("OK");
+								lblResultado_ConfirmarPass.setForeground(Color.GREEN);
+								miControlador.SoundSend();
+								textEmail.requestFocus();
+							}
+
+						}
+					} else {
+						lblResultado_ConfirmarPass.setForeground(Color.RED);
+						miControlador.SoundLogAtras();
+						lblResultado_ConfirmarPass.setText("La contraseñas no coinciden");
+					}
+
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					miControlador.SoundLogAtras();
-					miControlador.OpcionesAtras();
+					txtPasswordUser.requestFocus();
 				}
-				
 			}
 		});
 		txtPasswordConfirmar.setToolTipText("Confirma la contrase\u00F1a de acceso a la aplicacion");
@@ -347,104 +426,146 @@ public class Registro {
 		txtPasswordConfirmar.setForeground(Color.WHITE);
 		txtPasswordConfirmar.setFont(new Font("Tahoma", Font.BOLD, 17));
 		txtPasswordConfirmar.setCaretColor(Color.CYAN);
-		txtPasswordConfirmar.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Confirmar Contrase\u00F1a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		txtPasswordConfirmar.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"Confirmar Contrase\u00F1a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		txtPasswordConfirmar.setBounds(507, 190, 191, 48);
 		Frame.getContentPane().add(txtPasswordConfirmar);
-				
-				textFieldDNI = new JTextField();
-				textFieldDNI.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyReleased(KeyEvent e) {
-						
+
+		textFieldDNI = new JTextField();
+		textFieldDNI.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (textFieldDNI.getText().length() == 0) {
+						lblResultado_DNI.setForeground(Color.YELLOW);
+						miControlador.SoundLogAtras();
+						lblResultado_DNI.setText("Introduce un DNI valido");
+
+					} else {
 						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-							if (textFieldDNI.getText().length() == 0) {
-								lblResultado_DNI.setForeground(Color.YELLOW);
-								lblResultado_DNI.setText("Introduce un DNI valido");
-						
-						}else {
-						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-							lblResultado_DNI.setText(null);
+							lblResultado_DNI.setText("OK");
+							lblResultado_DNI.setForeground(Color.GREEN);
 							miControlador.SoundSend();
 							textNombreUser.requestFocus();
 						}
 
-						if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-							miControlador.SoundLogAtras();
-							miControlador.OpcionesAtras();
-						}
-					}}}
-				});
-				textFieldDNI.setToolTipText("Introduza  el DNI del usuario que se va registrar");
-				textFieldDNI.setOpaque(false);
-				textFieldDNI.setHorizontalAlignment(SwingConstants.CENTER);
-				textFieldDNI.setForeground(Color.WHITE);
-				textFieldDNI.setFont(new Font("Tahoma", Font.BOLD, 17));
-				textFieldDNI.setColumns(10);
-				textFieldDNI.setCaretColor(Color.CYAN);
-				textFieldDNI.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DNI del Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-				textFieldDNI.setBounds(258, 119, 191, 47);
-				Frame.getContentPane().add(textFieldDNI);
-						
-						JComboBox comboBoxRol = new JComboBox();
-						comboBoxRol.setFont(new Font("Tahoma", Font.BOLD, 14));
-						comboBoxRol.setForeground(Color.BLACK);
-						comboBoxRol.setBackground(Color.WHITE);
-						comboBoxRol.setLightWeightPopupEnabled(false);
-						comboBoxRol.setToolTipText("Categoria a la que pertenece");
-						comboBoxRol.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-						comboBoxRol.setName("");
-						comboBoxRol.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-						comboBoxRol.setOpaque(false);
-						comboBoxRol.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Elige Rol", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
-						comboBoxRol.setModel(new DefaultComboBoxModel(new String[] {"ADMIN", "TUTOR"}));
-						comboBoxRol.setBounds(64, 232, 153, 45);
-						Frame.getContentPane().add(comboBoxRol);
-								
-								lblResultado_DNI = new JLabel("");
-								lblResultado_DNI.setHorizontalAlignment(SwingConstants.CENTER);
-								lblResultado_DNI.setForeground(Color.WHITE);
-								lblResultado_DNI.setBounds(258, 166, 191, 14);
-								Frame.getContentPane().add(lblResultado_DNI);
-										
-										lblResultado_Nombre = new JLabel("");
-										lblResultado_Nombre.setHorizontalAlignment(SwingConstants.CENTER);
-										lblResultado_Nombre.setForeground(Color.GREEN);
-										lblResultado_Nombre.setBounds(507, 166, 191, 14);
-										Frame.getContentPane().add(lblResultado_Nombre);
-												
-												lblResultado_pass = new JLabel("");
-												lblResultado_pass.setHorizontalAlignment(SwingConstants.CENTER);
-												lblResultado_pass.setForeground(Color.GREEN);
-												lblResultado_pass.setBounds(258, 239, 191, 14);
-												Frame.getContentPane().add(lblResultado_pass);
-												
-												lblResultado_ConfirmarPass = new JLabel("");
-												lblResultado_ConfirmarPass.setHorizontalAlignment(SwingConstants.CENTER);
-												lblResultado_ConfirmarPass.setForeground(Color.GREEN);
-												lblResultado_ConfirmarPass.setBounds(507, 239, 191, 14);
-												Frame.getContentPane().add(lblResultado_ConfirmarPass);
-												
-														lblfondo = new JLabel("");
-														lblfondo.addKeyListener(new KeyAdapter() {
-															@Override
-															public void keyReleased(KeyEvent e) {
-																if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-																	miControlador.SoundLogAtras();
-																	miControlador.OpcionesAtras();
-																}
-															}
-														});
-														lblfondo.setBounds(0, -24, 780, 482);
-														lblfondo.setIcon(new ImageIcon(Registro.class.getResource("/Img/Fondogrande.jpg")));
-														Frame.getContentPane().add(lblfondo);
+					}
+				}
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.RegistroAtras();
+				}
+			}
+		});
+		textFieldDNI.setToolTipText("Introduza  el DNI del usuario que se va registrar");
+		textFieldDNI.setOpaque(false);
+		textFieldDNI.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldDNI.setForeground(Color.WHITE);
+		textFieldDNI.setFont(new Font("Tahoma", Font.BOLD, 17));
+		textFieldDNI.setColumns(10);
+		textFieldDNI.setCaretColor(Color.CYAN);
+		textFieldDNI.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"DNI del Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldDNI.setBounds(258, 119, 191, 47);
+		Frame.getContentPane().add(textFieldDNI);
+
+		comboBoxRol = new JComboBox();
+		comboBoxRol.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					btnGuardar.requestFocus();
+					miControlador.SoundSend();
+
+				} else {
+
+					if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+						miControlador.SoundLogAtras();
+						miControlador.RegistroAtras();
+					}
+				}
+
+			}
+		});
+		comboBoxRol.setFont(new Font("Tahoma", Font.BOLD, 14));
+		comboBoxRol.setForeground(Color.BLACK);
+		comboBoxRol.setBackground(Color.WHITE);
+		comboBoxRol.setLightWeightPopupEnabled(false);
+		comboBoxRol.setToolTipText("Categoria a la que pertenece");
+		comboBoxRol.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		comboBoxRol.setName("");
+		comboBoxRol.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		comboBoxRol.setOpaque(false);
+		comboBoxRol.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Elige Rol",
+				TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
+		comboBoxRol.setModel(new DefaultComboBoxModel(new String[] { "--------", "ADMIN", "TUTOR" }));
+		comboBoxRol.setBounds(64, 232, 153, 45);
+		Frame.getContentPane().add(comboBoxRol);
+
+		lblResultado_DNI = new JLabel("");
+		lblResultado_DNI.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultado_DNI.setForeground(Color.WHITE);
+		lblResultado_DNI.setBounds(258, 166, 191, 14);
+		Frame.getContentPane().add(lblResultado_DNI);
+
+		lblResultado_Nombre = new JLabel("");
+		lblResultado_Nombre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultado_Nombre.setForeground(Color.GREEN);
+		lblResultado_Nombre.setBounds(507, 166, 191, 14);
+		Frame.getContentPane().add(lblResultado_Nombre);
+
+		lblResultado_pass = new JLabel("");
+		lblResultado_pass.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultado_pass.setForeground(Color.GREEN);
+		lblResultado_pass.setBounds(258, 239, 191, 14);
+		Frame.getContentPane().add(lblResultado_pass);
+
+		lblResultado_ConfirmarPass = new JLabel("");
+		lblResultado_ConfirmarPass.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultado_ConfirmarPass.setForeground(Color.GREEN);
+		lblResultado_ConfirmarPass.setBounds(507, 239, 191, 14);
+		Frame.getContentPane().add(lblResultado_ConfirmarPass);
+
+		lblResultado_Email = new JLabel("");
+		lblResultado_Email.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultado_Email.setForeground(Color.GREEN);
+		lblResultado_Email.setBounds(343, 330, 262, 14);
+		Frame.getContentPane().add(lblResultado_Email);
+
+		lblResultado_Procesado = new JLabel("");
+		lblResultado_Procesado.setToolTipText("");
+		lblResultado_Procesado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultado_Procesado.setForeground(Color.GREEN);
+		lblResultado_Procesado.setBounds(389, 407, 153, 14);
+		Frame.getContentPane().add(lblResultado_Procesado);
+
+		lblResultado_Combo = new JLabel("");
+		lblResultado_Combo.setToolTipText("");
+		lblResultado_Combo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultado_Combo.setForeground(Color.GREEN);
+		lblResultado_Combo.setBounds(64, 283, 153, 14);
+		Frame.getContentPane().add(lblResultado_Combo);
+
+		lblfondo = new JLabel("");
+		lblfondo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					miControlador.SoundLogAtras();
+					miControlador.RegistroAtras();
+				}
+			}
+		});
+		lblfondo.setBounds(0, -24, 780, 482);
+		lblfondo.setIcon(new ImageIcon(Registro.class.getResource("/Img/Fondogrande.jpg")));
+		Frame.getContentPane().add(lblfondo);
 
 	}
-
-
-
-	
-
-
 
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
