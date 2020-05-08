@@ -194,6 +194,8 @@ public class Tutores {
 				miControlador.limpiar(textApellidos);
 				miControlador.limpiar(textEmail);
 				miControlador.limpiar(textArea);
+				miControlador.limpiar(textFieldCentro);
+				miControlador.limpiar(txtDniTutor);
 				btnEliminarTutor.setEnabled(false);
 				btnEditarTutor.setEnabled(false);
 				btnAadirTutor.setEnabled(false);
@@ -386,6 +388,12 @@ public class Tutores {
 		btnAsignar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String dni = txtDniTutor.getText();
+				miControlador.limpiar(textNombre);
+				miControlador.limpiar(textApellidos);
+				miControlador.limpiar(textEmail);
+				miControlador.limpiar(textArea);
+				miControlador.limpiar(textFieldCentro);
+				miControlador.limpiar(txtDniTutor);
 				miControlador.asgGrupo(dni);
 			}
 		});

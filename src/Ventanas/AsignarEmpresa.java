@@ -88,12 +88,7 @@ public class AsignarEmpresa {
 			}
 		});
 		btnAsignar.setToolTipText("Asigna la empresa con el alumno");
-		btnAsignar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				miModelo.insert("practica", "");
-				miControlador.terminarAsgEmpresa();
-			}
-		});
+		
 		
 		JLabel lblNewLabel_ApellidoAlumno = new JLabel("");
 		lblNewLabel_ApellidoAlumno.setHorizontalAlignment(SwingConstants.CENTER);
@@ -176,6 +171,15 @@ public class AsignarEmpresa {
 		frame.getContentPane().add(lblNewLabel);
 		frame.setBounds(550, 250, 1012, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		btnAsignar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int fila = table_1.getSelectedRow();
+				miModelo.insert("practica", "'" + (String)table_1.getValueAt(fila, 0) + "', " + lblExpedienteNumber.getText() +
+						", null, null, null, null, null, null,'"+ miControlador.getYear() +"', null, 'tutorempresa'");
+				miControlador.terminarAsgEmpresa();
+			}
+		});
 		
 		frame.addWindowListener(new WindowAdapter() {
 			@Override

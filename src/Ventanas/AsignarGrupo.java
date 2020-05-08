@@ -202,7 +202,7 @@ public class AsignarGrupo {
 			public void actionPerformed(ActionEvent e) {
 				int fila = table_1.getSelectedRow();
 				miModelo.insert("gestiona", "'" + lbldni.getText() + "', " +(String) table_1.getValueAt(fila, 0) + 
-						", EXTRACT(YEAR FROM sysdate), '22/03/2015'");
+						", '"+miControlador.getYear() +"', '22/03/2015'");
 				miControlador.asignarGrupoFin();
 			}
 		});

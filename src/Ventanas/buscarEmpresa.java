@@ -158,14 +158,13 @@ public class buscarEmpresa {
 						"', '" + txtAddEmpDireccion.getText() + "', " + txtAddEmpTelefono.getText() +", '" + 
 						 txtAddEmpLocalidad.getText() + "', '" + textFieldEmail.getText() + "', '" + textRepresentante.getText() + "'");
 				tblEmpresas.setModel(miModelo.getTabla("empresa"));
-				txtAddEmpDireccion.setText("");
-				txtAddEmpLocalidad.setText("");
-				txtAddEmpNombre.setText("");
-				txtAddEmpTelefono.setText("");
 				miControlador.limpiar(txtAddEmpNombre);
 				miControlador.limpiar(txtAddEmpDireccion);
 				miControlador.limpiar(txtAddEmpTelefono);
 				miControlador.limpiar(txtAddEmpLocalidad);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textRepresentante);
+				miControlador.limpiar(txtBuscarEmpresa);
 				btnAniadirEmpresa.setEnabled(false);
 			}
 		});
@@ -401,6 +400,13 @@ public class buscarEmpresa {
 		btnBuscarEmpresas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cif = txtBuscarEmpresa.getText();
+				miControlador.limpiar(txtAddEmpNombre);
+				miControlador.limpiar(txtAddEmpDireccion);
+				miControlador.limpiar(txtAddEmpTelefono);
+				miControlador.limpiar(txtAddEmpLocalidad);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textRepresentante);
+				miControlador.limpiar(txtBuscarEmpresa);
 				miControlador.Empresa(cif);
 			}
 		});

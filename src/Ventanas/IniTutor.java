@@ -130,6 +130,14 @@ public class IniTutor {
 						"Nacionalidad", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldNacionalidad.setBounds(517, 369, 160, 48);
 		frame.getContentPane().add(textFieldNacionalidad);
+		textFieldNacionalidad.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
 
 		textFieldTelefono = new JTextField();
 		textFieldTelefono.setToolTipText("Introduzca los apellidos del alumno");
@@ -206,6 +214,15 @@ public class IniTutor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				miControlador.limpiar(textFieldDni);
+				miControlador.limpiar(textFieldNombre);
+				miControlador.limpiar(textFieldApellidos);
+				miControlador.limpiar(textFieldEmpresa);
+				miControlador.limpiar(textFieldExp);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textFieldNacionalidad);
+				miControlador.limpiar(textFieldTelefono);
+				miControlador.limpiar(textFieldFechaNacimiento);
 				miModelo.terminar();
 				miControlador.salirTutor();
 			}
@@ -237,6 +254,11 @@ public class IniTutor {
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
 				miControlador.limpiar(textFieldEmpresa);
+				miControlador.limpiar(textFieldExp);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textFieldNacionalidad);
+				miControlador.limpiar(textFieldTelefono);
+				miControlador.limpiar(textFieldFechaNacimiento);
 				btnEliminar.setEnabled(false);
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
@@ -404,7 +426,7 @@ public class IniTutor {
 								+ textFieldEmail.getText() + "', " + textFieldTelefono.getText());
 				miModelo.insert("pertenece", textFieldExp.getText() + ", " + 
 								miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) 
-								+ ",'2019-2020'" );
+								+ ",'"+ miControlador.getYear() +"'" );
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
@@ -444,6 +466,8 @@ public class IniTutor {
 				textFieldNacionalidad.setText((String) table.getValueAt(fila, 4));
 				textFieldFechaNacimiento.setText((String) table.getValueAt(fila, 5));
 				updateEliminar();
+				updateAlta();
+				updateModificar();
 			}
 		});
 
@@ -488,6 +512,14 @@ public class IniTutor {
 				new Color(255, 255, 255)));
 		textFieldExp.setBounds(358, 77, 168, 51);
 		frame.getContentPane().add(textFieldExp);
+		textFieldExp.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				updateAlta();
+				updateModificar();
+			}
+		});
 
 		lblFondo = new JLabel("");
 		lblFondo.setForeground(Color.WHITE);
@@ -503,6 +535,15 @@ public class IniTutor {
 		btnAlumno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String numexp = textFieldExp.getText();
+				miControlador.limpiar(textFieldDni);
+				miControlador.limpiar(textFieldNombre);
+				miControlador.limpiar(textFieldApellidos);
+				miControlador.limpiar(textFieldEmpresa);
+				miControlador.limpiar(textFieldExp);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textFieldNacionalidad);
+				miControlador.limpiar(textFieldTelefono);
+				miControlador.limpiar(textFieldFechaNacimiento);
 				miControlador.vistaAlumno(numexp);
 			}
 
@@ -549,7 +590,8 @@ public class IniTutor {
 
 	private void updateAlta() {
 		if (textFieldDni.getText().length() == 0 || textFieldNombre.getText().length() == 0
-				|| textFieldApellidos.getText().length() == 0 || textFieldEmpresa.getText().length() == 0) {
+				|| textFieldApellidos.getText().length() == 0 || textFieldExp.getText().length() == 0 || 
+				textFieldFechaNacimiento.getText().length() == 0 || textFieldNacionalidad.getText().length() == 0) {
 			btnAadir.setEnabled(false);
 		} else {
 			btnAadir.setEnabled(true);
