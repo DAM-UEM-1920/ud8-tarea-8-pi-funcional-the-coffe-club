@@ -248,8 +248,9 @@ public class IniTutor {
 		btnEliminar.setBounds(507, 422, 117, 35);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
-				tabla.removeRow(table.getSelectedRow());
+				miModelo.delete("pertenece", "ALUMNO_NUM_EXP ", textFieldExp.getText());
+				miModelo.delete("practica", "ALUMNO_NUM_EXP ", textFieldExp.getText());
+				miModelo.delete("alumno", "NUM_EXP ", textFieldExp.getText());
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
@@ -262,6 +263,8 @@ public class IniTutor {
 				btnEliminar.setEnabled(false);
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
+				table.setModel(miModelo.getAlumnosTutor(user));
+				
 			}
 		});
 		frame.getContentPane().add(btnEliminar);

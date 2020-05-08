@@ -410,6 +410,21 @@ public class Modelo {
 
 		}
 	}
+	
+	public int delete (String tabla, String pk, String cod) {
+		int resultado = 0;
+		try {
+			String query = "DELETE FROM " + tabla + " WHERE "  + pk + " = " + cod;
+			PreparedStatement pstmt = conexion.prepareStatement(query);
+			resultado = pstmt.executeUpdate();
+			System.out.println(tabla + " eliminado con éxito");
+		} catch (SQLException e) {
+			System.out.println();
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+	
 
 	public void login(String usr, String pwd) {
 		String rol = getRol(usr, pwd);
