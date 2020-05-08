@@ -37,6 +37,8 @@ import Ventanas.MenuDirector;
 import Ventanas.Tutores;
 import Ventanas.buscarEmpresa;
 import Ventanas.Opciones;
+import Ventanas.Registro;
+
 import java.sql.SQLException;
 
 public class Modelo {
@@ -57,6 +59,7 @@ public class Modelo {
 	private Connection conexion;
 	private Checkbox checkbox;
 	private Opciones opciones;
+	private Registro registro;
 	private String texto, usuario, passwd, url;
 	private File fichero;
 	private String[] parts;
@@ -595,5 +598,10 @@ public class Modelo {
 	public void setOpciones(Opciones opciones) {
 		this.opciones = opciones;
 	}
+
+	public void setRegistro(Registro registro) {
+		this.registro = registro;
+	}
+	
 
 }

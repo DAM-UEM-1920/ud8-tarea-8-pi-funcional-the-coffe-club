@@ -22,6 +22,7 @@ import Ventanas.IniTutor;
 import Ventanas.Login;
 import Ventanas.MenuDirector;
 import Ventanas.Opciones;
+import Ventanas.Registro;
 import Ventanas.Tutores;
 import Ventanas.buscarEmpresa;
 import model.Modelo;
@@ -40,6 +41,7 @@ public class Controlador {
 	private JTextField text;
 	private Empresa empresa;
 	private Opciones opciones;
+	private Registro registro;
 	private boolean activo = true;
 
 	public void setModelo(Modelo miModelo) {
@@ -96,6 +98,11 @@ public class Controlador {
 		String pwd = miLogin.getPwd();
 		miModelo.login(usr, pwd);
 
+	}
+	
+
+	public void setRegistro(Registro registro) {
+		this.registro = registro;
 	}
 
 	public void menuTutor(String user) {
@@ -250,6 +257,17 @@ public class Controlador {
 		buscEmpresa.setVisible(true);
 
 	}
+	
+	public void Registro() {	
+		miLogin.setVisible(false);
+		registro.setVisible(true);
+	}
+	public void RegistroAtras() {
+		registro.setVisible(false);
+		miLogin.setVisible(true);
+		
+	}
+	
 
 	public void Empresa(String cif) {
 		buscEmpresa.setVisible(false);
