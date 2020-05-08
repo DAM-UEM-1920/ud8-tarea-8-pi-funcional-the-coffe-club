@@ -51,6 +51,7 @@ public class buscarEmpresa {
 	private JLabel lblLogoBoton;
 	private JButton btnBuscarEmpresas;
 	private JTextField textRepresentante;
+	private JTextField textFieldEmail;
 
 
 	/**
@@ -82,6 +83,19 @@ public class buscarEmpresa {
 		frame.setBounds(550, 250, 800, 598);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		textFieldEmail = new JTextField();
+		textFieldEmail.setToolTipText("Ingrese la direcci\u00F3n de la nueva empresa");
+		textFieldEmail.setOpaque(false);
+		textFieldEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldEmail.setForeground(Color.WHITE);
+		textFieldEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldEmail.setColumns(10);
+		textFieldEmail.setCaretColor(Color.WHITE);
+		textFieldEmail.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "E-mail", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		textFieldEmail.setBackground(Color.WHITE);
+		textFieldEmail.setBounds(527, 441, 230, 45);
+		frame.getContentPane().add(textFieldEmail);
 
 		lblLogoBoton = new JLabel("");
 		lblLogoBoton.setIcon(new ImageIcon(buscarEmpresa.class.getResource("/Img/LoUEBoton.png")));
@@ -94,7 +108,7 @@ public class buscarEmpresa {
 		JLabel lblEmpresas = new JLabel("Empresas");
 		lblEmpresas.setFont(new Font("Tahoma", Font.BOLD, 42));
 		lblEmpresas.setForeground(Color.WHITE);
-		lblEmpresas.setBounds(271, 59, 244, 70);
+		lblEmpresas.setBounds(271, 13, 244, 70);
 		frame.getContentPane().add(lblEmpresas);
 
 		txtBuscarEmpresa = new JTextField();
@@ -108,7 +122,7 @@ public class buscarEmpresa {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Introduzca El NIF", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		txtBuscarEmpresa.setToolTipText("Escriba aqu\u00ED el NIF de la empresa a buscar\r\n");
-		txtBuscarEmpresa.setBounds(455, 130, 137, 51);
+		txtBuscarEmpresa.setBounds(453, 78, 137, 51);
 		frame.getContentPane().add(txtBuscarEmpresa);
 		txtBuscarEmpresa.setColumns(10);
 
@@ -140,18 +154,17 @@ public class buscarEmpresa {
 		btnAniadirEmpresa.setToolTipText("A\u00F1ade la empresa con los datos introducidos en los campos");
 		btnAniadirEmpresa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel tabla = (DefaultTableModel) tblEmpresas.getModel();
-				String[] arr = { txtAddEmpNombre.getText(), txtAddEmpDireccion.getText(),
-						txtAddEmpTelefono.getText(), txtAddEmpLocalidad.getText() };
-				tabla.addRow(arr);
-				txtAddEmpDireccion.setText("");
-				txtAddEmpLocalidad.setText("");
-				txtAddEmpNombre.setText("");
-				txtAddEmpTelefono.setText("");
+				miModelo.insert("empresa", "'" + txtBuscarEmpresa.getText() + "', '" + txtAddEmpNombre.getText() +
+						"', '" + txtAddEmpDireccion.getText() + "', " + txtAddEmpTelefono.getText() +", '" + 
+						 txtAddEmpLocalidad.getText() + "', '" + textFieldEmail.getText() + "', '" + textRepresentante.getText() + "'");
+				tblEmpresas.setModel(miModelo.getTabla("empresa"));
 				miControlador.limpiar(txtAddEmpNombre);
 				miControlador.limpiar(txtAddEmpDireccion);
 				miControlador.limpiar(txtAddEmpTelefono);
 				miControlador.limpiar(txtAddEmpLocalidad);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textRepresentante);
+				miControlador.limpiar(txtBuscarEmpresa);
 				btnAniadirEmpresa.setEnabled(false);
 			}
 		});
@@ -189,9 +202,9 @@ public class buscarEmpresa {
 			}
 		});
 		btnEliminarEmpresa.setToolTipText("Elimina la empresa seleccionada");
-		btnEliminarEmpresa.setBounds(388, 491, 127, 31);
+		btnEliminarEmpresa.setBounds(388, 515, 127, 31);
 		frame.getContentPane().add(btnEliminarEmpresa);
-		btnAniadirEmpresa.setBounds(195, 491, 117, 31);
+		btnAniadirEmpresa.setBounds(189, 515, 117, 31);
 		frame.getContentPane().add(btnAniadirEmpresa);
 
 		btnGuardarCambios = new JButton("Guardar Cambios");
@@ -232,14 +245,14 @@ public class buscarEmpresa {
 
 		btnGuardarCambios.setEnabled(false);
 		btnGuardarCambios.setToolTipText("Actualiza los datos modificados");
-		btnGuardarCambios.setBounds(602, 491, 127, 31);
+		btnGuardarCambios.setBounds(603, 515, 127, 31);
 		frame.getContentPane().add(btnGuardarCambios);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setOpaque(false);
 		scrollPane.setViewportBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
-		scrollPane.setBounds(68, 191, 644, 219);
+		scrollPane.setBounds(68, 162, 644, 219);
 
 		frame.getContentPane().add(scrollPane);
 
@@ -258,6 +271,7 @@ public class buscarEmpresa {
 				txtAddEmpLocalidad.setText(tblEmpresas.getValueAt(tblEmpresas.getSelectedRow(), 4).toString());
 				textRepresentante.setText(tblEmpresas.getValueAt(tblEmpresas.getSelectedRow(), 6).toString());
 				txtBuscarEmpresa.setText(tblEmpresas.getValueAt(tblEmpresas.getSelectedRow(), 0).toString());
+				textFieldEmail.setText(tblEmpresas.getValueAt(tblEmpresas.getSelectedRow(), 5).toString());
 				
 			}
 		});
@@ -282,7 +296,7 @@ public class buscarEmpresa {
 		});
 		txtAddEmpNombre.setToolTipText("Ingrese el nombre de la nueva empresa");
 		txtAddEmpNombre.setColumns(10);
-		txtAddEmpNombre.setBounds(36, 421, 127, 45);
+		txtAddEmpNombre.setBounds(48, 394, 180, 45);
 		frame.getContentPane().add(txtAddEmpNombre);
 
 		txtAddEmpDireccion = new JTextField();
@@ -303,7 +317,7 @@ public class buscarEmpresa {
 		});
 		txtAddEmpDireccion.setToolTipText("Ingrese la direcci\u00F3n de la nueva empresa");
 		txtAddEmpDireccion.setColumns(10);
-		txtAddEmpDireccion.setBounds(162, 421, 209, 45);
+		txtAddEmpDireccion.setBounds(527, 394, 230, 45);
 		frame.getContentPane().add(txtAddEmpDireccion);
 
 		btnAtras = new JButton("Atras");
@@ -327,7 +341,7 @@ public class buscarEmpresa {
 		btnAtras.setForeground(Color.WHITE);
 		btnAtras.setBackground(Color.BLACK);
 		btnAtras.setToolTipText("Te lleva a la pantalla anterior");
-		btnAtras.setBounds(26, 483, 109, 39);
+		btnAtras.setBounds(27, 511, 109, 39);
 		frame.getContentPane().add(btnAtras);
 
 		txtAddEmpTelefono = new JTextField();
@@ -348,7 +362,7 @@ public class buscarEmpresa {
 		});
 		txtAddEmpTelefono.setToolTipText("Ingrese el tel\u00E9fono de la nueva empresa");
 		txtAddEmpTelefono.setColumns(10);
-		txtAddEmpTelefono.setBounds(371, 421, 137, 45);
+		txtAddEmpTelefono.setBounds(240, 443, 244, 45);
 		frame.getContentPane().add(txtAddEmpTelefono);
 
 		txtAddEmpLocalidad = new JTextField();
@@ -369,7 +383,7 @@ public class buscarEmpresa {
 		});
 		txtAddEmpLocalidad.setToolTipText("Ingrese la localidad de la nueva empresa");
 		txtAddEmpLocalidad.setColumns(10);
-		txtAddEmpLocalidad.setBounds(508, 421, 127, 45);
+		txtAddEmpLocalidad.setBounds(240, 394, 244, 45);
 		frame.getContentPane().add(txtAddEmpLocalidad);
 		btnBuscarEmpresas = new JButton("Buscar NIF");
 		btnBuscarEmpresas.addMouseListener(new MouseAdapter() {
@@ -386,6 +400,13 @@ public class buscarEmpresa {
 		btnBuscarEmpresas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cif = txtBuscarEmpresa.getText();
+				miControlador.limpiar(txtAddEmpNombre);
+				miControlador.limpiar(txtAddEmpDireccion);
+				miControlador.limpiar(txtAddEmpTelefono);
+				miControlador.limpiar(txtAddEmpLocalidad);
+				miControlador.limpiar(textFieldEmail);
+				miControlador.limpiar(textRepresentante);
+				miControlador.limpiar(txtBuscarEmpresa);
 				miControlador.Empresa(cif);
 			}
 		});
@@ -394,7 +415,7 @@ public class buscarEmpresa {
 		btnBuscarEmpresas
 				.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnBuscarEmpresas.setBackground(Color.BLACK);
-		btnBuscarEmpresas.setBounds(602, 136, 110, 45);
+		btnBuscarEmpresas.setBounds(602, 84, 110, 45);
 		frame.getContentPane().add(btnBuscarEmpresas);
 
 		textRepresentante = new JTextField();
@@ -407,7 +428,7 @@ public class buscarEmpresa {
 		textRepresentante.setColumns(10);
 		textRepresentante.setCaretColor(Color.WHITE);
 		textRepresentante.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Representante", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textRepresentante.setBounds(635, 421, 117, 45);
+		textRepresentante.setBounds(48, 441, 180, 45);
 		frame.getContentPane().add(textRepresentante);
 
 		JLabel lblBackground = new JLabel("");

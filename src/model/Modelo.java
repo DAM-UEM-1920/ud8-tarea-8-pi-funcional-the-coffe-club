@@ -114,20 +114,6 @@ public class Modelo {
 		}
 	}
 
-	public int insertar(String usr, String pwd) {
-		int resultado = 0;
-		try {
-			String query = "INSERT INTO COFFE.users (usr,pwd) VALUES (?,?)";
-			PreparedStatement pstmt = conexion.prepareStatement(query);
-			pstmt.setString(1, usr);
-			pstmt.setString(2, pwd);
-			resultado = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return resultado;
-	}
-
 	public int modificar(String pwd) {
 		int resultado = 0;
 		try {
@@ -330,6 +316,22 @@ public class Modelo {
 		}
 
 	}
+	
+	public ArrayList<String> getCentros() {
+		ArrayList<String> centro = new ArrayList<String>();
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT cod_centro FROM centro");
+			do {
+				rset.next();
+				centro.add(rset.getString(1));
+
+			} while (rset.next());
+			return centro;
+		} catch (SQLException e) {
+			return centro;
+		}
+	}
 
 	/**
 	 * devuelve el codigo del grupo a traves de su nombre
@@ -369,6 +371,7 @@ public class Modelo {
 			String qwery = "INSERT INTO COFFEE." + tabla + " VALUES (" + values + ")";
 			PreparedStatement pstmt = conexion.prepareStatement(qwery);
 			resultado = pstmt.executeUpdate();
+			System.out.println(tabla + " insertado con exito");
 		} catch (SQLException e) {
 			System.out.println(values);
 			System.out.println("error de insertado");

@@ -194,7 +194,7 @@ public class Login {
 		btnLogin.addMouseMotionListener(new MouseMotionAdapter() {
 
 		});
-		//preguntar a xavi
+		
 		btnLogin.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -273,7 +273,7 @@ public class Login {
 
 			}
 		});
-		
+
 		checkbox.setSelected(true);
 		checkbox.setFont(new Font("Tahoma", Font.BOLD, 11));
 		checkbox.setForeground(Color.WHITE);
@@ -344,7 +344,6 @@ public class Login {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-
 
 				// Sincroniza los CheckBox
 

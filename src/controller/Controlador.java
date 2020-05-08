@@ -3,6 +3,7 @@ package controller;
 import java.awt.Checkbox;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -298,6 +299,16 @@ public class Controlador {
 	public boolean getBoxselect() {
 		return activo;
 
+	}
+	
+	public String getYear() {
+		int mes = LocalDate.now().getMonthValue();
+		int año = LocalDate.now().getYear();
+		if(mes<6) {
+			return  String.valueOf(año-1)+ "-" +String.valueOf(año);
+		} else
+			return String.valueOf(año) + "-" + String.valueOf(año+1);
+		
 	}
 
 }

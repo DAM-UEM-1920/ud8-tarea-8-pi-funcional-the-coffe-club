@@ -96,6 +96,14 @@ public class AsignarGrupo {
 		table_1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		table_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		scrollPane.setViewportView(table_1);
+		
+		table_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int fila = table_1.getSelectedRow();
+
+			}
+		});
 
 		table_2 = new JTable();
 		table_2.setBounds(498, 5, 0, 0);
@@ -116,11 +124,7 @@ public class AsignarGrupo {
 			}
 		});
 		btnAsignar.setToolTipText("Asigna el tutor al grupo elegido");
-		btnAsignar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				miControlador.asignarGrupoFin();
-			}
-		});
+		
 		btnAsignar.setForeground(Color.WHITE);
 		btnAsignar.setFont(new Font("Dialog", Font.PLAIN, 18));
 		btnAsignar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
@@ -183,9 +187,7 @@ public class AsignarGrupo {
 		lbldni.setHorizontalAlignment(SwingConstants.CENTER);
 		lbldni.setForeground(Color.WHITE);
 		lbldni.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lbldni.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"Numero de Expediente", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		lbldni.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DNI", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		lbldni.setBounds(23, 173, 190, 68);
 		panel.add(lbldni);
 
@@ -195,6 +197,15 @@ public class AsignarGrupo {
 		panel.add(lblFondo);
 		frame.setBounds(550, 250, 997, 588);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		btnAsignar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int fila = table_1.getSelectedRow();
+				miModelo.insert("gestiona", "'" + lbldni.getText() + "', " +(String) table_1.getValueAt(fila, 0) + 
+						", '"+miControlador.getYear() +"', '22/03/2015'");
+				miControlador.asignarGrupoFin();
+			}
+		});
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
