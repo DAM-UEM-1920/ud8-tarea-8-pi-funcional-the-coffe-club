@@ -41,6 +41,9 @@ import java.util.Scanner;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.sun.javafx.geom.Edge;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.JPasswordField;
 
@@ -482,38 +485,44 @@ public class Opciones {
 	}
 
 	private void metodoEscritura() {
-		Exception e = new Exception("Este es mi propio error.");
+		//Exception e = new Exception("Este es mi propio error.");
+		int cont=0;
 		if (check == true) {
 
 			try {
-				if (textNombreUser.getText() != null) {
+				if (textNombreUser.getText().length()!=0) {
 					texto = texto.replace(parts[0], textNombreUser.getText());
 				} else {
 
-					throw e;
+					cont++;
 				}
-				if (txtPasswordUses.getText() != null) {
+				if (txtPasswordUses.getText().length()!=0&&cont<1) {
 					texto = texto.replace(parts[1], txtPasswordUses.getText());
 				} else {
 
-					throw e;
+					cont++;
 				}
-				if (textURLconexion.getText() != null) {
+				if (textURLconexion.getText().length()!=0&&cont<1) {
 					texto = texto.replace(parts[2], textURLconexion.getText());
 				} else {
-					throw e;
+					cont++;
 				}
+				
 				PrintWriter pw = new PrintWriter(fichero);
 				pw.println(texto);
 				pw.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
-			} catch (Exception excepcion) {
-
+			} 
+			if (cont<1) {
+				lblResultado.setForeground(Color.GREEN);
+				lblResultado.setText("Se ha guardado correctamente");
+				miControlador.SoundAcceso();
+			}else {
+				lblResultado.setForeground(Color.YELLOW);
+				lblResultado.setText("No puedes dejar espacios en blanco");
 			}
-			lblResultado.setForeground(Color.GREEN);
-			lblResultado.setText("Se ha guardado correctamente");
-			miControlador.SoundAcceso();
+			
 
 		} else {
 			lblResultado.setForeground(Color.YELLOW);
