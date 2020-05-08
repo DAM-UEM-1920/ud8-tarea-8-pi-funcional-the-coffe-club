@@ -42,7 +42,6 @@ import java.util.Scanner;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.sun.javafx.geom.Edge;
 
 import javax.swing.border.EtchedBorder;
 import javax.swing.JPasswordField;

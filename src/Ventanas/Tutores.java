@@ -166,8 +166,9 @@ public class Tutores {
 		btnEliminarTutor.setEnabled(false);
 		btnEliminarTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
-				tabla.removeRow(table.getSelectedRow());
+				miModelo.delete("ejerce", "e_dni_tutor ", "'" + txtDniTutor.getText() + "'");
+				miModelo.delete("gestiona", "tutor_dni_tutor ", "'" + txtDniTutor.getText() + "'");
+				miModelo.delete("tutor", "dni_tutor ", "'" + txtDniTutor.getText() + "'");
 				btnEliminarTutor.setEnabled(false);
 				btnEditarTutor.setEnabled(false);
 				btnAadirTutor.setEnabled(false);
@@ -175,6 +176,7 @@ public class Tutores {
 				miControlador.limpiar(textApellidos);
 				miControlador.limpiar(textEmail);
 				miControlador.limpiar(textArea);
+				table.setModel(miModelo.getTabla("tutor"));
 
 			}
 		});

@@ -192,14 +192,16 @@ public class buscarEmpresa {
 		btnEliminarEmpresa.setEnabled(false);
 		btnEliminarEmpresa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel tabla = (DefaultTableModel) tblEmpresas.getModel();
-				tabla.removeRow(tblEmpresas.getSelectedRow());
+				miModelo.delete("practica", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
+				miModelo.delete("colabora", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
+				miModelo.delete("empresa", "cif ", "'" + txtBuscarEmpresa.getText() + "'");
 				miControlador.limpiar(txtAddEmpNombre);
 				miControlador.limpiar(txtAddEmpDireccion);
 				miControlador.limpiar(txtAddEmpTelefono);
 				miControlador.limpiar(txtAddEmpLocalidad);
 				btnEliminarEmpresa.setEnabled(false);
 				btnAniadirEmpresa.setEnabled(false);
+				tblEmpresas.setModel(miModelo.getTabla("empresa"));
 
 			}
 		});
@@ -248,8 +250,7 @@ public class buscarEmpresa {
 				btnAniadirEmpresa.setEnabled(false);
 				btnEliminarEmpresa.setEnabled(false);
 				tblEmpresas.setModel(miModelo.getTabla("empresa"));
-				
-				
+
 			}
 		});
 
