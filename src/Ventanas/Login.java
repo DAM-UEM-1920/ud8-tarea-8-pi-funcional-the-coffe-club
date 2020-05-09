@@ -61,6 +61,7 @@ public class Login {
 	private JLabel lblrespuesta;
 	private JLabel lblusrimg_1;
 	private JCheckBox checkbox;
+	private JButton btnNuevoUsuario;
 
 	/**
 	 * Create the application.
@@ -119,8 +120,8 @@ public class Login {
 				// Salir con la tecla Escape
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
-					System.exit(0);
+					miControlador.SoundLogAtras();
+					txtUsuario.requestFocus();
 				}
 
 			}
@@ -148,8 +149,11 @@ public class Login {
 				// Cambiamos el Focus al campo selecionado
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					miControlador.SoundSend();
-					passwordField.requestFocus();
+					if (txtUsuario.getText().length() == 0) {
+						txtUsuario.requestFocus();
 
+				}else
+					passwordField.requestFocus();	
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
@@ -334,11 +338,43 @@ public class Login {
 		lblOpciones.setIcon(new ImageIcon(Login.class.getResource("/Img/rueda.png")));
 		lblOpciones.setBounds(553, 333, 49, 48);
 		frame.getContentPane().add(lblOpciones);
+		
+		btnNuevoUsuario = new JButton("Nuevo Usuario");
+		btnNuevoUsuario.setBorder(null);
+		btnNuevoUsuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.SoundAcceso();
+					miControlador.Registro();
+				}
 
-		JLabel lblbackground = new JLabel("");
-		lblbackground.setIcon(new ImageIcon(Login.class.getResource("/Img/Fondogrande.jpg")));
-		lblbackground.setBounds(0, 0, 626, 392);
-		frame.getContentPane().add(lblbackground);
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
+			
+			}
+		});
+		btnNuevoUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.SoundAcceso();
+				miControlador.Registro();
+			}
+		});
+		btnNuevoUsuario.setContentAreaFilled(false);
+		btnNuevoUsuario.setOpaque(false);
+		btnNuevoUsuario.setToolTipText("Pulse para acceder");
+		btnNuevoUsuario.setForeground(Color.CYAN);
+		btnNuevoUsuario.setBackground(Color.BLACK);
+		btnNuevoUsuario.setBounds(217, 331, 162, 22);
+		frame.getContentPane().add(btnNuevoUsuario);
+		
+				JLabel lblbackground = new JLabel("");
+				lblbackground.setIcon(new ImageIcon(Login.class.getResource("/Img/Fondogrande.jpg")));
+				lblbackground.setBounds(0, 0, 626, 392);
+				frame.getContentPane().add(lblbackground);
 		frame.setBounds(550, 250, 632, 421);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
@@ -373,9 +409,25 @@ public class Login {
 	}
 
 	public void actualaizar() {
-
 		String resultado = miModelo.getResultado();
 		String user = getUsr();
+		
+		if (txtUsuario.getText().length() == 0) {
+			lblrespuesta.setForeground(Color.YELLOW);
+			lblrespuesta.setText("Introduzca su usuario");
+			lblrespuesta.setFont(new Font("Tahoma", Font.BOLD, 12));
+			miControlador.SoundError();
+			txtUsuario.requestFocus();
+			
+			
+		}else if (passwordField.getText().length() == 0) {
+			lblrespuesta.setForeground(Color.YELLOW);
+			lblrespuesta.setText("Introduzca su Contraseña");
+			lblrespuesta.setFont(new Font("Tahoma", Font.BOLD, 12));
+			miControlador.SoundError();
+			passwordField.requestFocus();
+		}else {
+
 		if (resultado.equals("TUTOR")) {
 			miControlador.SoundAcceso();
 			miControlador.menuTutor(user);
@@ -385,13 +437,14 @@ public class Login {
 			miControlador.menuDirector(user);
 			miModelo.limpiar(lblrespuesta);
 		} else if (resultado.contentEquals("ERROR")) {
+			lblrespuesta.setForeground(Color.RED);
 			miControlador.SoundError();
 			lblrespuesta.setText("Usuario o contraseña incorrectos");
 			miModelo.limpiar(passwordField);
 		} else {
 			System.exit(0);
 
-		}
+		}}
 
 	}
 
