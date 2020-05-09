@@ -16,10 +16,10 @@ CREATE TABLE alumno (
     nombre      VARCHAR2(25 CHAR) NOT NULL,
     apellidos   VARCHAR2(55 CHAR) NOT NULL,
     num_exp     NUMBER(15) NOT NULL,
-    nacionalidad VARCHAR2(25 CHAR),
+    nacionalidad VARCHAR2(25 CHAR) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    email      VARCHAR2(50 CHAR), 
-    telefono    NUMBER(9) NOT NULL
+    e_mail      VARCHAR2(50 CHAR), 
+    telefono    NUMBER(9)
 );
 
 ALTER TABLE alumno ADD CONSTRAINT alumno_pk PRIMARY KEY ( num_exp );
@@ -37,7 +37,7 @@ CREATE TABLE colabora (
     centro_cod_centro   NUMBER(1) NOT NULL,
     empresa_cif         VARCHAR2(15 CHAR) NOT NULL,
     numconv             NUMBER NOT NULL,
-    anexo_1             VARCHAR2(50 CHAR) NOT NULL,
+    anexo_1             VARCHAR2(50 CHAR) ,
     fecha               DATE NOT NULL
 );
 
@@ -50,7 +50,7 @@ CREATE TABLE empresa (
     direccion   VARCHAR2(30 CHAR) NOT NULL,
     telefono    NUMBER(12) NOT NULL,
     localidad   VARCHAR2(50 CHAR) NOT NULL,
-    email VARCHAR2(30 CHAR),
+    e_mail VARCHAR2(30 CHAR),
     representantes VARCHAR2(20 CHAR) NOT NULL
 );
 
@@ -60,7 +60,7 @@ CREATE TABLE gestiona (
     tutor_dni_tutor   VARCHAR2(9 CHAR) NOT NULL,
     grupo_cod_grupo   NUMBER(5) NOT NULL,
     ano_acad         VARCHAR2(12 CHAR) NOT NULL,
-    anexo_2_2         DATE NOT NULL
+    anexo_2_2         DATE 
 );
 
 ALTER TABLE gestiona ADD CONSTRAINT gestiona_pk PRIMARY KEY ( tutor_dni_tutor,
@@ -86,14 +86,14 @@ ALTER TABLE pertenece ADD CONSTRAINT pertenece_pk PRIMARY KEY (grupo_cod_grupo, 
 CREATE TABLE practica (
     empresa_cif      VARCHAR2(15 CHAR) NOT NULL,
     alumno_num_exp   NUMBER(15) NOT NULL,
-    anexo_2_1        DATE NOT NULL,
-    anexo_3          DATE NOT NULL,
-    anexo_7          DATE NOT NULL,
-    anexo_8          DATE NOT NULL,
-    fecha_ini        DATE NOT NULL,
-    fecha_fin        DATE NOT NULL,
+    anexo_2_1        DATE ,
+    anexo_3          DATE ,
+    anexo_7          DATE ,
+    anexo_8          DATE ,
+    fecha_ini        DATE ,
+    fecha_fin        DATE ,
     ano_acad         VARCHAR2(12 CHAR) NOT NULL,
-    horario          VARCHAR2(50 CHAR) NOT NULL,
+    horario          VARCHAR2(50 CHAR) ,
     tutore           VARCHAR2(50 CHAR) NOT NULL
 );
 
@@ -173,11 +173,11 @@ ALTER TABLE ejerce
         REFERENCES tutor (dni_tutor) ;
 
 
-INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, EMAIL, TELEFONO) VALUES('594131t', 'Juan', 'Perez Garcia',1523547, 'Español','8/1/93','alumno1@uem.es', 600000000);
-INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, EMAIL, TELEFONO) VALUES('449162s', 'Pablo', 'Perez Ayuso',1226547, 'Ecuatoriano', '2/18/90','alumno2@uem.es', 600000001);
-INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, EMAIL, TELEFONO) VALUES('111896o', 'Fabiola', 'Yoquese Nobita',1336547, 'Mongol', '9/13/95','alumno3@uem.es', 600000002);
-INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, EMAIL, TELEFONO) VALUES('447893p', 'Nico', 'Fiesta Fiesta',256987, 'Canadiense', '11/6/98','alumno4@uem.es', 600000003 );
-INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, EMAIL, TELEFONO) VALUES('657894r', 'Miguel', 'Perchita Donrramon',897556, 'Frances', '9/16/90','alumno5@uem.es', 600000005 );
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('594131t', 'Juan', 'Perez Garcia',1523547, 'Español','8/1/93', 'juanPerez@gmail.com', 698742361);
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('449162s', 'Pablo', 'Perez Ayuso',1226547, 'Ecuatoriano', '2/18/90','pabloayuso@gmail.com', 623659879);
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('111896o', 'Fabiola', 'Yoquese Nobita',1336547, 'Mongol', '9/13/95', 'nobitaseque@gmail.com', 644444361);
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('447893p', 'Nico', 'Fiesta Fiesta',256987, 'Canadiense', '11/6/98', 'nikointhejoke@gmail.com', 687562361);
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento) VALUES('657894r', 'Miguel', 'Perchita Donrramon',897556, 'Frances', '9/16/90');
 
 INSERT INTO centro(cod_centro, localidad, director, DAT) VALUES(1, 'Villaviciosa', 'Ana','Yorya');
 INSERT INTO centro(cod_centro, localidad, director, DAT) VALUES(2, 'Leganes', 'Ana Maria','Iggy');
@@ -185,11 +185,11 @@ INSERT INTO centro(cod_centro, localidad, director, DAT) VALUES(3, 'Villacodigo'
 INSERT INTO centro(cod_centro, localidad, director, DAT) VALUES(4, 'Alcorcon', 'Jose','Grillo');
 INSERT INTO centro(cod_centro, localidad, director, DAT) VALUES(5, 'Alcornoque', 'Alguien','Berto');
 
-INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, email, representantes) VALUES('dfkj3156', 'algo S.A.', 'c/Miseria Nº69', 666666666, 'Las Penas', 'algo@algo.es','Carlos');
-INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, email, representantes) VALUES('oemd5698', 'algomas S.A.', 'c/Misericorda Nº39', 64789632, 'Los Lisiados', 'algomas@gmail.com', 'Luis');
-INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, email, representantes) VALUES('aned4236', 'otracosa S.A.', 'c/Estafa Nº2', 667778889, 'Los Listos', 'otracosa@cosa.com', 'Alex');
-INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, email, representantes) VALUES('awod1236', 'Mariposa S.A.', 'c/Perpetua Nº6', 67896541, 'Los Tontos', 'MariposaRosa@hotmail.com', 'Ionut');
-INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, email, representantes) VALUES('iqie4568', 'Alcatraz S.A.', 'c/Nosesale Nº1', 6796314, 'La Isla', 'Carcel@Alcatraz.es', 'Ivan');
+INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, e_mail, representantes) VALUES('dfkj3156', 'algo S.A.', 'c/Miseria Nº69', 666666666, 'Las Penas', 'algo@algo.es','Carlos');
+INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, e_mail, representantes) VALUES('oemd5698', 'algomas S.A.', 'c/Misericorda Nº39', 64789632, 'Los Lisiados', 'algomas@gmail.com', 'Luis');
+INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, e_mail, representantes) VALUES('aned4236', 'otracosa S.A.', 'c/Estafa Nº2', 667778889, 'Los Listos', 'otracosa@cosa.com', 'Alex');
+INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, e_mail, representantes) VALUES('awod1236', 'Mariposa S.A.', 'c/Perpetua Nº6', 67896541, 'Los Tontos', 'MariposaRosa@hotmail.com', 'Ionut');
+INSERT INTO empresa(cif, nombre, direccion, telefono, localidad, e_mail, representantes) VALUES('iqie4568', 'Alcatraz S.A.', 'c/Nosesale Nº1', 6796314, 'La Isla', 'Carcel@Alcatraz.es', 'Ivan');
 
 INSERT INTO grupo(cod_grupo, nom_grupo, clave_ciclo, nombre_ciclo) VALUES(3, 'DAMnificados', 0043, 'DAM');
 INSERT INTO grupo(cod_grupo, nom_grupo, clave_ciclo, nombre_ciclo) VALUES(1, 'ASIR123', 0039, 'ASIF');
@@ -245,21 +245,22 @@ INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorB', '236598w');
 INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorC', '789546q');
 INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorD', '123698a');
 INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorE', '965481f');
-
-
-
-REM ***************************** SELECT USADA EN EL LOGIN (METODO GETROL) *****************************
+REM
+REM ***************************** SELECT USADA EN EL LOGIN *****************************
 REM "SELECT rol FROM COFFE.users WHERE usr = " + "'" + usr + "'" + " AND pwd = " + "'" + pwd+ "'"
 REM ************************************************************************************
-
-
-REM *************** SELECT USADA PARA MOSTRAR EMPRESA EN VENTANA ALUMNO (METODO GETEMPRESA) ************
-REM "SELECT empresa.nombre FROM empresa, practica, alumno"
-REM + " WHERE alumno.num_exp = practica.alumno_num_exp AND practica.empresa_cif = empresa.cif "
-REM + "AND alumno.nombre= '"+ alumno + "'"
-REM ************************************************************************************
-
-
-REM ******************* SELECT USADA EN EL METODO GETDATO ******************************
-REM "SELECT * FROM COFFEE." + tabla + " WHERE " + pk + " = '" + cod + "'"
-REM************************************************************************************
+REM
+REM ***************************** SELECT USADA EN Alumnos *****************************
+REM
+REM
+REM
+REM
+REM
+REM
+REM
+REM
+REM
+REM
+REM
+REM
+REM
