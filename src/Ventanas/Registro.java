@@ -578,8 +578,19 @@ public class Registro {
 		 rppasswd=txtPasswordConfirmar.getText();
 		 email=textEmail.getText();
 		 DNI=textFieldDNI.getText();
-		 System.out.println(comboBoxRol.getSelectedItem().toString());
-		 miModelo.insert("users", "'"+usr+"' ,'"+passwd+"' ,'"+comboBoxRol.getSelectedItem().toString()+"'");
+		 if (usr.length()!=0&&passwd.length()!=0&&email.length()!=0&&DNI.length()!=0&&passwd.equals(rppasswd)) {
+			 if (miModelo.update("tutor", "E_MAIL = '"+email+"'" , "DNI_TUTOR","'"+ DNI+"'")==0) {
+					System.out.println("ERROR");
+				}else {
+					 miModelo.insert("users", "'"+usr+"' ,'"+passwd+"' ,'"+comboBoxRol.getSelectedItem().toString()+"'");
+					 miModelo.insert("ejerce","'" +usr+"', '"+DNI+"'");
+				}
+		}else {
+			System.out.println("Pene");
+		}
+		
+		
+		 
 		
 	 }
 
