@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -81,6 +82,7 @@ public class Registro {
 	private JLabel lblResultado_Combo;
 	private JLabel lblfondo;
 	private JComboBox comboBoxRol;
+	private String usr, passwd, rppasswd, email, DNI, rol; 
 
 	/**
 	 * Create the application.
@@ -183,7 +185,7 @@ public class Registro {
 			}
 		});
 		btnAtrs.setToolTipText("Te lleva a la pantalla anterior");
-		btnAtrs.setBounds(33, 376, 140, 45);
+		btnAtrs.setBounds(32, 400, 110, 39);
 		btnAtrs.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -369,7 +371,10 @@ public class Registro {
 		});
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				miModelo.metodoLectura();
+				miModelo.conexion();
+				miControlador.login();
+				añadir();
 			}
 		});
 		btnGuardar.setToolTipText("Guarda los datos introducidos");
@@ -566,6 +571,17 @@ public class Registro {
 		Frame.getContentPane().add(lblfondo);
 
 	}
+ public void añadir() {
+		 
+		 usr=textNombreUser.getText();
+		 passwd=txtPasswordUser.getText();
+		 rppasswd=txtPasswordConfirmar.getText();
+		 email=textEmail.getText();
+		 DNI=textFieldDNI.getText();
+		 System.out.println(comboBoxRol.getSelectedItem().toString());
+		 miModelo.insert("users", "'"+usr+"' ,'"+passwd+"' ,'"+comboBoxRol.getSelectedItem().toString()+"'");
+		
+	 }
 
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;

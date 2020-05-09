@@ -531,6 +531,7 @@ public class Opciones {
 		}
 
 	}
+	
 
 	public void setControlador(Controlador miControlador) {
 		this.miControlador = miControlador;
