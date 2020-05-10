@@ -578,15 +578,28 @@ public class Registro {
 		 rppasswd=txtPasswordConfirmar.getText();
 		 email=textEmail.getText();
 		 DNI=textFieldDNI.getText();
-		 if (usr.length()!=0&&passwd.length()!=0&&email.length()!=0&&DNI.length()!=0&&passwd.equals(rppasswd)) {
-			 if (miModelo.update("tutor", "E_MAIL = '"+email+"'" , "DNI_TUTOR","'"+ DNI+"'")==0) {
-					System.out.println("ERROR");
-				}else {
-					 miModelo.insert("users", "'"+usr+"' ,'"+passwd+"' ,'"+comboBoxRol.getSelectedItem().toString()+"'");
-					 miModelo.insert("ejerce","'" +usr+"', '"+DNI+"'");
-				}
+		 if (usr.length()!=0&&passwd.length()!=0&&email.length()!=0) {
+			 if (DNI.length()!=0&&passwd.equals(rppasswd)) {
+				 if (miModelo.update("tutor", "E_MAIL = '"+email+"'" , "DNI_TUTOR","'"+ DNI+"'")==0) {
+					 lblResultado.setForeground(Color.YELLOW);
+						lblResultado.setText("DNI Incorrecto");
+					}else {
+						if (miModelo.insert("users", "'"+usr+"' ,'"+passwd+"' ,'"+comboBoxRol.getSelectedItem().toString()+"'")==1) {
+							 miModelo.insert("ejerce","'" +usr+"', '"+DNI+"'");
+						} else {
+							lblResultado.setForeground(Color.YELLOW);
+							lblResultado.setText("Usuario Incorrecto");
+						}
+						
+					}
+			}else {
+				lblResultado.setForeground(Color.YELLOW);
+				lblResultado.setText("La Contraseña no coincide ");
+			}
+			
 		}else {
-			System.out.println("Pene");
+			lblResultado.setForeground(Color.YELLOW);
+			lblResultado.setText("Rellene todos los campos ");
 		}
 		
 		

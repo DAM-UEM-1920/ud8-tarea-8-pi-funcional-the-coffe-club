@@ -261,6 +261,7 @@ public class Modelo {
 		}
 		return num;
 	}
+	
 
 	/**
 	 * Devuelve un dato cualquiera de la base de datos
