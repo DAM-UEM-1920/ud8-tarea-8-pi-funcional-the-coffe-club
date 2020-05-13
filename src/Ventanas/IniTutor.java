@@ -2,6 +2,13 @@ package Ventanas;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.awt.EventQueue;
 
@@ -24,14 +31,19 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import controller.Controlador;
 import model.Modelo;
+import model.Tablas;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
@@ -70,6 +82,7 @@ public class IniTutor {
 	private JTextField textFieldTelefono;
 	private JTextField textFieldNacionalidad;
 	private JTextField textFieldFechaNacimiento;
+	private Tablas tabla;
 
 	/**
 	 * Create the application.
@@ -91,6 +104,24 @@ public class IniTutor {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IniTutor.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
+		
+		JButton btnCargarTabla = new JButton("Cargar Tabla");
+		btnCargarTabla.setToolTipText("Buscar por numero de expediente del alumno");
+		btnCargarTabla.setForeground(Color.WHITE);
+		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnCargarTabla.setBackground(Color.BLACK);
+		btnCargarTabla.setBounds(606, 212, 90, 28);
+		frame.getContentPane().add(btnCargarTabla);
+		
+		
+		JButton btnGuardarTabla = new JButton("Guardar Tabla");
+		
+		btnGuardarTabla.setToolTipText("Buscar por numero de expediente del alumno");
+		btnGuardarTabla.setForeground(Color.WHITE);
+		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnGuardarTabla.setBackground(Color.BLACK);
+		btnGuardarTabla.setBounds(606, 165, 90, 28);
+		frame.getContentPane().add(btnGuardarTabla);
 
 		JComboBox<String> comboBoxGrupos = new JComboBox();
 		comboBoxGrupos.setBackground(Color.WHITE);
@@ -459,7 +490,7 @@ public class IniTutor {
 		frame.getContentPane().add(btnAadir);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(61, 159, 582, 135);
+		scrollPane.setBounds(12, 159, 582, 135);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
@@ -542,6 +573,18 @@ public class IniTutor {
 		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
 		lblFondo.setBounds(0, 0, 703, 492);
 		frame.getContentPane().add(lblFondo);
+		
+		btnGuardarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guardarObjeto();
+			}
+		});
+		
+		btnCargarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cargarObjeto();
+			}
+		});
 
 		JLabel lblNewLabelCod_grupo = new JLabel("New label");
 		lblNewLabelCod_grupo.setBounds(22, 130, 56, 16);
@@ -627,5 +670,50 @@ public class IniTutor {
 
 	public void setTutor(String user) {
 		this.user = user;
+	}
+	
+	private void guardarObjeto() {
+		File rutaProyecto = new File(System.getProperty("user.dir"));
+		JFileChooser fc = new JFileChooser(rutaProyecto);
+		int seleccion = fc.showSaveDialog(table);
+		if (seleccion == JFileChooser.APPROVE_OPTION) {
+			File fichero = fc.getSelectedFile();
+			try {
+				FileOutputStream fos = new FileOutputStream(fichero);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				Tablas miTabla  = new Tablas (table.getColumnCount(), table.getRowCount(), "alumnos", table, user);
+				oos.writeObject(miTabla);
+				fos.close();
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void cargarObjeto() {
+		File rutaProyecto = new File(System.getProperty("user.dir"));
+		JFileChooser fc = new JFileChooser(rutaProyecto);
+		int seleccion = fc.showOpenDialog(table);
+		if (seleccion == JFileChooser.APPROVE_OPTION) {
+			try {
+				File fichero = fc.getSelectedFile();
+				FileInputStream fis = new FileInputStream(fichero);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				Tablas miTabla  = (Tablas) ois.readObject();
+				System.out.println(miTabla.getNombre());
+				System.out.println(miTabla.getFilas());
+				System.out.println(miTabla.getColumnas());
+				table.setModel(miTabla.getTabla().getModel());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
