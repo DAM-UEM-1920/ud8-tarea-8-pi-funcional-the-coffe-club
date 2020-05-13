@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Tablas implements Serializable {
 
@@ -13,17 +15,13 @@ public class Tablas implements Serializable {
 	private int columnas;
 	private int filas;
 	private String nombre;
-	private JTable tabla;
+	private DefaultTableModel tabla;
 	private String user;
 
 
-	public Tablas(int columnas, int filas, String nombre, JTable tabla, String user) {
+	public Tablas(DefaultTableModel tabla) {
 		super();
-		this.columnas = columnas;
-		this.filas = filas;
-		this.nombre = nombre;
 		this.tabla = tabla;
-		this.user = user;
 	}
 
 
@@ -57,12 +55,12 @@ public class Tablas implements Serializable {
 	}
 
 
-	public JTable getTabla() {
+	public DefaultTableModel getTabla() {
 		return tabla;
 	}
 
 
-	public void setTabla(JTable tabla) {
+	public void setTabla(DefaultTableModel tabla) {
 		this.tabla = tabla;
 	}
 

@@ -4,11 +4,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.awt.EventQueue;
 
@@ -104,7 +101,7 @@ public class IniTutor {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IniTutor.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JButton btnCargarTabla = new JButton("Cargar Tabla");
 		btnCargarTabla.setToolTipText("Buscar por numero de expediente del alumno");
 		btnCargarTabla.setForeground(Color.WHITE);
@@ -112,10 +109,9 @@ public class IniTutor {
 		btnCargarTabla.setBackground(Color.BLACK);
 		btnCargarTabla.setBounds(606, 212, 90, 28);
 		frame.getContentPane().add(btnCargarTabla);
-		
-		
+
 		JButton btnGuardarTabla = new JButton("Guardar Tabla");
-		
+
 		btnGuardarTabla.setToolTipText("Buscar por numero de expediente del alumno");
 		btnGuardarTabla.setForeground(Color.WHITE);
 		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
@@ -295,7 +291,7 @@ public class IniTutor {
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
 				table.setModel(miModelo.getAlumnosTutor(user));
-				
+
 			}
 		});
 		frame.getContentPane().add(btnEliminar);
@@ -341,7 +337,7 @@ public class IniTutor {
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
 				btnEliminar.setEnabled(false);
-				
+
 				table.setModel(miModelo.getTabla("alumno"));
 			}
 		});
@@ -469,9 +465,10 @@ public class IniTutor {
 								+ textFieldApellidos.getText() + "', " + textFieldExp.getText() + ", '"
 								+ textFieldNacionalidad.getText() + "', '" + textFieldFechaNacimiento.getText() + "', '"
 								+ textFieldEmail.getText() + "', " + textFieldTelefono.getText());
-				miModelo.insert("pertenece", textFieldExp.getText() + ", " + 
-								miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) 
-								+ ",'"+ miControlador.getYear() +"'" );
+				miModelo.insert("pertenece",
+						textFieldExp.getText() + ", "
+								+ miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) + ",'"
+								+ miControlador.getYear() + "'");
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
@@ -573,16 +570,22 @@ public class IniTutor {
 		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
 		lblFondo.setBounds(0, 0, 703, 492);
 		frame.getContentPane().add(lblFondo);
-		
+
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guardarObjeto();
+				miControlador.guardarObjeto(user);
 			}
 		});
-		
+
 		btnCargarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cargarObjeto();
+				File rutaProyecto = new File(System.getProperty("user.dir"));
+				JFileChooser fc = new JFileChooser(rutaProyecto);
+				int seleccion = fc.showOpenDialog(frame);
+				if (seleccion == JFileChooser.APPROVE_OPTION) {
+					File fichero = fc.getSelectedFile();
+					miControlador.cargarFichero(fichero);
+				}
 			}
 		});
 
@@ -615,12 +618,7 @@ public class IniTutor {
 			public void windowActivated(WindowEvent e) {
 				table.setModel(miModelo.getAlumnosTutor(user));
 				lblNewLabel.setText("Welcome " + user);
-				ArrayList<String> grup = miModelo.getGrupos(user);
-				String[] grupos = new String[grup.size()];
-				for (int i = 0; i < grupos.length; i++) {
-					grupos[i] = grup.get(i);
-				}
-				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(grupos));
+				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 			}
 		});
 
@@ -647,8 +645,8 @@ public class IniTutor {
 
 	private void updateAlta() {
 		if (textFieldDni.getText().length() == 0 || textFieldNombre.getText().length() == 0
-				|| textFieldApellidos.getText().length() == 0 || textFieldExp.getText().length() == 0 || 
-				textFieldFechaNacimiento.getText().length() == 0 || textFieldNacionalidad.getText().length() == 0) {
+				|| textFieldApellidos.getText().length() == 0 || textFieldExp.getText().length() == 0
+				|| textFieldFechaNacimiento.getText().length() == 0 || textFieldNacionalidad.getText().length() == 0) {
 			btnAadir.setEnabled(false);
 		} else {
 			btnAadir.setEnabled(true);
@@ -671,49 +669,5 @@ public class IniTutor {
 	public void setTutor(String user) {
 		this.user = user;
 	}
-	
-	private void guardarObjeto() {
-		File rutaProyecto = new File(System.getProperty("user.dir"));
-		JFileChooser fc = new JFileChooser(rutaProyecto);
-		int seleccion = fc.showSaveDialog(table);
-		if (seleccion == JFileChooser.APPROVE_OPTION) {
-			File fichero = fc.getSelectedFile();
-			try {
-				FileOutputStream fos = new FileOutputStream(fichero);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				Tablas miTabla  = new Tablas (table.getColumnCount(), table.getRowCount(), "alumnos", table, user);
-				oos.writeObject(miTabla);
-				fos.close();
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private void cargarObjeto() {
-		File rutaProyecto = new File(System.getProperty("user.dir"));
-		JFileChooser fc = new JFileChooser(rutaProyecto);
-		int seleccion = fc.showOpenDialog(table);
-		if (seleccion == JFileChooser.APPROVE_OPTION) {
-			try {
-				File fichero = fc.getSelectedFile();
-				FileInputStream fis = new FileInputStream(fichero);
-				ObjectInputStream ois = new ObjectInputStream(fis);
-				Tablas miTabla  = (Tablas) ois.readObject();
-				System.out.println(miTabla.getNombre());
-				System.out.println(miTabla.getFilas());
-				System.out.println(miTabla.getColumnas());
-				table.setModel(miTabla.getTabla().getModel());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+
 }
