@@ -399,7 +399,7 @@ public class Modelo {
 	 * @param pk Primary Key de la tabla
 	 * @param cod identificador de la fila en la que queremos actuar, coincide con el campo PK
 	 */
-	public void update(String tabla, String valores, String pk, String cod) {
+	public int update(String tabla, String valores, String pk, String cod) {
 		int resultado = 0;
 
 		try {
@@ -410,8 +410,9 @@ public class Modelo {
 			System.out.println(valores);
 			System.out.println("error de update");
 			e.printStackTrace();
-
+			
 		}
+		return resultado;
 	}
 	
 	public int delete (String tabla, String pk, String cod) {
