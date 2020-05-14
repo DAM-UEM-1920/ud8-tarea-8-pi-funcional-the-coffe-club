@@ -80,6 +80,7 @@ public class IniTutor {
 	private JTextField textFieldNacionalidad;
 	private JTextField textFieldFechaNacimiento;
 	private Tablas tabla;
+	private boolean carga = true;
 
 	/**
 	 * Create the application.
@@ -290,7 +291,6 @@ public class IniTutor {
 				btnEliminar.setEnabled(false);
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
-				table.setModel(miModelo.getAlumnosTutor(user));
 
 			}
 		});
@@ -338,7 +338,6 @@ public class IniTutor {
 				btnAadir.setEnabled(false);
 				btnEliminar.setEnabled(false);
 
-				table.setModel(miModelo.getTabla("alumno"));
 			}
 		});
 		frame.getContentPane().add(btnGuardarCambios);
@@ -579,13 +578,8 @@ public class IniTutor {
 
 		btnCargarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				File rutaProyecto = new File(System.getProperty("user.dir"));
-				JFileChooser fc = new JFileChooser(rutaProyecto);
-				int seleccion = fc.showOpenDialog(frame);
-				if (seleccion == JFileChooser.APPROVE_OPTION) {
-					File fichero = fc.getSelectedFile();
-					miControlador.cargarFichero(fichero);
-				}
+				carga = false;
+				refrescar();
 			}
 		});
 
@@ -605,6 +599,7 @@ public class IniTutor {
 				miControlador.limpiar(textFieldTelefono);
 				miControlador.limpiar(textFieldFechaNacimiento);
 				miControlador.vistaAlumno(numexp);
+
 			}
 
 		});
@@ -616,7 +611,7 @@ public class IniTutor {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				table.setModel(miModelo.getAlumnosTutor(user));
+				refrescar();
 				lblNewLabel.setText("Welcome " + user);
 				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 			}
@@ -668,6 +663,23 @@ public class IniTutor {
 
 	public void setTutor(String user) {
 		this.user = user;
+	}
+	
+
+	public void refrescar() {
+		if (this.carga) {
+			table.setModel(miModelo.getAlumnosTutor(user));
+
+		} else {
+			File rutaProyecto = new File(System.getProperty("user.dir"));
+			JFileChooser fc = new JFileChooser(rutaProyecto);
+			int seleccion = fc.showOpenDialog(frame);
+			if (seleccion == JFileChooser.APPROVE_OPTION) {
+				File fichero = fc.getSelectedFile();
+				table.setModel(miControlador.cargarFichero(fichero));
+			}
+		}
+		
 	}
 
 }

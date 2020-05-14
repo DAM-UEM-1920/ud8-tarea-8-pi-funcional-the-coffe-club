@@ -4,6 +4,7 @@ import java.awt.Checkbox;
 import java.awt.Label;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -590,7 +591,25 @@ public class Modelo {
 		}
 	}
 	
-	public void cargarObjeto(File fichero) {
+	public DefaultTableModel cargarObjeto(File fichero) {
+		FileInputStream fis;
+		DefaultTableModel result = null;
+		try {
+			fis = new FileInputStream(fichero);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Tablas miTabla = (Tablas) ois.readObject();
+			result = miTabla.getTabla();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 			
 			
 	}

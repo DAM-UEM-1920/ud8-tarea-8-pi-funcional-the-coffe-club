@@ -331,24 +331,8 @@ public class Controlador {
 	}
 
 	public DefaultTableModel cargarFichero(File fichero) {
-		FileInputStream fis;
-		DefaultTableModel result = null;
-		try {
-			fis = new FileInputStream(fichero);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			Tablas miTabla = (Tablas) ois.readObject();
-			result = miTabla.getTabla();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
+		return miModelo.cargarObjeto(fichero);
+		
 	}
 
 	public void guardarObjeto(String user) {
