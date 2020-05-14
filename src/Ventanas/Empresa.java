@@ -45,7 +45,7 @@ public class Empresa {
 	private JFrame frame;
 	private Controlador miControlador;
 	private Modelo miModelo;
-	private String cif, domicilio, localidad, social, telefono, contacto, mail;
+	private String cif;
 
 	public Empresa() {
 		initialize();
@@ -197,20 +197,14 @@ public class Empresa {
 			@Override
 			public void windowActivated(WindowEvent e) {
 
-				domicilio = miModelo.getDato("empresa", "cif", cif, 3);
-				localidad = miModelo.getDato("empresa", "cif", cif, 5);
-				social = miModelo.getDato("empresa", "cif", cif, 2);
-				telefono = miModelo.getDato("empresa", "cif", cif, 4);
-				contacto = miModelo.getDato("empresa", "cif", cif, 7);
-				mail = miModelo.getDato("empresa", "cif", cif, 6);
-				lblNewLabel_Nombre_Empresa.setText(social);
+				lblNewLabel_Nombre_Empresa.setText(miModelo.getDato("empresa", "cif", cif, 2));
 				lblDNI2.setText(cif);
-				lblDirección.setText(domicilio);
-				lblLocalidad.setText(localidad);
-				lblNombre.setText(social);
-				lblNacion_1.setText(telefono);
-				lblContacto.setText(contacto);
-				lblEmail.setText(mail);
+				lblDirección.setText(miModelo.getDato("empresa", "cif", cif, 3));
+				lblLocalidad.setText(miModelo.getDato("empresa", "cif", cif, 5));
+				lblNombre.setText(miModelo.getDato("empresa", "cif", cif, 2));
+				lblNacion_1.setText(miModelo.getDato("empresa", "cif", cif, 4));
+				lblContacto.setText(miModelo.getDato("empresa", "cif", cif, 7));
+				lblEmail.setText(miModelo.getDato("empresa", "cif", cif, 6));
 			}
 		});
 

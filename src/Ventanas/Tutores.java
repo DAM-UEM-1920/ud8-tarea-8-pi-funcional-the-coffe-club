@@ -132,7 +132,7 @@ public class Tutores {
 		btnAadirTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
-				miModelo.insert("tutor",
+				miControlador.insertar("tutor",
 						"'" + txtDniTutor.getText() + "', '" + textNombre.getText() + "', '" + textApellidos.getText()
 								+ "', " + textFieldCentro.getText() + ", '" + textEmail.getText() + "', '"
 								+ textArea.getText() + "'");
@@ -166,9 +166,9 @@ public class Tutores {
 		btnEliminarTutor.setEnabled(false);
 		btnEliminarTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				miModelo.delete("ejerce", "e_dni_tutor ", "'" + txtDniTutor.getText() + "'");
-				miModelo.delete("gestiona", "tutor_dni_tutor ", "'" + txtDniTutor.getText() + "'");
-				miModelo.delete("tutor", "dni_tutor ", "'" + txtDniTutor.getText() + "'");
+				miControlador.delete("ejerce", "e_dni_tutor ", "'" + txtDniTutor.getText() + "'");
+				miControlador.delete("gestiona", "tutor_dni_tutor ", "'" + txtDniTutor.getText() + "'");
+				miControlador.delete("tutor", "dni_tutor ", "'" + txtDniTutor.getText() + "'");
 				btnEliminarTutor.setEnabled(false);
 				btnEditarTutor.setEnabled(false);
 				btnAadirTutor.setEnabled(false);
@@ -203,7 +203,7 @@ public class Tutores {
 		btnEditarTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = table.getSelectedRow();
-				miModelo.update("tutor",
+				miControlador.update("tutor",
 						"nombre= '" + textNombre.getText() + "' , apellidos= '" + textApellidos.getText()
 								+ "' , e_mail= '" + textEmail.getText() + "' , area= '" + textArea.getText()
 								+ "' ,CENTRO_COD_CENTRO= " + Integer.parseInt(textFieldCentro.getText()),

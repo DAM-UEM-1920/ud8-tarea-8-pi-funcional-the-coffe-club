@@ -154,7 +154,7 @@ public class buscarEmpresa {
 		btnAniadirEmpresa.setToolTipText("A\u00F1ade la empresa con los datos introducidos en los campos");
 		btnAniadirEmpresa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miModelo.insert("empresa",
+				miControlador.insertar("empresa",
 						"'" + txtBuscarEmpresa.getText() + "', '" + txtAddEmpNombre.getText() + "', '"
 								+ txtAddEmpDireccion.getText() + "', " + txtAddEmpTelefono.getText() + ", '"
 								+ txtAddEmpLocalidad.getText() + "', '" + textFieldEmail.getText() + "', '"
@@ -192,9 +192,9 @@ public class buscarEmpresa {
 		btnEliminarEmpresa.setEnabled(false);
 		btnEliminarEmpresa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miModelo.delete("practica", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
-				miModelo.delete("colabora", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
-				miModelo.delete("empresa", "cif ", "'" + txtBuscarEmpresa.getText() + "'");
+				miControlador.delete("practica", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
+				miControlador.delete("colabora", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
+				miControlador.delete("empresa", "cif ", "'" + txtBuscarEmpresa.getText() + "'");
 				miControlador.limpiar(txtAddEmpNombre);
 				miControlador.limpiar(txtAddEmpDireccion);
 				miControlador.limpiar(txtAddEmpTelefono);
@@ -233,7 +233,7 @@ public class buscarEmpresa {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int fila = tblEmpresas.getSelectedRow();
-				miModelo.update("empresa",
+				miControlador.update("empresa",
 						"cif= '" + txtBuscarEmpresa.getText() + "' , nombre= '" + txtAddEmpNombre.getText()
 								+ "' , direccion= '" + txtAddEmpDireccion.getText() + "' , telefono= "
 								+ txtAddEmpTelefono.getText() + " , localidad= '" + txtAddEmpLocalidad.getText()

@@ -580,12 +580,12 @@ public class Registro {
 		 DNI=textFieldDNI.getText();
 		 if (usr.length()!=0&&passwd.length()!=0&&email.length()!=0) {
 			 if (DNI.length()!=0&&passwd.equals(rppasswd)) {
-				 if (miModelo.update("tutor", "E_MAIL = '"+email+"'" , "DNI_TUTOR","'"+ DNI+"'")==0) {
+				 if (miControlador.update("tutor", "E_MAIL = '"+email+"'" , "DNI_TUTOR","'"+ DNI+"'")==0) {
 					 lblResultado.setForeground(Color.YELLOW);
 						lblResultado.setText("DNI Incorrecto");
 					}else {
-						if (miModelo.insert("users", "'"+usr+"' ,'"+passwd+"' ,'"+comboBoxRol.getSelectedItem().toString()+"'")==1) {
-							 miModelo.insert("ejerce","'" +usr+"', '"+DNI+"'");
+						if (miControlador.insertar("users", "'"+usr+"' ,'"+passwd+"' ,'"+comboBoxRol.getSelectedItem().toString()+"'")==1) {
+							 miControlador.insertar("ejerce","'" +usr+"', '"+DNI+"'");
 						} else {
 							lblResultado.setForeground(Color.YELLOW);
 							lblResultado.setText("Usuario Incorrecto");
