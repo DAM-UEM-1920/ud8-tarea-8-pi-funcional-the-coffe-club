@@ -175,7 +175,7 @@ public class AsignarEmpresa {
 		btnAsignar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int fila = table_1.getSelectedRow();
-				miModelo.insert("practica", "'" + (String)table_1.getValueAt(fila, 0) + "', " + lblExpedienteNumber.getText() +
+				miControlador.insertar("practica", "'" + (String)table_1.getValueAt(fila, 0) + "', " + lblExpedienteNumber.getText() +
 						", null, null, null, null, null, null,'"+ miControlador.getYear() +"', null, 'tutorempresa'");
 				miControlador.terminarAsgEmpresa();
 			}

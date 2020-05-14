@@ -346,8 +346,9 @@ public class Controlador {
 		return miModelo.insert(tabla, values);
 		
 	}
-	public void update(String tabla, String valores, String pk, String cod) {
-		miModelo.update(tabla, valores, pk, cod);
+	public int update(String tabla, String valores, String pk, String cod) {
+		
+		return miModelo.update(tabla, valores, pk, cod);
 	}
 	
 	public int delete (String tabla, String pk, String cod) {
