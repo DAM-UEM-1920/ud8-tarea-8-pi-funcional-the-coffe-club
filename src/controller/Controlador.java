@@ -112,6 +112,7 @@ public class Controlador {
 	public void menuTutor(String user) {
 		miLogin.setVisible(false);
 		menuTutor.setTutor(user);
+		menuTutor.refrescar();
 		menuTutor.setVisible(true);
 	}
 
@@ -142,6 +143,7 @@ public class Controlador {
 	}
 
 	public void atrasAlumno() {
+		menuTutor.refrescar();
 		menuTutor.setVisible(true);
 		alumno.setVisible(false);
 
@@ -335,8 +337,8 @@ public class Controlador {
 		
 	}
 
-	public void guardarObjeto(String user) {
-		miModelo.guardarObjeto(user);
+	public void guardarObjetoTutor(String user) {
+		miModelo.guardarObjetoTutor(user);
 		
 	}
 	

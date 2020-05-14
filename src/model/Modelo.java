@@ -570,7 +570,7 @@ public class Modelo {
 			System.out.println("El fichero no existe");
 	}
 	
-	public void guardarObjeto(String user) {
+	public void guardarObjetoTutor(String user) {
 		File rutaProyecto = new File(System.getProperty("user.dir"));
 		JFileChooser fc = new JFileChooser(rutaProyecto);
 		int seleccion = fc.showSaveDialog(table);

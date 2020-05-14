@@ -276,9 +276,9 @@ public class IniTutor {
 		btnEliminar.setBounds(507, 422, 117, 35);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miModelo.delete("pertenece", "ALUMNO_NUM_EXP ", textFieldExp.getText());
-				miModelo.delete("practica", "ALUMNO_NUM_EXP ", textFieldExp.getText());
-				miModelo.delete("alumno", "NUM_EXP ", textFieldExp.getText());
+				miControlador.delete("pertenece", "ALUMNO_NUM_EXP ", textFieldExp.getText());
+				miControlador.delete("practica", "ALUMNO_NUM_EXP ", textFieldExp.getText());
+				miControlador.delete("alumno", "NUM_EXP ", textFieldExp.getText());
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
@@ -317,7 +317,7 @@ public class IniTutor {
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int fila = table.getSelectedRow();
-				miModelo.update("alumno",
+				miControlador.update("alumno",
 						"num_exp= '" + textFieldExp.getText() + "' , nombre = '" + textFieldNombre.getText()
 								+ "' , apellidos= '" + textFieldApellidos.getText() + "' , dni= '"
 								+ textFieldDni.getText() + "' , nacionalidad= '" + textFieldNacionalidad.getText()
@@ -459,12 +459,12 @@ public class IniTutor {
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
-				miModelo.insert("alumno",
+				miControlador.insertar("alumno",
 						"'" + textFieldDni.getText() + "', '" + textFieldNombre.getText() + "', '"
 								+ textFieldApellidos.getText() + "', " + textFieldExp.getText() + ", '"
 								+ textFieldNacionalidad.getText() + "', '" + textFieldFechaNacimiento.getText() + "', '"
 								+ textFieldEmail.getText() + "', " + textFieldTelefono.getText());
-				miModelo.insert("pertenece",
+				miControlador.insertar("pertenece",
 						textFieldExp.getText() + ", "
 								+ miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) + ",'"
 								+ miControlador.getYear() + "'");
@@ -573,7 +573,7 @@ public class IniTutor {
 
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.guardarObjeto(user);
+				miControlador.guardarObjetoTutor(user);
 			}
 		});
 
@@ -612,7 +612,6 @@ public class IniTutor {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				refrescar();
 				lblNewLabel.setText("Welcome " + user);
 				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 			}
