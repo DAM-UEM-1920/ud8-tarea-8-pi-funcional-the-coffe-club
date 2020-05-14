@@ -50,17 +50,6 @@ public class Alumno {
 	private JTable AlumTable;
 	private String nombre, apellidos, numexp, nacionalidad, telefono, email, dni;
 	private final JPanel panel = new JPanel();
-//
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//
-//				Alumno window = new Alumno();
-//				window.frame.setVisible(true);
-//
-//			}
-//		});
-//	}
 
 	public Alumno() {
 		initialize();
@@ -306,20 +295,13 @@ public class Alumno {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				nombre = miModelo.getDato("alumno", "num_exp", numexp, 2);
-				apellidos = miModelo.getDato("alumno", "num_exp", numexp, 3);
-				dni = miModelo.getDato("alumno", "num_exp", numexp, 1);
-				nacionalidad = miModelo.getDato("alumno", "num_exp", numexp, 5);
-				email = miModelo.getDato("alumno", "num_exp", numexp, 7);
-				telefono = miModelo.getDato("alumno", "num_exp", numexp, 8);
-				numexp = miModelo.getDato("alumno", "num_exp", numexp, 4);
-				lblNewLabel_NombreDelAlumno.setText(nombre);
-				lblNewLabel_NombreApellido.setText(apellidos);
-				lblNacion.setText(nacionalidad);
-				lblDNI2.setText(dni);
-				lblDondevamosallies.setText(email);
-				lblNacion_1.setText(telefono);
-				lblExpedienteNumber.setText(numexp);
+				lblNewLabel_NombreDelAlumno.setText(miModelo.getDato("alumno", "num_exp", numexp, 2));
+				lblNewLabel_NombreApellido.setText(miModelo.getDato("alumno", "num_exp", numexp, 3));
+				lblNacion.setText(miModelo.getDato("alumno", "num_exp", numexp, 5));
+				lblDNI2.setText(miModelo.getDato("alumno", "num_exp", numexp, 1));
+				lblDondevamosallies.setText(miModelo.getDato("alumno", "num_exp", numexp, 7));
+				lblNacion_1.setText(miModelo.getDato("alumno", "num_exp", numexp, 8));
+				lblExpedienteNumber.setText(miModelo.getDato("alumno", "num_exp", numexp, 4));
 			}
 		});
 
