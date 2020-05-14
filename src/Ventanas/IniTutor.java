@@ -2,6 +2,10 @@ package Ventanas;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.awt.EventQueue;
 
@@ -24,14 +28,19 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import controller.Controlador;
 import model.Modelo;
+import model.Tablas;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
@@ -70,6 +79,8 @@ public class IniTutor {
 	private JTextField textFieldTelefono;
 	private JTextField textFieldNacionalidad;
 	private JTextField textFieldFechaNacimiento;
+	private Tablas tabla;
+	private boolean carga = true;
 
 	/**
 	 * Create the application.
@@ -91,6 +102,23 @@ public class IniTutor {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IniTutor.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
+
+		JButton btnCargarTabla = new JButton("Cargar Tabla");
+		btnCargarTabla.setToolTipText("Buscar por numero de expediente del alumno");
+		btnCargarTabla.setForeground(Color.WHITE);
+		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnCargarTabla.setBackground(Color.BLACK);
+		btnCargarTabla.setBounds(606, 212, 90, 28);
+		frame.getContentPane().add(btnCargarTabla);
+
+		JButton btnGuardarTabla = new JButton("Guardar Tabla");
+
+		btnGuardarTabla.setToolTipText("Buscar por numero de expediente del alumno");
+		btnGuardarTabla.setForeground(Color.WHITE);
+		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnGuardarTabla.setBackground(Color.BLACK);
+		btnGuardarTabla.setBounds(606, 165, 90, 28);
+		frame.getContentPane().add(btnGuardarTabla);
 
 		JComboBox<String> comboBoxGrupos = new JComboBox();
 		comboBoxGrupos.setBackground(Color.WHITE);
@@ -263,8 +291,7 @@ public class IniTutor {
 				btnEliminar.setEnabled(false);
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
-				table.setModel(miModelo.getAlumnosTutor(user));
-				
+
 			}
 		});
 		frame.getContentPane().add(btnEliminar);
@@ -310,8 +337,7 @@ public class IniTutor {
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
 				btnEliminar.setEnabled(false);
-				
-				table.setModel(miModelo.getTabla("alumno"));
+
 			}
 		});
 		frame.getContentPane().add(btnGuardarCambios);
@@ -438,9 +464,10 @@ public class IniTutor {
 								+ textFieldApellidos.getText() + "', " + textFieldExp.getText() + ", '"
 								+ textFieldNacionalidad.getText() + "', '" + textFieldFechaNacimiento.getText() + "', '"
 								+ textFieldEmail.getText() + "', " + textFieldTelefono.getText());
-				miModelo.insert("pertenece", textFieldExp.getText() + ", " + 
-								miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) 
-								+ ",'"+ miControlador.getYear() +"'" );
+				miModelo.insert("pertenece",
+						textFieldExp.getText() + ", "
+								+ miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) + ",'"
+								+ miControlador.getYear() + "'");
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
@@ -459,7 +486,7 @@ public class IniTutor {
 		frame.getContentPane().add(btnAadir);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(61, 159, 582, 135);
+		scrollPane.setBounds(12, 159, 582, 135);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
@@ -544,6 +571,19 @@ public class IniTutor {
 		lblFondo.setBounds(0, 0, 703, 492);
 		frame.getContentPane().add(lblFondo);
 
+		btnGuardarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.guardarObjeto(user);
+			}
+		});
+
+		btnCargarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carga = false;
+				refrescar();
+			}
+		});
+
 		JLabel lblNewLabelCod_grupo = new JLabel("New label");
 		lblNewLabelCod_grupo.setBounds(22, 130, 56, 16);
 		frame.getContentPane().add(lblNewLabelCod_grupo);
@@ -560,6 +600,7 @@ public class IniTutor {
 				miControlador.limpiar(textFieldTelefono);
 				miControlador.limpiar(textFieldFechaNacimiento);
 				miControlador.vistaAlumno(numexp);
+
 			}
 
 		});
@@ -571,14 +612,9 @@ public class IniTutor {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				table.setModel(miModelo.getAlumnosTutor(user));
+				refrescar();
 				lblNewLabel.setText("Welcome " + user);
-				ArrayList<String> grup = miModelo.getGrupos(user);
-				String[] grupos = new String[grup.size()];
-				for (int i = 0; i < grupos.length; i++) {
-					grupos[i] = grup.get(i);
-				}
-				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(grupos));
+				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 			}
 		});
 
@@ -605,8 +641,8 @@ public class IniTutor {
 
 	private void updateAlta() {
 		if (textFieldDni.getText().length() == 0 || textFieldNombre.getText().length() == 0
-				|| textFieldApellidos.getText().length() == 0 || textFieldExp.getText().length() == 0 || 
-				textFieldFechaNacimiento.getText().length() == 0 || textFieldNacionalidad.getText().length() == 0) {
+				|| textFieldApellidos.getText().length() == 0 || textFieldExp.getText().length() == 0
+				|| textFieldFechaNacimiento.getText().length() == 0 || textFieldNacionalidad.getText().length() == 0) {
 			btnAadir.setEnabled(false);
 		} else {
 			btnAadir.setEnabled(true);
@@ -629,4 +665,22 @@ public class IniTutor {
 	public void setTutor(String user) {
 		this.user = user;
 	}
+	
+
+	public void refrescar() {
+		if (this.carga) {
+			table.setModel(miModelo.getAlumnosTutor(user));
+
+		} else {
+			File rutaProyecto = new File(System.getProperty("user.dir"));
+			JFileChooser fc = new JFileChooser(rutaProyecto);
+			int seleccion = fc.showOpenDialog(frame);
+			if (seleccion == JFileChooser.APPROVE_OPTION) {
+				File fichero = fc.getSelectedFile();
+				table.setModel(miControlador.cargarFichero(fichero));
+			}
+		}
+		
+	}
+
 }

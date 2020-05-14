@@ -2,8 +2,12 @@ package controller;
 
 import java.awt.Checkbox;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -12,6 +16,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
@@ -26,6 +31,7 @@ import Ventanas.Registro;
 import Ventanas.Tutores;
 import Ventanas.buscarEmpresa;
 import model.Modelo;
+import model.Tablas;
 
 public class Controlador {
 	private Modelo miModelo;
@@ -88,7 +94,6 @@ public class Controlador {
 		this.empresa = empresa;
 	}
 
-
 	public void setOpciones(Opciones opciones) {
 		this.opciones = opciones;
 	}
@@ -99,7 +104,6 @@ public class Controlador {
 		miModelo.login(usr, pwd);
 
 	}
-	
 
 	public void setRegistro(Registro registro) {
 		this.registro = registro;
@@ -108,7 +112,7 @@ public class Controlador {
 	public void menuTutor(String user) {
 		miLogin.setVisible(false);
 		menuTutor.setTutor(user);
-		menuTutor.setVisible(true);	
+		menuTutor.setVisible(true);
 	}
 
 	public void menuDirector(String user) {
@@ -227,7 +231,7 @@ public class Controlador {
 		menuAdmin.setVisible(true);
 
 	}
-	
+
 	public void Opciones() {
 		miLogin.setVisible(false);
 		opciones.setVisible(true);
@@ -239,7 +243,6 @@ public class Controlador {
 		miLogin.setVisible(true);
 
 	}
-	
 
 	public void asignarGrupoFin() {
 		asgGrupo.setVisible(false);
@@ -257,25 +260,23 @@ public class Controlador {
 		buscEmpresa.setVisible(true);
 
 	}
-	
-	public void Registro() {	
+
+	public void Registro() {
 		miLogin.setVisible(false);
 		registro.setVisible(true);
 	}
+
 	public void RegistroAtras() {
 		registro.setVisible(false);
 		miLogin.setVisible(true);
-		
+
 	}
-	
 
 	public void Empresa(String cif) {
 		buscEmpresa.setVisible(false);
 		empresa.setCif(cif);
 		empresa.setVisible(true);
 	}
-
-
 
 	public void setSonidos(boolean activo) {
 		this.activo = activo;
@@ -318,14 +319,47 @@ public class Controlador {
 		return activo;
 
 	}
-	
+
 	public String getYear() {
 		int mes = LocalDate.now().getMonthValue();
 		int año = LocalDate.now().getYear();
-		if(mes<6) {
-			return  String.valueOf(año-1)+ "-" +String.valueOf(año);
+		if (mes < 6) {
+			return String.valueOf(año - 1) + "-" + String.valueOf(año);
 		} else
-			return String.valueOf(año) + "-" + String.valueOf(año+1);
+			return String.valueOf(año) + "-" + String.valueOf(año + 1);
+
+	}
+
+	public DefaultTableModel cargarFichero(File fichero) {
+		return miModelo.cargarObjeto(fichero);
+		
+	}
+
+	public void guardarObjeto(String user) {
+		miModelo.guardarObjeto(user);
+		
+	}
+	
+	public int insertar(String tabla, String values) {
+		return miModelo.insert(tabla, values);
+		
+	}
+	public void update(String tabla, String valores, String pk, String cod) {
+		miModelo.update(tabla, valores, pk, cod);
+	}
+	
+	public int delete (String tabla, String pk, String cod) {
+		return miModelo.delete(tabla, pk, cod);
+		
+	}
+	
+	public String[] getGrupos(String user) {
+		ArrayList<String> grup = miModelo.getGrupos(user);
+		String[] grupos = new String[grup.size()];
+		for (int i = 0; i < grupos.length; i++) {
+			grupos[i] = grup.get(i);
+		}
+		return grupos;
 		
 	}
 

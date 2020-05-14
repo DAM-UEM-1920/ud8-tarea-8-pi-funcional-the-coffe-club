@@ -3,7 +3,12 @@ package model;
 import java.awt.Checkbox;
 import java.awt.Label;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -20,9 +25,15 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 //import com.sun.java.util.jar.pack.Attribute.Layout.Element;
 
@@ -63,6 +74,7 @@ public class Modelo {
 	private String texto, usuario, passwd, url;
 	private File fichero;
 	private String[] parts;
+	private JTable table;
 
 	public Modelo() {
 
@@ -556,6 +568,52 @@ public class Modelo {
 			}
 		} else
 			System.out.println("El fichero no existe");
+	}
+	
+	public void guardarObjeto(String user) {
+		File rutaProyecto = new File(System.getProperty("user.dir"));
+		JFileChooser fc = new JFileChooser(rutaProyecto);
+		int seleccion = fc.showSaveDialog(table);
+		if (seleccion == JFileChooser.APPROVE_OPTION) {
+			File fichero = fc.getSelectedFile();
+			try {
+				FileOutputStream fos = new FileOutputStream(fichero);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				Tablas miTabla  = new Tablas (getAlumnosTutor(user));
+				oos.writeObject(miTabla);
+				fos.close();
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public DefaultTableModel cargarObjeto(File fichero) {
+		FileInputStream fis;
+		DefaultTableModel result = null;
+		try {
+			fis = new FileInputStream(fichero);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Tablas miTabla = (Tablas) ois.readObject();
+			result = miTabla.getTabla();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+			
+			
 	}
 
 	public void setMenuTutor(IniTutor menuTutor) {
