@@ -125,6 +125,20 @@ public class IniTutor {
 		comboBoxGrupos.setBounds(134, 95, 110, 22);
 		frame.getContentPane().add(comboBoxGrupos);
 
+		comboBoxGrupos.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(comboBoxGrupos.getSelectedItem().toString());
+				if(comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
+					table.setModel(miModelo.getAlumnosTutor(user));
+				} else {
+					table.setModel(miControlador.getAlumnosByGrupo(user, miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString())));
+				}
+				
+
+			}
+		});
+
 		textFieldFechaNacimiento = new JTextField();
 		textFieldFechaNacimiento.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldFechaNacimiento.setOpaque(false);
@@ -494,7 +508,6 @@ public class IniTutor {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		scrollPane.setViewportView(table);
 
-		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -665,7 +678,6 @@ public class IniTutor {
 	public void setTutor(String user) {
 		this.user = user;
 	}
-	
 
 	public void refrescar() {
 		if (this.carga) {
@@ -680,7 +692,7 @@ public class IniTutor {
 				table.setModel(miControlador.cargarFichero(fichero));
 			}
 		}
-		
+
 	}
 
 }

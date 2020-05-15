@@ -273,7 +273,6 @@ public class Modelo {
 		}
 		return num;
 	}
-	
 
 	/**
 	 * Devuelve un dato cualquiera de la base de datos
@@ -380,6 +379,39 @@ public class Modelo {
 
 	}
 
+	public DefaultTableModel getAlumnosByGrupo(String user, String grupo) {
+		miTabla = new DefaultTableModel();
+		int numColumnas = getNumColumnas("alumno");
+		Object[] contenido = new Object[numColumnas];
+		PreparedStatement pstmt;
+		try {
+			pstmt = conexion.prepareStatement("SELECT alumno.* FROM alumno " + "LEFT JOIN pertenece "
+					+ "ON alumno.num_exp = pertenece.alumno_num_exp " + "LEFT JOIN GRUPO "
+					+ "ON pertenece.grupo_cod_grupo = grupo.cod_grupo " + "LEFT JOIN GESTIONA "
+					+ "ON grupo.cod_grupo = gestiona.grupo_cod_grupo " + "LEFT JOIN TUTOR "
+					+ "ON gestiona.tutor_dni_tutor = tutor.dni_tutor " + "LEFT JOIN EJERCE "
+					+ "ON tutor.dni_tutor = ejerce.e_dni_tutor "
+					+ "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
+					+ user + "') AND grupo.cod_grupo = " + grupo);
+			System.out.println(grupo);
+			ResultSet rset = pstmt.executeQuery();
+			ResultSetMetaData rsmd = rset.getMetaData();
+
+			for (int i = 0; i < numColumnas; i++) {
+				miTabla.addColumn(rsmd.getColumnName(i + 1));
+			}
+			while (rset.next()) {
+				for (int col = 1; col <= numColumnas; col++) {
+					contenido[col - 1] = rset.getString(col);
+				}
+				miTabla.addRow(contenido);
+			}
+		} catch (SQLException e) {
+
+		}
+		return miTabla;
+	}
+
 	/**
 	 * inserta en la base de datos la fila en la tabla correspondiente, es
 	 * importante que a los valores le pongamos las comillas y los espacios al
@@ -387,8 +419,7 @@ public class Modelo {
 	 * esta funcion.
 	 * 
 	 * @param tabla  tabla en la que actuamos
-	 * @param values parte del insert que corresponde a la fila de TODOS los
-	 *                valores
+	 * @param values parte del insert que corresponde a la fila de TODOS los valores
 	 * 
 	 */
 	public int insert(String tabla, String values) {
@@ -404,13 +435,16 @@ public class Modelo {
 		}
 		return resultado;
 	}
+
 	/**
-	 * Actualiza en la base de datos en la tabla que se le pase por parámetro y rellena el resto del UPDATE con el resto de parámetros
+	 * Actualiza en la base de datos en la tabla que se le pase por parámetro y
+	 * rellena el resto del UPDATE con el resto de parámetros
 	 * 
-	 * @param tabla tabla en la que se actúa
+	 * @param tabla   tabla en la que se actúa
 	 * @param valores el cuerpo del UPDATE, incluye todas las columnas
-	 * @param pk Primary Key de la tabla
-	 * @param cod identificador de la fila en la que queremos actuar, coincide con el campo PK
+	 * @param pk      Primary Key de la tabla
+	 * @param cod     identificador de la fila en la que queremos actuar, coincide
+	 *                con el campo PK
 	 */
 	public int update(String tabla, String valores, String pk, String cod) {
 		int resultado = 0;
@@ -423,15 +457,15 @@ public class Modelo {
 			System.out.println(valores);
 			System.out.println("error de update");
 			e.printStackTrace();
-			
+
 		}
 		return resultado;
 	}
-	
-	public int delete (String tabla, String pk, String cod) {
+
+	public int delete(String tabla, String pk, String cod) {
 		int resultado = 0;
 		try {
-			String query = "DELETE FROM " + tabla + " WHERE "  + pk + " = " + cod;
+			String query = "DELETE FROM " + tabla + " WHERE " + pk + " = " + cod;
 			PreparedStatement pstmt = conexion.prepareStatement(query);
 			resultado = pstmt.executeUpdate();
 			System.out.println(tabla + " eliminado con éxito");
@@ -441,7 +475,6 @@ public class Modelo {
 		}
 		return resultado;
 	}
-	
 
 	public void login(String usr, String pwd) {
 		String rol = getRol(usr, pwd);
@@ -569,7 +602,7 @@ public class Modelo {
 		} else
 			System.out.println("El fichero no existe");
 	}
-	
+
 	public void guardarObjeto(String tabla) {
 		File rutaProyecto = new File(System.getProperty("user.dir"));
 		JFileChooser fc = new JFileChooser(rutaProyecto);
@@ -579,7 +612,7 @@ public class Modelo {
 			try {
 				FileOutputStream fos = new FileOutputStream(fichero);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				Tablas miTabla  = new Tablas (getTabla(tabla));
+				Tablas miTabla = new Tablas(getTabla(tabla));
 				oos.writeObject(miTabla);
 				fos.close();
 				oos.close();
@@ -592,7 +625,7 @@ public class Modelo {
 			}
 		}
 	}
-	
+
 	public void guardarObjetoTutor(String user) {
 		File rutaProyecto = new File(System.getProperty("user.dir"));
 		JFileChooser fc = new JFileChooser(rutaProyecto);
@@ -602,7 +635,7 @@ public class Modelo {
 			try {
 				FileOutputStream fos = new FileOutputStream(fichero);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				Tablas miTabla  = new Tablas (getAlumnosTutor(user));
+				Tablas miTabla = new Tablas(getAlumnosTutor(user));
 				oos.writeObject(miTabla);
 				fos.close();
 				oos.close();
@@ -615,7 +648,7 @@ public class Modelo {
 			}
 		}
 	}
-	
+
 	public DefaultTableModel cargarObjeto(File fichero) {
 		FileInputStream fis;
 		DefaultTableModel result = null;
@@ -635,8 +668,7 @@ public class Modelo {
 			e.printStackTrace();
 		}
 		return result;
-			
-			
+
 	}
 
 	public void setMenuTutor(IniTutor menuTutor) {
@@ -700,6 +732,5 @@ public class Modelo {
 	public void setRegistro(Registro registro) {
 		this.registro = registro;
 	}
-	
 
 }

@@ -363,11 +363,19 @@ public class Controlador {
 	
 	public String[] getGrupos(String user) {
 		ArrayList<String> grup = miModelo.getGrupos(user);
-		String[] grupos = new String[grup.size()];
-		for (int i = 0; i < grupos.length; i++) {
-			grupos[i] = grup.get(i);
+		int a = grup.size()+1;
+		String[] grupos = new String[a];
+		grupos[0] = "todos";
+		for (int i = 1; i < grupos.length; i++) {
+			grupos[i] = grup.get(i-1);
 		}
+		System.out.println(grupos.toString());
 		return grupos;
+		
+	}
+
+	public DefaultTableModel getAlumnosByGrupo(String user, String grupo) {
+		return miModelo.getAlumnosByGrupo(user, grupo);
 		
 	}
 
