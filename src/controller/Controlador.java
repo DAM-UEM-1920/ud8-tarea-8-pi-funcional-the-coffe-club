@@ -342,6 +342,11 @@ public class Controlador {
 		
 	}
 	
+	public void guardarObjeto(String tabla) {
+		miModelo.guardarObjeto(tabla);
+		
+	}
+	
 	public int insertar(String tabla, String values) {
 		return miModelo.insert(tabla, values);
 		

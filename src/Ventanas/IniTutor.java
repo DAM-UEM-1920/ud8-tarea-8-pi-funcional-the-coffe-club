@@ -288,6 +288,7 @@ public class IniTutor {
 				miControlador.limpiar(textFieldNacionalidad);
 				miControlador.limpiar(textFieldTelefono);
 				miControlador.limpiar(textFieldFechaNacimiento);
+				table.setModel(miModelo.getAlumnosTutor(user));
 				btnEliminar.setEnabled(false);
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
@@ -333,7 +334,7 @@ public class IniTutor {
 				miControlador.limpiar(textFieldFechaNacimiento);
 				miControlador.limpiar(textFieldNacionalidad);
 				miControlador.limpiar(textFieldTelefono);
-
+				table.setModel(miModelo.getAlumnosTutor(user));
 				btnGuardarCambios.setEnabled(false);
 				btnAadir.setEnabled(false);
 				btnEliminar.setEnabled(false);
