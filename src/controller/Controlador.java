@@ -224,6 +224,7 @@ public class Controlador {
 
 	public void buscarEmpre() {
 		menuAdmin.setVisible(false);
+		buscEmpresa.refrescar();
 		buscEmpresa.setVisible(true);
 
 	}
@@ -259,6 +260,7 @@ public class Controlador {
 
 	public void EmpresaAtras() {
 		empresa.setVisible(false);
+		buscEmpresa.refrescar();
 		buscEmpresa.setVisible(true);
 
 	}

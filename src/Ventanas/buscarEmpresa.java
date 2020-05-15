@@ -16,6 +16,8 @@ import model.Modelo;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.SoftBevelBorder;
@@ -24,6 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.FocusAdapter;
@@ -52,6 +55,7 @@ public class buscarEmpresa {
 	private JButton btnBuscarEmpresas;
 	private JTextField textRepresentante;
 	private JTextField textFieldEmail;
+	private boolean carga = true;
 
 	/**
 	 * Create the application.
@@ -71,14 +75,13 @@ public class buscarEmpresa {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				tblEmpresas.setModel(miModelo.getTabla("empresa"));
 			}
 		});
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(buscarEmpresa.class.getResource("/Img/UEM-simbolo.jpg")));
 
 		frame.setTitle("Empresas");
-		frame.setBounds(550, 250, 800, 598);
+		frame.setBounds(550, 250, 852, 598);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -94,7 +97,7 @@ public class buscarEmpresa {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "E-mail",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldEmail.setBackground(Color.WHITE);
-		textFieldEmail.setBounds(527, 441, 230, 45);
+		textFieldEmail.setBounds(527, 441, 266, 45);
 		frame.getContentPane().add(textFieldEmail);
 
 		lblLogoBoton = new JLabel("");
@@ -258,12 +261,40 @@ public class buscarEmpresa {
 		btnGuardarCambios.setToolTipText("Actualiza los datos modificados");
 		btnGuardarCambios.setBounds(603, 515, 127, 31);
 		frame.getContentPane().add(btnGuardarCambios);
+		
+		JButton btnGuardarTabla = new JButton("Guardar Tabla");
+		btnGuardarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.guardarObjeto("empresa");
+			}
+		});
+		btnGuardarTabla.setToolTipText("Guarda la tabla en un fichero");
+		btnGuardarTabla.setForeground(Color.WHITE);
+		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnGuardarTabla.setBackground(Color.BLACK);
+		btnGuardarTabla.setBounds(696, 218, 127, 31);
+		frame.getContentPane().add(btnGuardarTabla);
+		
+		JButton btnCargarTabla = new JButton("Cargar Tabla");
+		btnCargarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carga = false;
+				refrescar();
+				
+			}
+		});
+		btnCargarTabla.setToolTipText("Carga la tabla de un fichero seleccionado");
+		btnCargarTabla.setForeground(Color.WHITE);
+		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnCargarTabla.setBackground(Color.BLACK);
+		btnCargarTabla.setBounds(696, 260, 127, 31);
+		frame.getContentPane().add(btnCargarTabla);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setOpaque(false);
 		scrollPane.setViewportBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
-		scrollPane.setBounds(68, 162, 644, 219);
+		scrollPane.setBounds(27, 160, 644, 219);
 
 		frame.getContentPane().add(scrollPane);
 
@@ -328,7 +359,7 @@ public class buscarEmpresa {
 		});
 		txtAddEmpDireccion.setToolTipText("Ingrese la direcci\u00F3n de la nueva empresa");
 		txtAddEmpDireccion.setColumns(10);
-		txtAddEmpDireccion.setBounds(527, 394, 230, 45);
+		txtAddEmpDireccion.setBounds(527, 394, 266, 45);
 		frame.getContentPane().add(txtAddEmpDireccion);
 
 		btnAtras = new JButton("Atras");
@@ -373,7 +404,7 @@ public class buscarEmpresa {
 		});
 		txtAddEmpTelefono.setToolTipText("Ingrese el tel\u00E9fono de la nueva empresa");
 		txtAddEmpTelefono.setColumns(10);
-		txtAddEmpTelefono.setBounds(240, 443, 244, 45);
+		txtAddEmpTelefono.setBounds(257, 441, 244, 45);
 		frame.getContentPane().add(txtAddEmpTelefono);
 
 		txtAddEmpLocalidad = new JTextField();
@@ -394,7 +425,7 @@ public class buscarEmpresa {
 		});
 		txtAddEmpLocalidad.setToolTipText("Ingrese la localidad de la nueva empresa");
 		txtAddEmpLocalidad.setColumns(10);
-		txtAddEmpLocalidad.setBounds(240, 394, 244, 45);
+		txtAddEmpLocalidad.setBounds(257, 394, 244, 45);
 		frame.getContentPane().add(txtAddEmpLocalidad);
 		btnBuscarEmpresas = new JButton("Buscar NIF");
 		btnBuscarEmpresas.addMouseListener(new MouseAdapter() {
@@ -446,7 +477,7 @@ public class buscarEmpresa {
 
 		JLabel lblBackground = new JLabel("");
 		lblBackground.setIcon(new ImageIcon(buscarEmpresa.class.getResource("/Img/Fondogrande.jpg")));
-		lblBackground.setBounds(0, 0, 784, 559);
+		lblBackground.setBounds(0, 0, 846, 559);
 		frame.getContentPane().add(lblBackground);
 
 	}
@@ -490,5 +521,20 @@ public class buscarEmpresa {
 		} else {
 			btnGuardarCambios.setEnabled(true);
 		}
+	}
+	public void refrescar() {
+		if (carga) {
+			tblEmpresas.setModel(miModelo.getTabla("empresa"));
+
+		} else {
+			File rutaProyecto = new File(System.getProperty("user.dir"));
+			JFileChooser fc = new JFileChooser(rutaProyecto);
+			int seleccion = fc.showOpenDialog(frame);
+			if (seleccion == JFileChooser.APPROVE_OPTION) {
+				File fichero = fc.getSelectedFile();
+				tblEmpresas.setModel(miControlador.cargarFichero(fichero));
+			}
+		}
+		
 	}
 }
