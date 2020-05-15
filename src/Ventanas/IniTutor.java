@@ -587,7 +587,12 @@ public class IniTutor {
 
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.guardarObjetoTutor(user);
+				if(comboBoxGrupos.getSelectedItem().toString().equals("todos")){
+					miControlador.guardarObjetoTutor(user);
+				} else {
+					miControlador.guardarObjetoTutorYGrupo(user,miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()));
+				}
+				
 			}
 		});
 

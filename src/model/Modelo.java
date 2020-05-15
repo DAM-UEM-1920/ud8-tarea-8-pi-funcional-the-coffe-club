@@ -379,6 +379,13 @@ public class Modelo {
 
 	}
 
+	/**
+	 * Obtenemos la tabla de alumnos filtrando por grupo y usuario(tutor) logueado
+	 * 
+	 * @param user
+	 * @param grupo
+	 * @return
+	 */
 	public DefaultTableModel getAlumnosByGrupo(String user, String grupo) {
 		miTabla = new DefaultTableModel();
 		int numColumnas = getNumColumnas("alumno");
@@ -476,6 +483,13 @@ public class Modelo {
 		return resultado;
 	}
 
+	/**
+	 * elije a que ventana mandaremos al usuario segun sus permisos o si cerrara la
+	 * aplicacicio por fallar varias veces
+	 * 
+	 * @param usr
+	 * @param pwd
+	 */
 	public void login(String usr, String pwd) {
 		String rol = getRol(usr, pwd);
 		if (rol.toUpperCase().equals("TUTOR")) {
@@ -603,6 +617,11 @@ public class Modelo {
 			System.out.println("El fichero no existe");
 	}
 
+	/**
+	 * Guarda una tabla cualquiera en un archivo en local
+	 * 
+	 * @param tabla
+	 */
 	public void guardarObjeto(String tabla) {
 		File rutaProyecto = new File(System.getProperty("user.dir"));
 		JFileChooser fc = new JFileChooser(rutaProyecto);
@@ -626,6 +645,10 @@ public class Modelo {
 		}
 	}
 
+	/**
+	 * guarda una tabla con todos los alumnos del usuario logueado
+	 * @param user
+	 */
 	public void guardarObjetoTutor(String user) {
 		File rutaProyecto = new File(System.getProperty("user.dir"));
 		JFileChooser fc = new JFileChooser(rutaProyecto);
@@ -648,7 +671,35 @@ public class Modelo {
 			}
 		}
 	}
-
+	
+	public void guardarObjetoTutorYGrupo(String user, String grupo) {
+		File rutaProyecto = new File(System.getProperty("user.dir"));
+		JFileChooser fc = new JFileChooser(rutaProyecto);
+		int seleccion = fc.showSaveDialog(table);
+		if (seleccion == JFileChooser.APPROVE_OPTION) {
+			File fichero = fc.getSelectedFile();
+			try {
+				FileOutputStream fos = new FileOutputStream(fichero);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				Tablas miTabla = new Tablas(getAlumnosByGrupo(user, grupo));
+				oos.writeObject(miTabla);
+				fos.close();
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+/**
+ * carga una tabla guardada anteriormente en local, se selecciona dicho archivo en una
+ * ventana emergente
+ * @param fichero
+ * @return
+ */
 	public DefaultTableModel cargarObjeto(File fichero) {
 		FileInputStream fis;
 		DefaultTableModel result = null;

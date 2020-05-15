@@ -342,6 +342,11 @@ public class Controlador {
 		
 	}
 	
+	public void guardarObjetoTutorYGrupo(String user, String grupo) {
+		miModelo.guardarObjetoTutorYGrupo(user, grupo);
+		
+	}
+	
 	public void guardarObjeto(String tabla) {
 		miModelo.guardarObjeto(tabla);
 		
@@ -369,7 +374,6 @@ public class Controlador {
 		for (int i = 1; i < grupos.length; i++) {
 			grupos[i] = grup.get(i-1);
 		}
-		System.out.println(grupos.toString());
 		return grupos;
 		
 	}
