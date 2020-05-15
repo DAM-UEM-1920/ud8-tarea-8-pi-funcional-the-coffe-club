@@ -374,7 +374,7 @@ public class Registro {
 				miModelo.metodoLectura();
 				miModelo.conexion();
 				miControlador.login();
-				añadir();
+				aniadir();
 			}
 		});
 		btnGuardar.setToolTipText("Guarda los datos introducidos");
@@ -571,7 +571,7 @@ public class Registro {
 		Frame.getContentPane().add(lblfondo);
 
 	}
- public void añadir() {
+ public void aniadir() {
 		 
 		 usr=textNombreUser.getText();
 		 passwd=txtPasswordUser.getText();
