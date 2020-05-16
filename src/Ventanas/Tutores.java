@@ -77,6 +77,22 @@ public class Tutores {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Tutores.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
+		
+		JButton btnCargarTabla = new JButton("Cargar Tabla");
+		btnCargarTabla.setToolTipText("Buscar por numero de expediente del alumno");
+		btnCargarTabla.setForeground(Color.WHITE);
+		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnCargarTabla.setBackground(Color.BLACK);
+		btnCargarTabla.setBounds(742, 246, 90, 28);
+		frame.getContentPane().add(btnCargarTabla);
+		
+		JButton btnGuardarTabla = new JButton("Guardar Tabla");
+		btnGuardarTabla.setToolTipText("Buscar por numero de expediente del alumno");
+		btnGuardarTabla.setForeground(Color.WHITE);
+		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnGuardarTabla.setBackground(Color.BLACK);
+		btnGuardarTabla.setBounds(742, 190, 90, 28);
+		frame.getContentPane().add(btnGuardarTabla);
 
 		textFieldCentro = new JTextField();
 		textFieldCentro.setToolTipText("\u00C1rea academica del tutor");
@@ -107,7 +123,7 @@ public class Tutores {
 		lblLogoBoton.setToolTipText("Volver al menu principal");
 		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY,
 				Color.LIGHT_GRAY));
-		lblLogoBoton.setBounds(53, 35, 110, 110);
+		lblLogoBoton.setBounds(42, 36, 110, 110);
 		frame.getContentPane().add(lblLogoBoton);
 
 		btnAadirTutor = new JButton("A\u00F1adir Tutor");
@@ -261,11 +277,11 @@ public class Tutores {
 		JLabel lblTutores = new JLabel("Tutores");
 		lblTutores.setForeground(Color.WHITE);
 		lblTutores.setFont(new Font("Dialog", Font.BOLD, 49));
-		lblTutores.setBounds(299, 69, 240, 66);
+		lblTutores.setBounds(237, 71, 240, 66);
 		frame.getContentPane().add(lblTutores);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(79, 180, 706, 126);
+		scrollPane.setBounds(26, 168, 706, 126);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();

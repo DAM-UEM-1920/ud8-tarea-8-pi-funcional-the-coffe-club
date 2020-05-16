@@ -119,6 +119,7 @@ public class Controlador {
 	public void menuDirector(String user) {
 		menuAdmin.setVisible(true);
 		menuAdmin.setUser(user);
+		menuAdmin.refrescar();
 		miLogin.setVisible(false);
 
 	}
@@ -170,6 +171,7 @@ public class Controlador {
 
 	public void buscarTutores() {
 		menuAdmin.setVisible(false);
+		menuTutor.refrescar();
 		tutores.setVisible(true);
 
 	}
