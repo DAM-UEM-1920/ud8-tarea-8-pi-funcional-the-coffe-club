@@ -28,6 +28,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -38,6 +39,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 
 public class Tutores {
@@ -56,6 +58,10 @@ public class Tutores {
 	private JTextField txtDniTutor;
 	private JLabel lblLogoBoton;
 	private JTextField textFieldCentro;
+	private boolean carga = true;
+	private JButton btnGuardarTabla;
+	private JButton btnCargarTabla;
+
 
 	/**
 	 * Create the application.
@@ -78,21 +84,33 @@ public class Tutores {
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnCargarTabla = new JButton("Cargar Tabla");
-		btnCargarTabla.setToolTipText("Buscar por numero de expediente del alumno");
-		btnCargarTabla.setForeground(Color.WHITE);
-		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnCargarTabla.setBackground(Color.BLACK);
-		btnCargarTabla.setBounds(742, 246, 90, 28);
-		frame.getContentPane().add(btnCargarTabla);
-		
 		JButton btnGuardarTabla = new JButton("Guardar Tabla");
-		btnGuardarTabla.setToolTipText("Buscar por numero de expediente del alumno");
+		btnGuardarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.guardarObjeto("tutor");
+			}
+		});
+		btnGuardarTabla.setToolTipText("Guarda la tabla en un fichero");
 		btnGuardarTabla.setForeground(Color.WHITE);
 		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnGuardarTabla.setBackground(Color.BLACK);
-		btnGuardarTabla.setBounds(742, 190, 90, 28);
+		btnGuardarTabla.setBounds(756, 180, 110, 31);
 		frame.getContentPane().add(btnGuardarTabla);
+		
+		JButton btnCargarTabla = new JButton("Cargar Tabla");
+		btnCargarTabla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carga = false;
+				refrescar();
+				
+			}
+		});
+		btnCargarTabla.setToolTipText("Carga la tabla de un fichero seleccionado");
+		btnCargarTabla.setForeground(Color.WHITE);
+		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnCargarTabla.setBackground(Color.BLACK);
+		btnCargarTabla.setBounds(756, 243, 110, 31);
+		frame.getContentPane().add(btnCargarTabla);
 
 		textFieldCentro = new JTextField();
 		textFieldCentro.setToolTipText("\u00C1rea academica del tutor");
@@ -455,20 +473,14 @@ public class Tutores {
 		lblNewLabel.setIcon(new ImageIcon(Tutores.class.getResource("/Img/Fondogrande.jpg")));
 		lblNewLabel.setBounds(0, 0, 996, 659);
 		frame.getContentPane().add(lblNewLabel);
-
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(834, 58, 7, 20);
-		frame.getContentPane().add(formattedTextField);
-		frame.setBounds(550, 250, 865, 562);
+		frame.setBounds(550, 250, 882, 562);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				table.setModel(miModelo.getTabla("tutor"));
 			}
 		});
-
 	}
 
 	private void updateModificar() {
@@ -512,5 +524,20 @@ public class Tutores {
 	public void setVisible(boolean b) {
 		frame.setVisible(b);
 
+	}
+	public void refrescar() {
+		if (carga) {
+			table.setModel(miModelo.getTabla("tutor"));
+
+		} else {
+			File rutaProyecto = new File(System.getProperty("user.dir"));
+			JFileChooser fc = new JFileChooser(rutaProyecto);
+			int seleccion = fc.showOpenDialog(frame);
+			if (seleccion == JFileChooser.APPROVE_OPTION) {
+				File fichero = fc.getSelectedFile();
+				table.setModel(miControlador.cargarFichero(fichero));
+			}
+		}
+		
 	}
 }

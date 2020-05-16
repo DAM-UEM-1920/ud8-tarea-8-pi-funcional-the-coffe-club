@@ -40,8 +40,7 @@ public class MenuDirector {
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private String user;
-	private boolean carga = true;
-	private JTable tblMenuDirector;
+
 
 
 
@@ -303,19 +302,5 @@ public class MenuDirector {
 		
 	}
 	
-	public void refrescar() {
-		if (carga) {
-			tblMenuDirector.setModel(miModelo.getTabla("tutor"));
 
-		} else {
-			File rutaProyecto = new File(System.getProperty("user.dir"));
-			JFileChooser fc = new JFileChooser(rutaProyecto);
-			int seleccion = fc.showOpenDialog(frame);
-			if (seleccion == JFileChooser.APPROVE_OPTION) {
-				File fichero = fc.getSelectedFile();
-				tblMenuDirector.setModel(miControlador.cargarFichero(fichero));
-			}
-		}
-		
-	}
 }
