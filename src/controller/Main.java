@@ -60,6 +60,7 @@ public class Main {
 		miModelo.setEmpresa(empresa);
 		miModelo.setOpciones(opciones);
 		miModelo.setRegistro(registro);
+
 		
 		
 		empresa.setControlador(miControlador);
