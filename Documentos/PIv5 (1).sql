@@ -177,7 +177,10 @@ INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento
 INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('449162s', 'Pablo', 'Perez Ayuso',1226547, 'Ecuatoriano', '2/18/90','pabloayuso@gmail.com', 623659879);
 INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('111896o', 'Fabiola', 'Yoquese Nobita',1336547, 'Mongol', '9/13/95', 'nobitaseque@gmail.com', 644444361);
 INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('447893p', 'Nico', 'Fiesta Fiesta',256987, 'Canadiense', '11/6/98', 'nikointhejoke@gmail.com', 687562361);
-INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento) VALUES('657894r', 'Miguel', 'Perchita Donrramon',897556, 'Frances', '9/16/90');
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('657894r', 'Miguel', 'Perchita Donrramon',897556, 'Frances', '9/16/90', 'migpar@gmail.com', 63446554);
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('745345w', 'Paquito', 'Elcho Colatero',3465463, 'RRRuso', '7/26/90', 'pidoayuda@gmail.com', 63464352);
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('328754e', 'Melas', 'Udaso Ymanolo',345645, 'Polaco', '7/26/90', 'misericordia@gmail.com', 64578865);
+INSERT INTO alumno(dni, nombre, apellidos, num_exp,nacionalidad,fecha_nacimiento, e_mail, telefono) VALUES('845430s', 'Paquito', 'Elcho Colatero',7456463, 'Chernóbyl', '7/26/90', 'tusericordia@gmail.com', 62647434);
 
 INSERT INTO centro(cod_centro, localidad, director, DAT) VALUES(1, 'Villaviciosa', 'Ana','Yorya');
 INSERT INTO centro(cod_centro, localidad, director, DAT) VALUES(2, 'Leganes', 'Ana Maria','Iggy');
@@ -198,7 +201,7 @@ INSERT INTO grupo(cod_grupo, nom_grupo, clave_ciclo, nombre_ciclo) VALUES(4, 'DA
 INSERT INTO grupo(cod_grupo, nom_grupo, clave_ciclo, nombre_ciclo) VALUES(5, 'TAFADtofurius', 0001, 'TAFAD');
 
 
-INSERT INTO users(usr, pwd, rol) VALUES('tutorA','abc123','TUTOR');
+INSERT INTO users(usr, pwd, rol) VALUES('A','a','TUTOR');
 INSERT INTO users(usr, pwd, rol) VALUES('tutorB','def456','TUTOR');
 INSERT INTO users(usr, pwd, rol) VALUES('tutorC','ghi789','TUTOR');
 INSERT INTO users(usr, pwd, rol) VALUES('tutorD','qtr569','TUTOR');
@@ -218,8 +221,8 @@ INSERT INTO colabora(centro_cod_centro, empresa_cif, numconv, anexo_1, fecha) VA
 INSERT INTO colabora(centro_cod_centro, empresa_cif, numconv, anexo_1, fecha) VALUES(2,'dfkj3156', 654897, '6/4/16', '12/10/17');
 
 INSERT INTO gestiona(tutor_dni_tutor, grupo_cod_grupo, anexo_2_2, ano_acad) VALUES('159863p',3, '7/22/20', '2019/2020');
-INSERT INTO gestiona(tutor_dni_tutor, grupo_cod_grupo, anexo_2_2, ano_acad) VALUES('236598w',1, '10/21/19', '2018/2019');
-INSERT INTO gestiona(tutor_dni_tutor, grupo_cod_grupo, anexo_2_2, ano_acad) VALUES('789546q',2, '7/12/20', '2019/2020');
+INSERT INTO gestiona(tutor_dni_tutor, grupo_cod_grupo, anexo_2_2, ano_acad) VALUES('159863p',1, '10/21/19', '2018/2019');
+INSERT INTO gestiona(tutor_dni_tutor, grupo_cod_grupo, anexo_2_2, ano_acad) VALUES('159863p',2, '7/12/20', '2019/2020');
 INSERT INTO gestiona(tutor_dni_tutor, grupo_cod_grupo, anexo_2_2, ano_acad) VALUES('123698a',4, '5/23/17', '2016/2017');
 INSERT INTO gestiona(tutor_dni_tutor, grupo_cod_grupo, anexo_2_2, ano_acad) VALUES('965481f',5, '6/29/20', '2019/2020');
 
@@ -236,11 +239,14 @@ INSERT INTO practica(empresa_cif, alumno_num_exp, anexo_2_1, anexo_3,anexo_7, an
 
 INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 1523547, 3);
 INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 1226547, 3);
-INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 1336547, 2);
-INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 256987, 5);
-INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 897556, 4);
+INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 1336547, 1);
+INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 256987, 1);
+INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2018/2019', 897556, 2);
+INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 345645, 3);
+INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2019/2020', 3465463, 2);
+INSERT INTO pertenece(ano_acad, alumno_num_exp, grupo_cod_grupo) VALUES ('2018/2019', 7456463, 1);
 
-INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorA', '159863p');
+INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('A', '159863p');
 INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorB', '236598w');
 INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorC', '789546q');
 INSERT INTO ejerce(e_usr_users, e_dni_tutor) VALUES('tutorD', '123698a');

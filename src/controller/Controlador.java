@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -378,6 +379,9 @@ public class Controlador {
 		for (int i = 1; i < grupos.length; i++) {
 			grupos[i] = grup.get(i-1);
 		}
+		grupos[grupos.length-1]=grup.get(grup.size()-1);
+		System.out.println(grup.toString());
+		System.out.println(Arrays.toString(grupos));
 		return grupos;
 		
 	}

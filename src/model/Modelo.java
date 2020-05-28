@@ -330,11 +330,10 @@ public class Modelo {
 					+ " WHERE grupo.cod_grupo = gestiona.grupo_cod_grupo AND gestiona.tutor_dni_tutor = tutor.dni_tutor AND "
 					+ "tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr= '" + user
 					+ "'");
-			do {
-				rset.next();
-				grupos.add(rset.getString(1));
 
-			} while (rset.next());
+			while (rset.next()) {
+				grupos.add(rset.getString(1));
+			}
 			return grupos;
 		} catch (SQLException e) {
 			return grupos;
@@ -647,6 +646,7 @@ public class Modelo {
 
 	/**
 	 * guarda una tabla con todos los alumnos del usuario logueado
+	 * 
 	 * @param user
 	 */
 	public void guardarObjetoTutor(String user) {
@@ -671,7 +671,7 @@ public class Modelo {
 			}
 		}
 	}
-	
+
 	public void guardarObjetoTutorYGrupo(String user, String grupo) {
 		File rutaProyecto = new File(System.getProperty("user.dir"));
 		JFileChooser fc = new JFileChooser(rutaProyecto);
@@ -694,12 +694,14 @@ public class Modelo {
 			}
 		}
 	}
-/**
- * carga una tabla guardada anteriormente en local, se selecciona dicho archivo en una
- * ventana emergente
- * @param fichero
- * @return
- */
+
+	/**
+	 * carga una tabla guardada anteriormente en local, se selecciona dicho archivo
+	 * en una ventana emergente
+	 * 
+	 * @param fichero
+	 * @return
+	 */
 	public DefaultTableModel cargarObjeto(File fichero) {
 		FileInputStream fis;
 		DefaultTableModel result = null;
