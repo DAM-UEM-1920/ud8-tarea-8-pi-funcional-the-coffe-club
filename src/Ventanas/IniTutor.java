@@ -80,6 +80,7 @@ public class IniTutor {
 	private JTextField textFieldFechaNacimiento;
 	private Tablas tabla;
 	private boolean carga = true;
+	private int selectedValue = 0;
 
 	/**
 	 * Create the application.
@@ -117,6 +118,7 @@ public class IniTutor {
 					table.setModel(miControlador.getAlumnosByGrupo(user,
 							miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString())));
 				}
+				selectedValue=comboBoxGrupos.getSelectedIndex();
 
 			}
 		});
@@ -285,7 +287,12 @@ public class IniTutor {
 					miControlador.limpiar(textFieldNacionalidad);
 					miControlador.limpiar(textFieldTelefono);
 					miControlador.limpiar(textFieldFechaNacimiento);
-					table.setModel(miModelo.getAlumnosTutor(user));
+					if (comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
+						table.setModel(miModelo.getAlumnosTutor(user));
+					} else {
+						table.setModel(miControlador.getAlumnosByGrupo(user,
+								miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString())));
+					}
 					btnEliminar.setEnabled(false);
 					btnGuardarCambios.setEnabled(false);
 					btnAadir.setEnabled(false);
@@ -604,6 +611,7 @@ public class IniTutor {
 			public void windowActivated(WindowEvent e) {
 				lblNewLabel.setText("Welcome " + user);
 				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
+				comboBoxGrupos.setSelectedIndex(selectedValue);
 			}
 		});
 
