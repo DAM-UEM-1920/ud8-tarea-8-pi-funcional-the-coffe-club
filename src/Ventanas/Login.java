@@ -60,7 +60,6 @@ public class Login {
 	private JPasswordField passwordField;
 	private JLabel lblrespuesta;
 	private JLabel lblusrimg_1;
-	private JCheckBox checkbox;
 	private JButton btnNuevoUsuario;
 
 	/**
@@ -152,12 +151,15 @@ public class Login {
 					if (txtUsuario.getText().length() == 0) {
 						txtUsuario.requestFocus();
 
-				}else
-					passwordField.requestFocus();	
+					} else
+						passwordField.requestFocus();
 				}
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
-					System.exit(0);
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
+
 				}
 
 			}
@@ -189,8 +191,10 @@ public class Login {
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
-					System.exit(0);
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
 
 				}
 			}
@@ -198,19 +202,13 @@ public class Login {
 		btnLogin.addMouseMotionListener(new MouseMotionAdapter() {
 
 		});
-		
+
 		btnLogin.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 
-				if (checkbox.isSelected()) {
-
-					miControlador.SoundSobreBoton();
-
-				} else {
-					miControlador.setSonidos(false);
-				}
+				miControlador.SoundSobreBoton();
 
 			}
 
@@ -223,7 +221,21 @@ public class Login {
 		btnLogin.setToolTipText("Pulse para acceder");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				miModelo.metodoLectura();
+				if (txtUsuario.getText().length() == 0) {
+					lblrespuesta.setForeground(Color.YELLOW);
+					lblrespuesta.setText("Introduzca su usuario");
+					lblrespuesta.setFont(new Font("Tahoma", Font.BOLD, 12));
+					miControlador.SoundError();
+					txtUsuario.requestFocus();
+
+				} else if (passwordField.getPassword().length == 0) {
+					lblrespuesta.setForeground(Color.YELLOW);
+					lblrespuesta.setText("Introduzca su Contraseña");
+					lblrespuesta.setFont(new Font("Tahoma", Font.BOLD, 12));
+					miControlador.SoundError();
+					passwordField.requestFocus();
+				} else
+					miModelo.metodoLectura();
 				miModelo.conexion();
 				miControlador.login();
 			}
@@ -242,64 +254,14 @@ public class Login {
 		lblusrimg.setIcon(new ImageIcon(Login.class.getResource("/Img/LoginUser60.png")));
 		frame.getContentPane().add(lblusrimg);
 
-		checkbox = new JCheckBox("Sonido");
-
-		checkbox.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// Cambiamos la seleccion del check
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (checkbox.isSelected()) {
-						checkbox.setSelected(false);
-					} else
-						checkbox.setSelected(true);
-				}
-
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
-					System.exit(0);
-				}
-
-			}
-
-		});
-		checkbox.addActionListener(new ActionListener() {
-
-			// Esto comprueba que el checbox este activo o no
-
-			public void actionPerformed(ActionEvent e) {
-
-				checkbox.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						miControlador.setSonidos(checkbox.isSelected());
-					}
-				});
-
-			}
-		});
-
-		checkbox.setSelected(true);
-		checkbox.setFont(new Font("Tahoma", Font.BOLD, 11));
-		checkbox.setForeground(Color.WHITE);
-		checkbox.setContentAreaFilled(false);
-		checkbox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		checkbox.setOpaque(false);
-		checkbox.setHorizontalAlignment(SwingConstants.CENTER);
-		checkbox.setBounds(6, 352, 76, 22);
-		frame.getContentPane().add(checkbox);
-
 		// Boton de Opciones
 		JButton lblOpciones = new JButton("");
 		lblOpciones.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				if (checkbox.isSelected()) {
 
-					miControlador.SoundSobreBoton();
+				miControlador.SoundSobreBoton();
 
-				} else {
-					miControlador.setSonidos(false);
-				}
 			}
 
 			@Override
@@ -318,8 +280,10 @@ public class Login {
 				}
 				// salimos de la aplicacion
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					JOptionPane.showMessageDialog(frame, "Recuerda quedate en casa");
-					System.exit(0);
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
 				}
 
 			}
@@ -338,7 +302,7 @@ public class Login {
 		lblOpciones.setIcon(new ImageIcon(Login.class.getResource("/Img/rueda.png")));
 		lblOpciones.setBounds(553, 333, 49, 48);
 		frame.getContentPane().add(lblOpciones);
-		
+
 		btnNuevoUsuario = new JButton("Nuevo Usuario");
 		btnNuevoUsuario.setBorder(null);
 		btnNuevoUsuario.addKeyListener(new KeyAdapter() {
@@ -350,11 +314,13 @@ public class Login {
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
-					System.exit(0);
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
 
 				}
-			
+
 			}
 		});
 		btnNuevoUsuario.addActionListener(new ActionListener() {
@@ -370,29 +336,28 @@ public class Login {
 		btnNuevoUsuario.setBackground(Color.BLACK);
 		btnNuevoUsuario.setBounds(217, 331, 162, 22);
 		frame.getContentPane().add(btnNuevoUsuario);
-		
-				JLabel lblbackground = new JLabel("");
-				lblbackground.setIcon(new ImageIcon(Login.class.getResource("/Img/Fondogrande.jpg")));
-				lblbackground.setBounds(0, 0, 626, 392);
-				frame.getContentPane().add(lblbackground);
+
+		JLabel lblbackground = new JLabel("");
+		lblbackground.setIcon(new ImageIcon(Login.class.getResource("/Img/Fondogrande.jpg")));
+		lblbackground.setBounds(0, 0, 626, 392);
+		frame.getContentPane().add(lblbackground);
 		frame.setBounds(550, 250, 632, 421);
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-
-				// Sincroniza los CheckBox
-
-				if (miControlador.getBoxselect()) {
-
-				} else
-					checkbox.setSelected(false);
-
 			}
+
 			@Override
 			public void windowClosing(WindowEvent e) {
-				JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 	}
@@ -413,25 +378,14 @@ public class Login {
 		return String.valueOf(passwordField.getPassword());
 	}
 
-	public void actualaizar() {
-		String resultado = miModelo.getResultado();
+	/**
+	 * 
+	 * @param resultado El modelo le dice que rol tiene la conexion y se loguea en
+	 *                  consecuencia.
+	 */
+	public void actualaizar(String resultado) {
+
 		String user = getUsr();
-		
-		if (txtUsuario.getText().length() == 0) {
-			lblrespuesta.setForeground(Color.YELLOW);
-			lblrespuesta.setText("Introduzca su usuario");
-			lblrespuesta.setFont(new Font("Tahoma", Font.BOLD, 12));
-			miControlador.SoundError();
-			txtUsuario.requestFocus();
-			
-			
-		}else if (passwordField.getText().length() == 0) {
-			lblrespuesta.setForeground(Color.YELLOW);
-			lblrespuesta.setText("Introduzca su Contraseña");
-			lblrespuesta.setFont(new Font("Tahoma", Font.BOLD, 12));
-			miControlador.SoundError();
-			passwordField.requestFocus();
-		}else {
 
 		if (resultado.equals("TUTOR")) {
 			miControlador.SoundAcceso();
@@ -447,9 +401,10 @@ public class Login {
 			lblrespuesta.setText("Usuario o contraseña incorrectos");
 			miModelo.limpiar(passwordField);
 		} else {
+			JOptionPane.showMessageDialog(frame, "Demasiados intentos fallidos");
 			System.exit(0);
 
-		}}
+		}
 
 	}
 

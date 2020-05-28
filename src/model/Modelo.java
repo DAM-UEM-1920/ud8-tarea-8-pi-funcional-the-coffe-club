@@ -505,7 +505,7 @@ public class Modelo {
 			resultado = "Cerrar";
 		}
 
-		miLogin.actualaizar();
+		miLogin.actualaizar(resultado);
 	}
 
 	// Sonido de acceso correcto

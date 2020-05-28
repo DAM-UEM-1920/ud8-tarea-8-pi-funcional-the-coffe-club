@@ -59,7 +59,7 @@ public class IniTutor {
 	private JTable table_1;
 	private JButton btnLogOut;
 	private JScrollPane scrollPane;
-	private JLabel lblNewLabel;
+	private JLabel lblBienvenida;
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JLabel lblFondo;
@@ -102,17 +102,25 @@ public class IniTutor {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IniTutor.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
+		
+		JButton btnAadir_1 = new JButton("Historico");
+		btnAadir_1.setForeground(Color.WHITE);
+		btnAadir_1.setEnabled(false);
+		btnAadir_1.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnAadir_1.setBackground(Color.BLACK);
+		btnAadir_1.setBounds(678, 521, 91, 26);
+		frame.getContentPane().add(btnAadir_1);
 
 		JComboBox<String> comboBoxGrupos = new JComboBox();
 		comboBoxGrupos.setBackground(Color.WHITE);
-		comboBoxGrupos.setBounds(134, 95, 110, 22);
+		comboBoxGrupos.setBounds(41, 127, 110, 22);
 		frame.getContentPane().add(comboBoxGrupos);
 
 		comboBoxGrupos.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(comboBoxGrupos.getSelectedItem().toString());
-				if (comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
+				if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
 					table.setModel(miModelo.getAlumnosTutor(user));
 				} else {
 					table.setModel(miControlador.getAlumnosByGrupo(user,
@@ -137,7 +145,7 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"Fecha Nacimiento", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldFechaNacimiento.setBounds(381, 369, 131, 48);
+		textFieldFechaNacimiento.setBounds(425, 430, 143, 48);
 		frame.getContentPane().add(textFieldFechaNacimiento);
 
 		textFieldNacionalidad = new JTextField();
@@ -154,7 +162,7 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"Nacionalidad", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldNacionalidad.setBounds(517, 369, 160, 48);
+		textFieldNacionalidad.setBounds(573, 430, 160, 48);
 		frame.getContentPane().add(textFieldNacionalidad);
 		textFieldNacionalidad.addKeyListener(new KeyAdapter() {
 
@@ -179,7 +187,7 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"Telefono", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldTelefono.setBounds(237, 369, 138, 48);
+		textFieldTelefono.setBounds(262, 430, 160, 48);
 		frame.getContentPane().add(textFieldTelefono);
 
 		textFieldEmail = new JTextField();
@@ -196,15 +204,16 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"E-mail", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldEmail.setBounds(12, 369, 217, 48);
+		textFieldEmail.setBounds(41, 430, 217, 48);
 		frame.getContentPane().add(textFieldEmail);
 
-		lblNewLabel = new JLabel();
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 28));
-		lblNewLabel.setBounds(193, 11, 293, 72);
-		frame.getContentPane().add(lblNewLabel);
+		lblBienvenida = new JLabel();
+		lblBienvenida.setToolTipText("Nombre Tutor");
+		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBienvenida.setForeground(Color.WHITE);
+		lblBienvenida.setFont(new Font("Dialog", Font.BOLD, 48));
+		lblBienvenida.setBounds(231, 13, 293, 72);
+		frame.getContentPane().add(lblBienvenida);
 
 		lblLogoBoton = new JLabel("");
 		lblLogoBoton.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/LoUEBoton.png")));
@@ -232,7 +241,7 @@ public class IniTutor {
 		});
 		btnLogOut.setToolTipText("Desconectarse de la sesion");
 		btnLogOut.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnLogOut.setBounds(581, 13, 83, 28);
+		btnLogOut.setBounds(689, 20, 83, 28);
 		btnLogOut.setForeground(Color.WHITE);
 		btnLogOut.setBackground(Color.BLACK);
 		frame.getContentPane().add(btnLogOut);
@@ -271,7 +280,7 @@ public class IniTutor {
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnEliminar.setBackground(Color.BLACK);
-		btnEliminar.setBounds(507, 422, 117, 35);
+		btnEliminar.setBounds(524, 489, 131, 35);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (miControlador.askWindow(frame)) {
@@ -287,7 +296,7 @@ public class IniTutor {
 					miControlador.limpiar(textFieldNacionalidad);
 					miControlador.limpiar(textFieldTelefono);
 					miControlador.limpiar(textFieldFechaNacimiento);
-					if (comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
+					if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
 						table.setModel(miModelo.getAlumnosTutor(user));
 					} else {
 						table.setModel(miControlador.getAlumnosByGrupo(user,
@@ -319,7 +328,7 @@ public class IniTutor {
 		btnGuardarCambios
 				.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnGuardarCambios.setBackground(Color.BLACK);
-		btnGuardarCambios.setBounds(280, 422, 168, 35);
+		btnGuardarCambios.setBounds(293, 489, 207, 35);
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (miControlador.askWindow(frame)) {
@@ -364,7 +373,7 @@ public class IniTutor {
 		textFieldNombre.setOpaque(false);
 		textFieldNombre.setToolTipText("Introduzca el nombre del alumno");
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(167, 308, 114, 48);
+		textFieldNombre.setBounds(195, 369, 150, 48);
 		frame.getContentPane().add(textFieldNombre);
 		textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
@@ -388,7 +397,7 @@ public class IniTutor {
 		textFieldApellidos.setOpaque(false);
 		textFieldApellidos.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldApellidos.setColumns(10);
-		textFieldApellidos.setBounds(287, 308, 217, 48);
+		textFieldApellidos.setBounds(351, 369, 217, 48);
 		frame.getContentPane().add(textFieldApellidos);
 		textFieldApellidos.addKeyListener(new KeyAdapter() {
 			@Override
@@ -412,7 +421,7 @@ public class IniTutor {
 		textFieldEmpresa.setOpaque(false);
 		textFieldEmpresa.setToolTipText("Introduzca en nombre de la empresa");
 		textFieldEmpresa.setColumns(10);
-		textFieldEmpresa.setBounds(507, 308, 157, 48);
+		textFieldEmpresa.setBounds(573, 369, 160, 48);
 		frame.getContentPane().add(textFieldEmpresa);
 		textFieldEmpresa.addKeyListener(new KeyAdapter() {
 			@Override
@@ -435,7 +444,7 @@ public class IniTutor {
 						"DNI", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldDni.setForeground(Color.WHITE);
 		textFieldDni.setToolTipText("Introduzca el numero de expediente del alumno");
-		textFieldDni.setBounds(12, 307, 150, 49);
+		textFieldDni.setBounds(41, 369, 150, 49);
 		frame.getContentPane().add(textFieldDni);
 		textFieldDni.setColumns(10);
 		textFieldDni.addKeyListener(new KeyAdapter() {
@@ -451,19 +460,19 @@ public class IniTutor {
 		btnAadir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAadir.setEnabled(false);
 		btnAadir.setForeground(Color.WHITE);
 		btnAadir.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAadir.setBackground(Color.BLACK);
-		btnAadir.setBounds(97, 421, 117, 37);
+		btnAadir.setBounds(149, 489, 123, 35);
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
@@ -497,7 +506,7 @@ public class IniTutor {
 		frame.getContentPane().add(btnAadir);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 159, 582, 135);
+		scrollPane.setBounds(41, 154, 692, 191);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
@@ -526,8 +535,8 @@ public class IniTutor {
 		JLabel lblGrupo = new JLabel("Mi Grupo:");
 		lblGrupo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGrupo.setForeground(Color.WHITE);
-		lblGrupo.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblGrupo.setBounds(237, 131, 160, 25);
+		lblGrupo.setFont(new Font("Dialog", Font.BOLD, 36));
+		lblGrupo.setBounds(195, 96, 240, 53);
 		frame.getContentPane().add(lblGrupo);
 
 		JButton btnAlumno = new JButton("Buscar");
@@ -546,7 +555,7 @@ public class IniTutor {
 		btnAlumno.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAlumno.setBackground(Color.BLACK);
 		btnAlumno.setForeground(Color.WHITE);
-		btnAlumno.setBounds(536, 85, 131, 43);
+		btnAlumno.setBounds(602, 107, 131, 37);
 		frame.getContentPane().add(btnAlumno);
 
 		textFieldExp = new JTextField();
@@ -562,7 +571,7 @@ public class IniTutor {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Introduzca N\u00BA Expediente", TitledBorder.CENTER, TitledBorder.TOP, null,
 				new Color(255, 255, 255)));
-		textFieldExp.setBounds(358, 77, 168, 51);
+		textFieldExp.setBounds(425, 96, 168, 51);
 		frame.getContentPane().add(textFieldExp);
 		textFieldExp.addKeyListener(new KeyAdapter() {
 
@@ -578,7 +587,7 @@ public class IniTutor {
 		lblFondo.setToolTipText("");
 		lblFondo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
-		lblFondo.setBounds(0, 0, 703, 492);
+		lblFondo.setBounds(0, 0, 794, 571);
 		frame.getContentPane().add(lblFondo);
 
 		JLabel lblNewLabelCod_grupo = new JLabel("New label");
@@ -602,14 +611,14 @@ public class IniTutor {
 
 		});
 
-		frame.setBounds(550, 250, 710, 510);
+		frame.setBounds(550, 250, 800, 600);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				lblNewLabel.setText("Welcome " + user);
+				lblBienvenida.setText(user);
 				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 				comboBoxGrupos.setSelectedIndex(selectedValue);
 			}

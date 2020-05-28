@@ -241,7 +241,7 @@ public class Controlador {
 
 	}
 
-	public void Opciones() {
+;	public void Opciones() {
 		miLogin.setVisible(false);
 		opciones.setVisible(true);
 
@@ -379,7 +379,7 @@ public class Controlador {
 		ArrayList<String> grup = miModelo.getGrupos(user);
 		int a = grup.size() + 1;
 		String[] grupos = new String[a];
-		grupos[0] = "todos";
+		grupos[0] = "Todos";
 		for (int i = 1; i < grupos.length; i++) {
 			grupos[i] = grup.get(i - 1);
 		}
@@ -404,6 +404,8 @@ public class Controlador {
 
 	}
 
+	
+	
 //	public int closeAplication(Component parentComponent) {
 //		int i = JOptionPane.showConfirmDialog(parentComponent, "¿Quiere cerrar la aplicacion?", "ventana de cierre", 0);
 //		System.out.println(JFrame.EXIT_ON_CLOSE);
