@@ -390,6 +390,10 @@ public class Login {
 					checkbox.setSelected(false);
 
 			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+			}
 		});
 	}
 

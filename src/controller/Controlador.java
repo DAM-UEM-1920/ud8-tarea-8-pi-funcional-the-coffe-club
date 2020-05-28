@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
 import Ventanas.AsignarGrupo;
-import Ventanas.BusquedaPersonalizada;
+import Ventanas.Historico;
 import Ventanas.Empresa;
 import Ventanas.IniTutor;
 import Ventanas.Login;
@@ -43,7 +43,7 @@ public class Controlador {
 	private IniTutor menuTutor;
 	private MenuDirector menuAdmin;
 	private Tutores tutores;
-	private BusquedaPersonalizada miBusqueda;
+	private Historico miBusqueda;
 	private AsignarGrupo asgGrupo;
 	private AsignarEmpresa asgEmpresa;
 	private Alumno alumno;
@@ -74,7 +74,7 @@ public class Controlador {
 		this.tutores = tutores;
 	}
 
-	public void setBusqueda(BusquedaPersonalizada miBusqueda) {
+	public void setBusqueda(Historico miBusqueda) {
 		this.miBusqueda = miBusqueda;
 	}
 
