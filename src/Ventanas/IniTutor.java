@@ -568,7 +568,7 @@ public class IniTutor {
 
 		lblFondo = new JLabel("");
 		lblFondo.setForeground(Color.WHITE);
-		lblFondo.setToolTipText("Escriba aqu\u00ED el Numero de Expediente del Alumno a buscar");
+		lblFondo.setToolTipText("");
 		lblFondo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
 		lblFondo.setBounds(0, 0, 703, 492);

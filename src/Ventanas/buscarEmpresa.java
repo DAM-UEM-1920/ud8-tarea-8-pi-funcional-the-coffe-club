@@ -130,6 +130,7 @@ public class buscarEmpresa {
 		txtBuscarEmpresa.setColumns(10);
 
 		btnAniadirEmpresa = new JButton("A\u00F1adir empresa");
+		btnAniadirEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		btnAniadirEmpresa.addMouseListener(new MouseAdapter() {
 			@Override
@@ -175,6 +176,7 @@ public class buscarEmpresa {
 		});
 
 		btnEliminarEmpresa = new JButton("Eliminar Empresa");
+		btnEliminarEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		btnEliminarEmpresa.addMouseListener(new MouseAdapter() {
 			@Override
@@ -211,12 +213,13 @@ public class buscarEmpresa {
 			}
 		});
 		btnEliminarEmpresa.setToolTipText("Elimina la empresa seleccionada");
-		btnEliminarEmpresa.setBounds(388, 515, 127, 31);
+		btnEliminarEmpresa.setBounds(353, 515, 180, 31);
 		frame.getContentPane().add(btnEliminarEmpresa);
-		btnAniadirEmpresa.setBounds(189, 515, 117, 31);
+		btnAniadirEmpresa.setBounds(160, 515, 169, 31);
 		frame.getContentPane().add(btnAniadirEmpresa);
 
 		btnGuardarCambios = new JButton("Guardar Cambios");
+		btnGuardarCambios.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		btnGuardarCambios.addMouseListener(new MouseAdapter() {
 			@Override
@@ -263,7 +266,7 @@ public class buscarEmpresa {
 
 		btnGuardarCambios.setEnabled(false);
 		btnGuardarCambios.setToolTipText("Actualiza los datos modificados");
-		btnGuardarCambios.setBounds(603, 515, 127, 31);
+		btnGuardarCambios.setBounds(561, 515, 188, 31);
 		frame.getContentPane().add(btnGuardarCambios);
 
 		JButton btnGuardarTabla = new JButton("Guardar Tabla");
@@ -367,6 +370,7 @@ public class buscarEmpresa {
 		frame.getContentPane().add(txtAddEmpDireccion);
 
 		btnAtras = new JButton("Atras");
+		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
