@@ -5,7 +5,7 @@ import javax.swing.Icon;
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
 import Ventanas.AsignarGrupo;
-import Ventanas.BusquedaPersonalizada;
+import Ventanas.Historico;
 import Ventanas.IniTutor;
 import Ventanas.Login;
 import Ventanas.MenuDirector;
@@ -25,7 +25,7 @@ public class Main {
 		IniTutor menuTutor = new IniTutor();
 		MenuDirector menuAdmin = new MenuDirector();
 		Tutores tutores = new Tutores();
-		BusquedaPersonalizada miBusqueda = new BusquedaPersonalizada();
+		Historico miBusqueda = new Historico();
 		AsignarGrupo asgGrupo = new AsignarGrupo();
 		AsignarEmpresa asgEmpresa = new AsignarEmpresa();
 		Alumno alumno = new Alumno();
