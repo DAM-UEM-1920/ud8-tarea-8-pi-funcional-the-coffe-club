@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Checkbox;
+import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,6 +15,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -338,53 +341,70 @@ public class Controlador {
 
 	public DefaultTableModel cargarFichero(File fichero) {
 		return miModelo.cargarObjeto(fichero);
-		
+
 	}
 
 	public void guardarObjetoTutor(String user) {
 		miModelo.guardarObjetoTutor(user);
-		
+
 	}
-	
+
 	public void guardarObjetoTutorYGrupo(String user, String grupo) {
 		miModelo.guardarObjetoTutorYGrupo(user, grupo);
-		
+
 	}
-	
+
 	public void guardarObjeto(String tabla) {
 		miModelo.guardarObjeto(tabla);
-		
+
 	}
-	
+
 	public int insertar(String tabla, String values) {
 		return miModelo.insert(tabla, values);
-		
+
 	}
+
 	public int update(String tabla, String valores, String pk, String cod) {
-		
+
 		return miModelo.update(tabla, valores, pk, cod);
 	}
-	
-	public int delete (String tabla, String pk, String cod) {
+
+	public int delete(String tabla, String pk, String cod) {
 		return miModelo.delete(tabla, pk, cod);
-		
+
 	}
-	
+
 	public String[] getGrupos(String user) {
 		ArrayList<String> grup = miModelo.getGrupos(user);
-		int a = grup.size()+1;
+		int a = grup.size() + 1;
 		String[] grupos = new String[a];
 		grupos[0] = "todos";
 		for (int i = 1; i < grupos.length; i++) {
-			grupos[i] = grup.get(i-1);
+			grupos[i] = grup.get(i - 1);
 		}
 		return grupos;
-		
+
 	}
 
 	public DefaultTableModel getAlumnosByGrupo(String user, String grupo) {
 		return miModelo.getAlumnosByGrupo(user, grupo);
-		
+
 	}
+
+	public boolean askWindow(Component parentComponent) {
+		int i = JOptionPane.showConfirmDialog(parentComponent, "Estas Seguro", "ventana de seguridad", 0);
+		if (i == 0)
+			return true;
+		else
+			return false;
+
+	}
+
+//	public int closeAplication(Component parentComponent) {
+//		int i = JOptionPane.showConfirmDialog(parentComponent, "¿Quiere cerrar la aplicacion?", "ventana de cierre", 0);
+//		System.out.println(JFrame.EXIT_ON_CLOSE);
+//		return JFrame.EXIT_ON_CLOSE;
+//
+//	}
 
 }

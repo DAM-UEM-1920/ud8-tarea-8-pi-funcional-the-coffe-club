@@ -102,23 +102,6 @@ public class IniTutor {
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
 
-		JButton btnCargarTabla = new JButton("Cargar Tabla");
-		btnCargarTabla.setToolTipText("Buscar por numero de expediente del alumno");
-		btnCargarTabla.setForeground(Color.WHITE);
-		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnCargarTabla.setBackground(Color.BLACK);
-		btnCargarTabla.setBounds(606, 212, 90, 28);
-		frame.getContentPane().add(btnCargarTabla);
-
-		JButton btnGuardarTabla = new JButton("Guardar Tabla");
-
-		btnGuardarTabla.setToolTipText("Buscar por numero de expediente del alumno");
-		btnGuardarTabla.setForeground(Color.WHITE);
-		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnGuardarTabla.setBackground(Color.BLACK);
-		btnGuardarTabla.setBounds(606, 165, 90, 28);
-		frame.getContentPane().add(btnGuardarTabla);
-
 		JComboBox<String> comboBoxGrupos = new JComboBox();
 		comboBoxGrupos.setBackground(Color.WHITE);
 		comboBoxGrupos.setBounds(134, 95, 110, 22);
@@ -128,12 +111,12 @@ public class IniTutor {
 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(comboBoxGrupos.getSelectedItem().toString());
-				if(comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
+				if (comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
 					table.setModel(miModelo.getAlumnosTutor(user));
 				} else {
-					table.setModel(miControlador.getAlumnosByGrupo(user, miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString())));
+					table.setModel(miControlador.getAlumnosByGrupo(user,
+							miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString())));
 				}
-				
 
 			}
 		});
@@ -289,22 +272,24 @@ public class IniTutor {
 		btnEliminar.setBounds(507, 422, 117, 35);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.delete("pertenece", "ALUMNO_NUM_EXP ", textFieldExp.getText());
-				miControlador.delete("practica", "ALUMNO_NUM_EXP ", textFieldExp.getText());
-				miControlador.delete("alumno", "NUM_EXP ", textFieldExp.getText());
-				miControlador.limpiar(textFieldDni);
-				miControlador.limpiar(textFieldNombre);
-				miControlador.limpiar(textFieldApellidos);
-				miControlador.limpiar(textFieldEmpresa);
-				miControlador.limpiar(textFieldExp);
-				miControlador.limpiar(textFieldEmail);
-				miControlador.limpiar(textFieldNacionalidad);
-				miControlador.limpiar(textFieldTelefono);
-				miControlador.limpiar(textFieldFechaNacimiento);
-				table.setModel(miModelo.getAlumnosTutor(user));
-				btnEliminar.setEnabled(false);
-				btnGuardarCambios.setEnabled(false);
-				btnAadir.setEnabled(false);
+				if (miControlador.askWindow(frame)) {
+					miControlador.delete("pertenece", "ALUMNO_NUM_EXP ", textFieldExp.getText());
+					miControlador.delete("practica", "ALUMNO_NUM_EXP ", textFieldExp.getText());
+					miControlador.delete("alumno", "NUM_EXP ", textFieldExp.getText());
+					miControlador.limpiar(textFieldDni);
+					miControlador.limpiar(textFieldNombre);
+					miControlador.limpiar(textFieldApellidos);
+					miControlador.limpiar(textFieldEmpresa);
+					miControlador.limpiar(textFieldExp);
+					miControlador.limpiar(textFieldEmail);
+					miControlador.limpiar(textFieldNacionalidad);
+					miControlador.limpiar(textFieldTelefono);
+					miControlador.limpiar(textFieldFechaNacimiento);
+					table.setModel(miModelo.getAlumnosTutor(user));
+					btnEliminar.setEnabled(false);
+					btnGuardarCambios.setEnabled(false);
+					btnAadir.setEnabled(false);
+				}
 
 			}
 		});
@@ -330,27 +315,29 @@ public class IniTutor {
 		btnGuardarCambios.setBounds(280, 422, 168, 35);
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int fila = table.getSelectedRow();
-				miControlador.update("alumno",
-						"num_exp= '" + textFieldExp.getText() + "' , nombre = '" + textFieldNombre.getText()
-								+ "' , apellidos= '" + textFieldApellidos.getText() + "' , dni= '"
-								+ textFieldDni.getText() + "' , nacionalidad= '" + textFieldNacionalidad.getText()
-								+ "', fecha_nacimiento= '1-1-1', e_mail= '" + textFieldEmail.getText()
-								+ "' , telefono= " + Integer.parseInt(textFieldTelefono.getText()),
-						"num_exp", "'" + textFieldExp.getText() + "'");
+				if (miControlador.askWindow(frame)) {
+					int fila = table.getSelectedRow();
+					miControlador.update("alumno",
+							"num_exp= '" + textFieldExp.getText() + "' , nombre = '" + textFieldNombre.getText()
+									+ "' , apellidos= '" + textFieldApellidos.getText() + "' , dni= '"
+									+ textFieldDni.getText() + "' , nacionalidad= '" + textFieldNacionalidad.getText()
+									+ "', fecha_nacimiento= '1-1-1', e_mail= '" + textFieldEmail.getText()
+									+ "' , telefono= " + Integer.parseInt(textFieldTelefono.getText()),
+							"num_exp", "'" + textFieldExp.getText() + "'");
 
-				miControlador.limpiar(textFieldDni);
-				miControlador.limpiar(textFieldNombre);
-				miControlador.limpiar(textFieldApellidos);
-				miControlador.limpiar(textFieldEmpresa);
-				miControlador.limpiar(textFieldExp);
-				miControlador.limpiar(textFieldFechaNacimiento);
-				miControlador.limpiar(textFieldNacionalidad);
-				miControlador.limpiar(textFieldTelefono);
-				table.setModel(miModelo.getAlumnosTutor(user));
-				btnGuardarCambios.setEnabled(false);
-				btnAadir.setEnabled(false);
-				btnEliminar.setEnabled(false);
+					miControlador.limpiar(textFieldDni);
+					miControlador.limpiar(textFieldNombre);
+					miControlador.limpiar(textFieldApellidos);
+					miControlador.limpiar(textFieldEmpresa);
+					miControlador.limpiar(textFieldExp);
+					miControlador.limpiar(textFieldFechaNacimiento);
+					miControlador.limpiar(textFieldNacionalidad);
+					miControlador.limpiar(textFieldTelefono);
+					table.setModel(miModelo.getAlumnosTutor(user));
+					btnGuardarCambios.setEnabled(false);
+					btnAadir.setEnabled(false);
+					btnEliminar.setEnabled(false);
+				}
 
 			}
 		});
@@ -478,12 +465,12 @@ public class IniTutor {
 								+ textFieldApellidos.getText() + "', " + textFieldExp.getText() + ", '"
 								+ textFieldNacionalidad.getText() + "', '" + textFieldFechaNacimiento.getText() + "', '"
 								+ textFieldEmail.getText() + "', " + textFieldTelefono.getText());
-				if(miControlador.insertar("pertenece",
+				if (miControlador.insertar("pertenece",
 						textFieldExp.getText() + ", "
 								+ miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) + ",'"
 								+ miControlador.getYear() + "'") == 0) {
 					miControlador.delete("alumno", "num_exp", textFieldExp.getText());
-					
+
 				}
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
@@ -587,24 +574,6 @@ public class IniTutor {
 		lblFondo.setBounds(0, 0, 703, 492);
 		frame.getContentPane().add(lblFondo);
 
-		btnGuardarTabla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(comboBoxGrupos.getSelectedItem().toString().equals("todos")){
-					miControlador.guardarObjetoTutor(user);
-				} else {
-					miControlador.guardarObjetoTutorYGrupo(user,miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()));
-				}
-				
-			}
-		});
-
-		btnCargarTabla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				carga = false;
-				refrescar();
-			}
-		});
-
 		JLabel lblNewLabelCod_grupo = new JLabel("New label");
 		lblNewLabelCod_grupo.setBounds(22, 130, 56, 16);
 		frame.getContentPane().add(lblNewLabelCod_grupo);
@@ -701,5 +670,4 @@ public class IniTutor {
 		}
 
 	}
-
 }

@@ -376,6 +376,7 @@ public class Login {
 				lblbackground.setBounds(0, 0, 626, 392);
 				frame.getContentPane().add(lblbackground);
 		frame.setBounds(550, 250, 632, 421);
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override

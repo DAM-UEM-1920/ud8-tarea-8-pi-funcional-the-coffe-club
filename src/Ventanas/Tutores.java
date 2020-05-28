@@ -62,7 +62,6 @@ public class Tutores {
 	private JButton btnGuardarTabla;
 	private JButton btnCargarTabla;
 
-
 	/**
 	 * Create the application.
 	 * 
@@ -83,7 +82,7 @@ public class Tutores {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Tutores.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JButton btnGuardarTabla = new JButton("Guardar Tabla");
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -96,13 +95,13 @@ public class Tutores {
 		btnGuardarTabla.setBackground(Color.BLACK);
 		btnGuardarTabla.setBounds(756, 180, 110, 31);
 		frame.getContentPane().add(btnGuardarTabla);
-		
+
 		JButton btnCargarTabla = new JButton("Cargar Tabla");
 		btnCargarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				carga = false;
 				refrescar();
-				
+
 			}
 		});
 		btnCargarTabla.setToolTipText("Carga la tabla de un fichero seleccionado");
@@ -200,18 +199,20 @@ public class Tutores {
 		btnEliminarTutor.setEnabled(false);
 		btnEliminarTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				miControlador.delete("ejerce", "e_dni_tutor ", "'" + txtDniTutor.getText() + "'");
-				miControlador.delete("gestiona", "tutor_dni_tutor ", "'" + txtDniTutor.getText() + "'");
-				miControlador.delete("tutor", "dni_tutor ", "'" + txtDniTutor.getText() + "'");
-				btnEliminarTutor.setEnabled(false);
-				btnEditarTutor.setEnabled(false);
-				btnAadirTutor.setEnabled(false);
-				miControlador.limpiar(textNombre);
-				miControlador.limpiar(textApellidos);
-				miControlador.limpiar(textEmail);
-				miControlador.limpiar(textArea);
-				table.setModel(miModelo.getTabla("tutor"));
+				if (miControlador.askWindow(frame)) {
+					miControlador.delete("ejerce", "e_dni_tutor ", "'" + txtDniTutor.getText() + "'");
+					miControlador.delete("gestiona", "tutor_dni_tutor ", "'" + txtDniTutor.getText() + "'");
+					miControlador.delete("tutor", "dni_tutor ", "'" + txtDniTutor.getText() + "'");
+					btnEliminarTutor.setEnabled(false);
+					btnEditarTutor.setEnabled(false);
+					btnAadirTutor.setEnabled(false);
+					miControlador.limpiar(textNombre);
+					miControlador.limpiar(textApellidos);
+					miControlador.limpiar(textEmail);
+					miControlador.limpiar(textArea);
+					table.setModel(miModelo.getTabla("tutor"));
 
+				}
 			}
 		});
 		btnEliminarTutor.setBackground(Color.BLACK);
@@ -236,24 +237,26 @@ public class Tutores {
 		btnEditarTutor.setEnabled(false);
 		btnEditarTutor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int fila = table.getSelectedRow();
-				miControlador.update("tutor",
-						"nombre= '" + textNombre.getText() + "' , apellidos= '" + textApellidos.getText()
-								+ "' , e_mail= '" + textEmail.getText() + "' , area= '" + textArea.getText()
-								+ "' ,CENTRO_COD_CENTRO= " + Integer.parseInt(textFieldCentro.getText()),
-						"dni_tutor", "'"+txtDniTutor.getText()+"'");
-				miControlador.limpiar(textNombre);
-				miControlador.limpiar(textApellidos);
-				miControlador.limpiar(textEmail);
-				miControlador.limpiar(textArea);
-				miControlador.limpiar(textFieldCentro);
-				miControlador.limpiar(txtDniTutor);
-				btnEliminarTutor.setEnabled(false);
-				btnEditarTutor.setEnabled(false);
-				btnAadirTutor.setEnabled(false);
-				
-				table.setModel(miModelo.getTabla("tutor"));
+				if (miControlador.askWindow(frame)) {
+					int fila = table.getSelectedRow();
+					miControlador.update("tutor",
+							"nombre= '" + textNombre.getText() + "' , apellidos= '" + textApellidos.getText()
+									+ "' , e_mail= '" + textEmail.getText() + "' , area= '" + textArea.getText()
+									+ "' ,CENTRO_COD_CENTRO= " + Integer.parseInt(textFieldCentro.getText()),
+							"dni_tutor", "'" + txtDniTutor.getText() + "'");
+					miControlador.limpiar(textNombre);
+					miControlador.limpiar(textApellidos);
+					miControlador.limpiar(textEmail);
+					miControlador.limpiar(textArea);
+					miControlador.limpiar(textFieldCentro);
+					miControlador.limpiar(txtDniTutor);
+					btnEliminarTutor.setEnabled(false);
+					btnEditarTutor.setEnabled(false);
+					btnAadirTutor.setEnabled(false);
 
+					table.setModel(miModelo.getTabla("tutor"));
+
+				}
 			}
 		});
 		btnEditarTutor.setBackground(Color.BLACK);
@@ -496,7 +499,7 @@ public class Tutores {
 
 	private void updateAlta() {
 		if (textNombre.getText().length() == 0 || textApellidos.getText().length() == 0
-				|| textEmail.getText().length() == 0 || textArea.getText().length() == 0 
+				|| textEmail.getText().length() == 0 || textArea.getText().length() == 0
 				|| textFieldCentro.getText().length() == 0 || txtDniTutor.getText().length() == 0) {
 			btnAadirTutor.setEnabled(false);
 		} else {
@@ -525,6 +528,7 @@ public class Tutores {
 		frame.setVisible(b);
 
 	}
+
 	public void refrescar() {
 		if (carga) {
 			table.setModel(miModelo.getTabla("tutor"));
@@ -538,6 +542,6 @@ public class Tutores {
 				table.setModel(miControlador.cargarFichero(fichero));
 			}
 		}
-		
+
 	}
 }

@@ -195,17 +195,19 @@ public class buscarEmpresa {
 		btnEliminarEmpresa.setEnabled(false);
 		btnEliminarEmpresa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.delete("practica", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
-				miControlador.delete("colabora", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
-				miControlador.delete("empresa", "cif ", "'" + txtBuscarEmpresa.getText() + "'");
-				miControlador.limpiar(txtAddEmpNombre);
-				miControlador.limpiar(txtAddEmpDireccion);
-				miControlador.limpiar(txtAddEmpTelefono);
-				miControlador.limpiar(txtAddEmpLocalidad);
-				btnEliminarEmpresa.setEnabled(false);
-				btnAniadirEmpresa.setEnabled(false);
-				tblEmpresas.setModel(miModelo.getTabla("empresa"));
+				if (miControlador.askWindow(frame)) {
+					miControlador.delete("practica", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
+					miControlador.delete("colabora", "empresa_cif ", "'" + txtBuscarEmpresa.getText() + "'");
+					miControlador.delete("empresa", "cif ", "'" + txtBuscarEmpresa.getText() + "'");
+					miControlador.limpiar(txtAddEmpNombre);
+					miControlador.limpiar(txtAddEmpDireccion);
+					miControlador.limpiar(txtAddEmpTelefono);
+					miControlador.limpiar(txtAddEmpLocalidad);
+					btnEliminarEmpresa.setEnabled(false);
+					btnAniadirEmpresa.setEnabled(false);
+					tblEmpresas.setModel(miModelo.getTabla("empresa"));
 
+				}
 			}
 		});
 		btnEliminarEmpresa.setToolTipText("Elimina la empresa seleccionada");
@@ -235,25 +237,27 @@ public class buscarEmpresa {
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int fila = tblEmpresas.getSelectedRow();
-				miControlador.update("empresa",
-						"cif= '" + txtBuscarEmpresa.getText() + "' , nombre= '" + txtAddEmpNombre.getText()
-								+ "' , direccion= '" + txtAddEmpDireccion.getText() + "' , telefono= "
-								+ txtAddEmpTelefono.getText() + " , localidad= '" + txtAddEmpLocalidad.getText()
-								+ "', e_mail= '" + textFieldEmail.getText() + "', representantes= '"
-								+ textRepresentante.getText() + "'",
-						"cif", "'" + txtBuscarEmpresa.getText() + "'");
-				miControlador.limpiar(txtAddEmpNombre);
-				miControlador.limpiar(txtAddEmpDireccion);
-				miControlador.limpiar(txtAddEmpTelefono);
-				miControlador.limpiar(txtAddEmpLocalidad);
-				miControlador.limpiar(textFieldEmail);
-				miControlador.limpiar(textRepresentante);
-				btnGuardarCambios.setEnabled(false);
-				btnAniadirEmpresa.setEnabled(false);
-				btnEliminarEmpresa.setEnabled(false);
-				tblEmpresas.setModel(miModelo.getTabla("empresa"));
+				if (miControlador.askWindow(frame)) {
+					int fila = tblEmpresas.getSelectedRow();
+					miControlador.update("empresa",
+							"cif= '" + txtBuscarEmpresa.getText() + "' , nombre= '" + txtAddEmpNombre.getText()
+									+ "' , direccion= '" + txtAddEmpDireccion.getText() + "' , telefono= "
+									+ txtAddEmpTelefono.getText() + " , localidad= '" + txtAddEmpLocalidad.getText()
+									+ "', e_mail= '" + textFieldEmail.getText() + "', representantes= '"
+									+ textRepresentante.getText() + "'",
+							"cif", "'" + txtBuscarEmpresa.getText() + "'");
+					miControlador.limpiar(txtAddEmpNombre);
+					miControlador.limpiar(txtAddEmpDireccion);
+					miControlador.limpiar(txtAddEmpTelefono);
+					miControlador.limpiar(txtAddEmpLocalidad);
+					miControlador.limpiar(textFieldEmail);
+					miControlador.limpiar(textRepresentante);
+					btnGuardarCambios.setEnabled(false);
+					btnAniadirEmpresa.setEnabled(false);
+					btnEliminarEmpresa.setEnabled(false);
+					tblEmpresas.setModel(miModelo.getTabla("empresa"));
 
+				}
 			}
 		});
 
@@ -261,7 +265,7 @@ public class buscarEmpresa {
 		btnGuardarCambios.setToolTipText("Actualiza los datos modificados");
 		btnGuardarCambios.setBounds(603, 515, 127, 31);
 		frame.getContentPane().add(btnGuardarCambios);
-		
+
 		JButton btnGuardarTabla = new JButton("Guardar Tabla");
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -274,13 +278,13 @@ public class buscarEmpresa {
 		btnGuardarTabla.setBackground(Color.BLACK);
 		btnGuardarTabla.setBounds(696, 218, 127, 31);
 		frame.getContentPane().add(btnGuardarTabla);
-		
+
 		JButton btnCargarTabla = new JButton("Cargar Tabla");
 		btnCargarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				carga = false;
 				refrescar();
-				
+
 			}
 		});
 		btnCargarTabla.setToolTipText("Carga la tabla de un fichero seleccionado");
@@ -522,6 +526,7 @@ public class buscarEmpresa {
 			btnGuardarCambios.setEnabled(true);
 		}
 	}
+
 	public void refrescar() {
 		if (carga) {
 			tblEmpresas.setModel(miModelo.getTabla("empresa"));
@@ -535,6 +540,6 @@ public class buscarEmpresa {
 				tblEmpresas.setModel(miControlador.cargarFichero(fichero));
 			}
 		}
-		
+
 	}
 }
