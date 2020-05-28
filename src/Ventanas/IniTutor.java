@@ -62,7 +62,6 @@ public class IniTutor {
 	private JLabel lblNewLabel;
 	private Controlador miControlador;
 	private Modelo miModelo;
-	private JButton btnNewButton_1;
 	private JLabel lblFondo;
 	private JTextField textFieldDni;
 	private JTextField textFieldNombre;
@@ -479,10 +478,13 @@ public class IniTutor {
 								+ textFieldApellidos.getText() + "', " + textFieldExp.getText() + ", '"
 								+ textFieldNacionalidad.getText() + "', '" + textFieldFechaNacimiento.getText() + "', '"
 								+ textFieldEmail.getText() + "', " + textFieldTelefono.getText());
-				miControlador.insertar("pertenece",
+				if(miControlador.insertar("pertenece",
 						textFieldExp.getText() + ", "
 								+ miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()) + ",'"
-								+ miControlador.getYear() + "'");
+								+ miControlador.getYear() + "'") == 0) {
+					miControlador.delete("alumno", "num_exp", textFieldExp.getText());
+					
+				}
 				miControlador.limpiar(textFieldDni);
 				miControlador.limpiar(textFieldNombre);
 				miControlador.limpiar(textFieldApellidos);
