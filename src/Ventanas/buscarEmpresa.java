@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
@@ -76,13 +77,23 @@ public class buscarEmpresa {
 			@Override
 			public void windowActivated(WindowEvent e) {
 			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
+			}
 		});
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(buscarEmpresa.class.getResource("/Img/UEM-simbolo.jpg")));
 
 		frame.setTitle("Empresas");
 		frame.setBounds(550, 250, 852, 598);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		textFieldEmail = new JTextField();
@@ -130,7 +141,7 @@ public class buscarEmpresa {
 		txtBuscarEmpresa.setColumns(10);
 
 		btnAniadirEmpresa = new JButton("A\u00F1adir empresa");
-		btnAniadirEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnAniadirEmpresa.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		btnAniadirEmpresa.addMouseListener(new MouseAdapter() {
 			@Override
@@ -176,7 +187,7 @@ public class buscarEmpresa {
 		});
 
 		btnEliminarEmpresa = new JButton("Eliminar Empresa");
-		btnEliminarEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnEliminarEmpresa.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		btnEliminarEmpresa.addMouseListener(new MouseAdapter() {
 			@Override
@@ -219,7 +230,7 @@ public class buscarEmpresa {
 		frame.getContentPane().add(btnAniadirEmpresa);
 
 		btnGuardarCambios = new JButton("Guardar Cambios");
-		btnGuardarCambios.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnGuardarCambios.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		btnGuardarCambios.addMouseListener(new MouseAdapter() {
 			@Override
@@ -370,7 +381,7 @@ public class buscarEmpresa {
 		frame.getContentPane().add(txtAddEmpDireccion);
 
 		btnAtras = new JButton("Atras");
-		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -436,15 +447,16 @@ public class buscarEmpresa {
 		txtAddEmpLocalidad.setBounds(257, 394, 244, 45);
 		frame.getContentPane().add(txtAddEmpLocalidad);
 		btnBuscarEmpresas = new JButton("Buscar NIF");
+		btnBuscarEmpresas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnBuscarEmpresas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnBuscarEmpresas.addActionListener(new ActionListener() {

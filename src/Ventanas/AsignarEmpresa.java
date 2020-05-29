@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.GroupLayout;
@@ -170,7 +172,7 @@ public class AsignarEmpresa {
 		lblNewLabel.setBounds(0, 0, 1008, 659);
 		frame.getContentPane().add(lblNewLabel);
 		frame.setBounds(550, 250, 1012, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		btnAsignar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,6 +191,16 @@ public class AsignarEmpresa {
 				lblNewLabel_ApellidoAlumno.setText(miModelo.getDato("alumno", "num_exp", numexp, 3));
 				lblExpedienteNumber.setText(miModelo.getDato("alumno", "num_exp", numexp, 4));
 				
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 		

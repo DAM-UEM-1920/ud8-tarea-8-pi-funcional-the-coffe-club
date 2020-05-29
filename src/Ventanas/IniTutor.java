@@ -45,6 +45,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import java.awt.Toolkit;
@@ -124,7 +125,7 @@ public class IniTutor {
 		btnHistoricoAlumnos.setForeground(Color.WHITE);
 		btnHistoricoAlumnos.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnHistoricoAlumnos.setBackground(Color.BLACK);
-		btnHistoricoAlumnos.setBounds(653, 527, 117, 22);
+		btnHistoricoAlumnos.setBounds(653, 527, 117, 25);
 		frame.getContentPane().add(btnHistoricoAlumnos);
 
 		JComboBox<String> comboBoxGrupos = new JComboBox();
@@ -239,10 +240,10 @@ public class IniTutor {
 
 		lblLogoBoton = new JLabel("");
 		lblLogoBoton.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/LoUEBoton.png")));
-		lblLogoBoton.setToolTipText("Volver al menu principal");
+		lblLogoBoton.setToolTipText("");
 		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY,
 				Color.LIGHT_GRAY));
-		lblLogoBoton.setBounds(12, 11, 110, 110);
+		lblLogoBoton.setBounds(41, 23, 110, 93);
 		frame.getContentPane().add(lblLogoBoton);
 
 		table_1 = new JTable();
@@ -350,7 +351,7 @@ public class IniTutor {
 		btnGuardarCambios
 				.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnGuardarCambios.setBackground(Color.BLACK);
-		btnGuardarCambios.setBounds(285, 489, 207, 35);
+		btnGuardarCambios.setBounds(285, 489, 210, 35);
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (miControlador.askWindow(frame)) {
@@ -494,7 +495,7 @@ public class IniTutor {
 		btnAadir.setForeground(Color.WHITE);
 		btnAadir.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAadir.setBackground(Color.BLACK);
-		btnAadir.setBounds(141, 489, 123, 35);
+		btnAadir.setBounds(135, 489, 131, 35);
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
@@ -635,7 +636,7 @@ public class IniTutor {
 
 		frame.setBounds(550, 250, 800, 600);
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -643,6 +644,16 @@ public class IniTutor {
 				lblBienvenida.setText(user);
 				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 				comboBoxGrupos.setSelectedIndex(selectedValue);
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 

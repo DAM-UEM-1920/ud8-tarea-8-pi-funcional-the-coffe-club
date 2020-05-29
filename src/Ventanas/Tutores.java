@@ -22,7 +22,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -84,6 +84,16 @@ public class Tutores {
 		frame.getContentPane().setLayout(null);
 
 		JButton btnGuardarTabla = new JButton("Guardar Tabla");
+		btnGuardarTabla.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+			}
+		});
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.guardarObjeto("tutor");
@@ -97,6 +107,16 @@ public class Tutores {
 		frame.getContentPane().add(btnGuardarTabla);
 
 		JButton btnCargarTabla = new JButton("Cargar Tabla");
+		btnCargarTabla.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+			}
+		});
 		btnCargarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				carga = false;
@@ -147,12 +167,12 @@ public class Tutores {
 		btnAadirTutor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAadirTutor.setToolTipText("A\u00F1ade un tutor al registro");
@@ -186,12 +206,12 @@ public class Tutores {
 		btnEliminarTutor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnEliminarTutor.setToolTipText("Elimina un tutor del registro");
@@ -224,12 +244,12 @@ public class Tutores {
 		btnEditarTutor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnEditarTutor.setToolTipText("Actualiza los datos");
@@ -268,12 +288,12 @@ public class Tutores {
 		btnAtrs.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+				miControlador.SoundLogAtras();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAtrs.setToolTipText("Te lleva a la pantalla anterior");
@@ -445,12 +465,12 @@ public class Tutores {
 		btnAsignar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAsignar.setToolTipText("Asigna un grupo al dni del tutor");
@@ -477,11 +497,22 @@ public class Tutores {
 		lblNewLabel.setBounds(0, 0, 996, 659);
 		frame.getContentPane().add(lblNewLabel);
 		frame.setBounds(550, 250, 882, 562);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
+				
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 	}

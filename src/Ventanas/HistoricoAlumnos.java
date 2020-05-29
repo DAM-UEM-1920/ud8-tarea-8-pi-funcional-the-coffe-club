@@ -14,6 +14,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
@@ -184,13 +186,23 @@ public class HistoricoAlumnos {
 		frame.getContentPane().add(lblNewLabel);
 		frame.setBackground(Color.ORANGE);
 		frame.setBounds(550, 250, 740, 547);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
 				
 			}
 			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
+			}
 		});
 	}
 

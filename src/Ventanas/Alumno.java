@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.Font;
@@ -290,7 +291,7 @@ public class Alumno {
 				miControlador.asignarEmpresa(numexp);
 			}
 		});
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -302,6 +303,16 @@ public class Alumno {
 				lblDondevamosallies.setText(miModelo.getDato("alumno", "num_exp", numexp, 7));
 				lblNacion_1.setText(miModelo.getDato("alumno", "num_exp", numexp, 8));
 				lblExpedienteNumber.setText(miModelo.getDato("alumno", "num_exp", numexp, 4));
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 
