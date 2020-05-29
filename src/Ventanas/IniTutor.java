@@ -33,6 +33,7 @@ import javax.swing.table.TableModel;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import controller.Controlador;
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import model.Modelo;
 import model.Tablas;
 
@@ -155,6 +156,7 @@ public class IniTutor {
 		});
 
 		textFieldFechaNacimiento = new JTextField();
+		textFieldFechaNacimiento.setCaretColor(Color.CYAN);
 		textFieldFechaNacimiento.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldFechaNacimiento.setOpaque(false);
 		textFieldFechaNacimiento.setHorizontalAlignment(SwingConstants.CENTER);
@@ -172,6 +174,7 @@ public class IniTutor {
 		frame.getContentPane().add(textFieldFechaNacimiento);
 
 		textFieldNacionalidad = new JTextField();
+		textFieldNacionalidad.setCaretColor(Color.CYAN);
 		textFieldNacionalidad.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldNacionalidad.setOpaque(false);
 		textFieldNacionalidad.setHorizontalAlignment(SwingConstants.CENTER);
@@ -197,6 +200,7 @@ public class IniTutor {
 		});
 
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.setCaretColor(Color.CYAN);
 		textFieldTelefono.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldTelefono.setOpaque(false);
 		textFieldTelefono.setHorizontalAlignment(SwingConstants.CENTER);
@@ -214,6 +218,7 @@ public class IniTutor {
 		frame.getContentPane().add(textFieldTelefono);
 
 		textFieldEmail = new JTextField();
+		textFieldEmail.setCaretColor(Color.CYAN);
 		textFieldEmail.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldEmail.setOpaque(false);
 		textFieldEmail.setHorizontalAlignment(SwingConstants.CENTER);
@@ -383,6 +388,7 @@ public class IniTutor {
 		frame.getContentPane().add(btnGuardarCambios);
 
 		textFieldNombre = new JTextField();
+		textFieldNombre.setCaretColor(Color.CYAN);
 		textFieldNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldNombre
@@ -407,6 +413,7 @@ public class IniTutor {
 		});
 
 		textFieldApellidos = new JTextField();
+		textFieldApellidos.setCaretColor(Color.CYAN);
 		textFieldApellidos.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldApellidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldApellidos
@@ -431,6 +438,7 @@ public class IniTutor {
 		});
 
 		textFieldEmpresa = new JTextField();
+		textFieldEmpresa.setCaretColor(Color.CYAN);
 		textFieldEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldEmpresa.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldEmpresa
@@ -455,6 +463,7 @@ public class IniTutor {
 		});
 
 		textFieldDni = new JTextField();
+		textFieldDni.setCaretColor(Color.CYAN);
 		textFieldDni.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldDni.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldDni.setOpaque(false);
@@ -563,6 +572,36 @@ public class IniTutor {
 		frame.getContentPane().add(lblGrupo);
 
 		JButton btnAlumno = new JButton("Buscar");
+		btnAlumno.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.SoundSend();
+					String numexp = textFieldExp.getText();
+					miControlador.limpiar(textFieldDni);
+					miControlador.limpiar(textFieldNombre);
+					miControlador.limpiar(textFieldApellidos);
+					miControlador.limpiar(textFieldEmpresa);
+					miControlador.limpiar(textFieldExp);
+					miControlador.limpiar(textFieldEmail);
+					miControlador.limpiar(textFieldNacionalidad);
+					miControlador.limpiar(textFieldTelefono);
+					miControlador.limpiar(textFieldFechaNacimiento);
+					miControlador.vistaAlumno(numexp);
+					
+
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
+
+				}
+				
+			}
+		});
 		btnAlumno.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -600,8 +639,20 @@ public class IniTutor {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				updateAlta();
-				updateModificar();
+				
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.SoundSend();
+					btnAlumno.requestFocus();
+
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
+
+				}
 			}
 		});
 

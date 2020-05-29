@@ -75,6 +75,7 @@ public class Historico_Tutor {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnFiltrar.setToolTipText("Filtra las opciones seleccionadas");
