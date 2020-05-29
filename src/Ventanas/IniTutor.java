@@ -81,6 +81,7 @@ public class IniTutor {
 	private Tablas tabla;
 	private boolean carga = true;
 	private int selectedValue = 0;
+	private JButton btnHistoricoAlumnos;
 
 	/**
 	 * Create the application.
@@ -103,15 +104,36 @@ public class IniTutor {
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnAadir_1 = new JButton("Historico");
-		btnAadir_1.setForeground(Color.WHITE);
-		btnAadir_1.setEnabled(false);
-		btnAadir_1.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnAadir_1.setBackground(Color.BLACK);
-		btnAadir_1.setBounds(678, 521, 91, 26);
-		frame.getContentPane().add(btnAadir_1);
+		btnHistoricoAlumnos = new JButton("Historico Alumnos");
+		btnHistoricoAlumnos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+		});
+		btnHistoricoAlumnos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.HistoricoAlumnos();
+			}
+		});
+		btnHistoricoAlumnos.setToolTipText("Ventana con la informacion historica de los tutores");
+		btnHistoricoAlumnos.setForeground(Color.WHITE);
+		btnHistoricoAlumnos.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnHistoricoAlumnos.setBackground(Color.BLACK);
+		btnHistoricoAlumnos.setBounds(653, 527, 117, 22);
+		frame.getContentPane().add(btnHistoricoAlumnos);
 
 		JComboBox<String> comboBoxGrupos = new JComboBox();
+		comboBoxGrupos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+		});
 		comboBoxGrupos.setBackground(Color.WHITE);
 		comboBoxGrupos.setBounds(41, 127, 110, 22);
 		frame.getContentPane().add(comboBoxGrupos);
@@ -231,12 +253,12 @@ public class IniTutor {
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+				miControlador.SoundLogAtras();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();;
 			}
 		});
 		btnLogOut.setToolTipText("Desconectarse de la sesion");
@@ -268,19 +290,19 @@ public class IniTutor {
 		btnEliminar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();;
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnEliminar.setEnabled(false);
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnEliminar.setBackground(Color.BLACK);
-		btnEliminar.setBounds(524, 489, 131, 35);
+		btnEliminar.setBounds(516, 489, 131, 35);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (miControlador.askWindow(frame)) {
@@ -315,12 +337,12 @@ public class IniTutor {
 		btnGuardarCambios.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnGuardarCambios.setEnabled(false);
@@ -328,7 +350,7 @@ public class IniTutor {
 		btnGuardarCambios
 				.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnGuardarCambios.setBackground(Color.BLACK);
-		btnGuardarCambios.setBounds(293, 489, 207, 35);
+		btnGuardarCambios.setBounds(285, 489, 207, 35);
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (miControlador.askWindow(frame)) {
@@ -472,7 +494,7 @@ public class IniTutor {
 		btnAadir.setForeground(Color.WHITE);
 		btnAadir.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAadir.setBackground(Color.BLACK);
-		btnAadir.setBounds(149, 489, 123, 35);
+		btnAadir.setBounds(141, 489, 123, 35);
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
@@ -543,12 +565,12 @@ public class IniTutor {
 		btnAlumno.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAlumno.setToolTipText("Buscar por numero de expediente del alumno");

@@ -90,7 +90,7 @@ public class Historico_Tutor {
 		btnFiltrar.setToolTipText("Filtra las opciones seleccionadas");
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.personalizadaFin();
+				miControlador.HistoricoTurtorAtras();
 			}
 		});
 		
@@ -129,6 +129,13 @@ public class Historico_Tutor {
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblLogoBoton = new JLabel("");
+		lblLogoBoton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				miControlador.SoundLogAtras();
+				miControlador.HistoricoTurtorAtras();
+			}
+		});
 		lblLogoBoton.setIcon(new ImageIcon(Historico_Tutor.class.getResource("/Img/LoUEBoton.png")));
 		lblLogoBoton.setToolTipText("Volver al menu principal");
 		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY));
@@ -167,7 +174,7 @@ public class Historico_Tutor {
 		btnAtrs.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.personalizadaAtras();
+				miControlador.HistoricoTurtorAtras();
 				
 			}
 		});

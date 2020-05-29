@@ -25,7 +25,8 @@ import javax.swing.table.DefaultTableModel;
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
 import Ventanas.AsignarGrupo;
-import Ventanas.Historico;
+import Ventanas.HistoricoAlumnos;
+import Ventanas.Historico_Tutor;
 import Ventanas.Empresa;
 import Ventanas.IniTutor;
 import Ventanas.Login;
@@ -43,7 +44,8 @@ public class Controlador {
 	private IniTutor menuTutor;
 	private MenuDirector menuAdmin;
 	private Tutores tutores;
-	private Historico miBusqueda;
+	private HistoricoAlumnos miHistoricoAlumnos;
+	private Historico_Tutor historico_Tutor;
 	private AsignarGrupo asgGrupo;
 	private AsignarEmpresa asgEmpresa;
 	private Alumno alumno;
@@ -74,8 +76,11 @@ public class Controlador {
 		this.tutores = tutores;
 	}
 
-	public void setBusqueda(Historico miBusqueda) {
-		this.miBusqueda = miBusqueda;
+	public void setHistoricoAlumnos(HistoricoAlumnos miHistoricoAlumnos) {
+		this.miHistoricoAlumnos = miHistoricoAlumnos;
+	}
+	public void setHistoricoTutor(Historico_Tutor miHistoricoTutor) {
+		this.historico_Tutor = miHistoricoTutor;
 	}
 
 	public void setAsgGrupo(AsignarGrupo asgGrupo) {
@@ -179,8 +184,23 @@ public class Controlador {
 
 	}
 
-	public void personalizadaAtras() {
-		miBusqueda.setVisible(false);
+	public void HistoricoAlumnos() {
+		menuTutor.setVisible(false);
+		miHistoricoAlumnos.setVisible(true);
+
+	}
+	public void HistoricoAlumnosAtras() {
+		miHistoricoAlumnos.setVisible(false);
+		menuTutor.setVisible(true);
+
+	}
+	public void HistoricoTurtor() {
+		menuAdmin.setVisible(false);
+		historico_Tutor.setVisible(true);
+
+	}
+	public void HistoricoTurtorAtras() {
+		historico_Tutor.setVisible(false);
 		menuAdmin.setVisible(true);
 
 	}
@@ -190,17 +210,6 @@ public class Controlador {
 		menuAdmin.setVisible(true);
 	}
 
-	public void busquedaPersonalizada() {
-		menuAdmin.setVisible(false);
-		miBusqueda.setVisible(true);
-
-	}
-
-	public void personalizadaAtrasTutor() {
-		miBusqueda.setVisible(false);
-		menuTutor.setVisible(true);
-
-	}
 
 	public void asgGrupo(String dni) {
 		tutores.setVisible(false);
@@ -218,12 +227,6 @@ public class Controlador {
 
 	public void asgGrupoFin() {
 		asgGrupo.setVisible(false);
-		menuAdmin.setVisible(true);
-
-	}
-
-	public void personalizadaFin() {
-		miBusqueda.setVisible(false);
 		menuAdmin.setVisible(true);
 
 	}

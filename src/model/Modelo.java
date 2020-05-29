@@ -40,7 +40,8 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
 import Ventanas.AsignarGrupo;
-import Ventanas.Historico;
+import Ventanas.HistoricoAlumnos;
+import Ventanas.Historico_Tutor;
 import Ventanas.Empresa;
 import Ventanas.IniTutor;
 import Ventanas.Login;
@@ -59,7 +60,8 @@ public class Modelo {
 	private IniTutor menuTutor;
 	private MenuDirector menuAdmin;
 	private Tutores tutores;
-	private Historico miBusqueda;
+	private HistoricoAlumnos miHistoricoAlumnos;
+	private Historico_Tutor miHistoricoTutor;
 	private AsignarGrupo asgGrupo;
 	private AsignarEmpresa asgEmpresa;
 	private Alumno alumno;
@@ -740,8 +742,8 @@ public class Modelo {
 		this.tutores = tutores;
 	}
 
-	public void setMiBusqueda(Historico miBusqueda) {
-		this.miBusqueda = miBusqueda;
+	public void setMiBusqueda(HistoricoAlumnos miBusqueda) {
+		this.miHistoricoAlumnos = miBusqueda;
 	}
 
 	public void setAsgGrupo(AsignarGrupo asgGrupo) {
@@ -784,6 +786,14 @@ public class Modelo {
 
 	public void setRegistro(Registro registro) {
 		this.registro = registro;
+	}
+
+	public void setMiHistoricoAlumnos(HistoricoAlumnos miHistoricoAlumnos) {
+		this.miHistoricoAlumnos = miHistoricoAlumnos;
+	}
+
+	public void setMiHistoricoTutor(Historico_Tutor miHistoricoTutor) {
+		this.miHistoricoTutor = miHistoricoTutor;
 	}
 
 }

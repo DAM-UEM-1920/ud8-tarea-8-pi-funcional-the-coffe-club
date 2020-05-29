@@ -155,22 +155,22 @@ public class MenuDirector {
 
 		});
 
-		JButton btnNewButton_1 = new JButton("Busqueda Personalizada");
+		JButton btnNewButton_1 = new JButton("Historico Tutores");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 		});
-		btnNewButton_1.setToolTipText("Busqueda avanzada");
+		btnNewButton_1.setToolTipText("Ventana con la informacion historica de los tutores");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.busquedaPersonalizada();
+				miControlador.HistoricoTurtor();
 			}
 		});
 		btnNewButton_1.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
@@ -183,12 +183,12 @@ public class MenuDirector {
 		btnTutores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 		});
 		btnTutores.setToolTipText("Busqueda de tutores");
@@ -208,12 +208,12 @@ public class MenuDirector {
 		btnBuscarEmpresas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 		});
 		btnBuscarEmpresas.setToolTipText("Busqueda de Empresas");
