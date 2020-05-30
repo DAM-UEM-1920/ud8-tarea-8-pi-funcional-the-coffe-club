@@ -42,6 +42,7 @@ public class Historico_Tutor {
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JTable table;
+	private String user;
 
 	/**
 	 * Create the application.
@@ -90,14 +91,7 @@ public class Historico_Tutor {
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, },
-				new String[] { "New column", "New column", "New column", "New column", "New column", "New column",
-						"New column" }));
+//		table.setModel(miControlador.getAlumnosByTutor(user));
 		scrollPane.setViewportView(table);
 
 		JScrollBar scrollBar = new JScrollBar();
@@ -183,6 +177,7 @@ public class Historico_Tutor {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
+				table.setModel(miControlador.getAlumnosByTutor(user));
 			}
 
 			@Override
@@ -208,6 +203,14 @@ public class Historico_Tutor {
 
 	public void setVisible(boolean b) {
 		frame.setVisible(b);
+	}
+	
+	public void setDnitutor(String user) {
+		this.user=user;
+	}
+	
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 

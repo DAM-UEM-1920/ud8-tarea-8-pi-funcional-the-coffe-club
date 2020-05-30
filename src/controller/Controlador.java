@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
@@ -185,23 +186,24 @@ public class Controlador {
 	}
 
 	public void HistoricoAlumnos() {
-		menuTutor.setVisible(false);
+		menuAdmin.setVisible(false);
 		miHistoricoAlumnos.setVisible(true);
 
 	}
 	public void HistoricoAlumnosAtras() {
 		miHistoricoAlumnos.setVisible(false);
-		menuTutor.setVisible(true);
+		menuAdmin.setVisible(true);
 
 	}
-	public void HistoricoTurtor() {
-		menuAdmin.setVisible(false);
+	public void HistoricoTurtor(String user) {
+		menuTutor.setVisible(false);
+		historico_Tutor.setUser(user);
 		historico_Tutor.setVisible(true);
 
 	}
 	public void HistoricoTurtorAtras() {
 		historico_Tutor.setVisible(false);
-		menuAdmin.setVisible(true);
+		menuTutor.setVisible(true);
 
 	}
 
@@ -407,7 +409,9 @@ public class Controlador {
 
 	}
 
-	
+	public TableModel getAlumnosByTutor(String user) {
+		return miModelo.getAlumnosTutor(user);
+	}	
 	
 //	public int closeAplication(Component parentComponent) {
 //		int i = JOptionPane.showConfirmDialog(parentComponent, "¿Quiere cerrar la aplicacion?", "ventana de cierre", 0);

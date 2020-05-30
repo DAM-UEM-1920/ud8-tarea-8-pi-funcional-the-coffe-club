@@ -119,7 +119,7 @@ public class IniTutor {
 		});
 		btnHistoricoAlumnos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.HistoricoAlumnos();
+				miControlador.HistoricoTurtor(user);
 			}
 		});
 		btnHistoricoAlumnos.setToolTipText("Ventana con la informacion historica de los tutores");
@@ -251,10 +251,6 @@ public class IniTutor {
 		lblLogoBoton.setBounds(41, 23, 110, 93);
 		frame.getContentPane().add(lblLogoBoton);
 
-		table_1 = new JTable();
-		table_1.setBounds(0, 0, 0, 0);
-		frame.getContentPane().add(table_1);
-
 		btnLogOut = new JButton("Logout");
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
@@ -325,7 +321,7 @@ public class IniTutor {
 					miControlador.limpiar(textFieldTelefono);
 					miControlador.limpiar(textFieldFechaNacimiento);
 					if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
-						table.setModel(miModelo.getAlumnosTutor(user));
+						table.setModel(miControlador.getAlumnosByTutor(user));
 					} else {
 						table.setModel(miControlador.getAlumnosByGrupo(user,
 								miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString())));

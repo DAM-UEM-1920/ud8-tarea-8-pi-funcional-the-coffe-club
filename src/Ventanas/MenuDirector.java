@@ -173,7 +173,7 @@ public class MenuDirector {
 		btnNewButton_1.setToolTipText("Ventana con la informacion historica de los tutores");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.HistoricoTurtor();
+				miControlador.HistoricoAlumnos();
 			}
 		});
 		btnNewButton_1.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
