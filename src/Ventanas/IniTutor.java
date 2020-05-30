@@ -129,7 +129,7 @@ public class IniTutor {
 		btnHistoricoAlumnos.setBounds(653, 527, 117, 25);
 		frame.getContentPane().add(btnHistoricoAlumnos);
 
-		JComboBox<String> comboBoxGrupos = new JComboBox();
+		JComboBox<String> comboBoxGrupos = new JComboBox<String>();
 		comboBoxGrupos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -143,7 +143,6 @@ public class IniTutor {
 		comboBoxGrupos.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(comboBoxGrupos.getSelectedItem().toString());
 				if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
 					table.setModel(miModelo.getAlumnosTutor(user));
 				} else {

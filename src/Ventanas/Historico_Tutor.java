@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -43,6 +44,8 @@ public class Historico_Tutor {
 	private Modelo miModelo;
 	private JTable table;
 	private String user;
+	private int selectedValueAño = 0;
+	private int selectedgrupo = 0;
 
 	/**
 	 * Create the application.
@@ -97,13 +100,41 @@ public class Historico_Tutor {
 		JScrollBar scrollBar = new JScrollBar();
 		scrollPane.setColumnHeaderView(scrollBar);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(508, 178, 140, 29);
-		frame.getContentPane().add(comboBox_1);
+		JComboBox<String> comboBoxGrupos = new JComboBox<String>();
+		comboBoxGrupos.setBounds(508, 178, 140, 29);
+		frame.getContentPane().add(comboBoxGrupos);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(96, 178, 140, 29);
-		frame.getContentPane().add(comboBox);
+		JComboBox<String> comboBoxAño = new JComboBox<String>();
+		comboBoxAño.setBounds(96, 178, 140, 29);
+		frame.getContentPane().add(comboBoxAño);
+		comboBoxAño.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				selectedValueAño=comboBoxGrupos.getSelectedIndex();
+				if(comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
+					table.setModel(miControlador.getAlumnosByTutorYaño(user, comboBoxAño.getSelectedItem().toString()));
+				}else {
+					table.setModel(miControlador.getAlumnosByGrupoYAño(user,
+							miControlador.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()),
+							comboBoxAño.getSelectedItem().toString()));
+				}
+			}
+		});
+		
+		comboBoxGrupos.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				selectedgrupo=comboBoxGrupos.getSelectedIndex();
+				if(comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
+					table.setModel(miControlador.getAlumnosByTutor(user));
+				}else {
+					table.setModel(miControlador.getAlumnosByGrupoYAño(user,
+							miControlador.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()),
+							comboBoxAño.getSelectedItem().toString()));
+				}
+			}
+		});
+
 
 		JLabel lblLogoBoton = new JLabel("");
 		lblLogoBoton.addMouseListener(new MouseAdapter() {
@@ -177,7 +208,11 @@ public class Historico_Tutor {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				table.setModel(miControlador.getAlumnosByTutor(user));
+				comboBoxAño.setModel(new DefaultComboBoxModel<String>(miControlador.getAños()));
+				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
+				
+				comboBoxGrupos.setSelectedIndex(selectedValueAño);
+				comboBoxGrupos.setSelectedIndex(selectedgrupo);
 			}
 
 			@Override
@@ -204,14 +239,13 @@ public class Historico_Tutor {
 	public void setVisible(boolean b) {
 		frame.setVisible(b);
 	}
-	
+
 	public void setDnitutor(String user) {
-		this.user=user;
-	}
-	
-	public void setUser(String user) {
 		this.user = user;
 	}
 
+	public void setUser(String user) {
+		this.user = user;
+	}
 
 }

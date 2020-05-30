@@ -80,6 +80,7 @@ public class Controlador {
 	public void setHistoricoAlumnos(HistoricoAlumnos miHistoricoAlumnos) {
 		this.miHistoricoAlumnos = miHistoricoAlumnos;
 	}
+
 	public void setHistoricoTutor(Historico_Tutor miHistoricoTutor) {
 		this.historico_Tutor = miHistoricoTutor;
 	}
@@ -190,17 +191,20 @@ public class Controlador {
 		miHistoricoAlumnos.setVisible(true);
 
 	}
+
 	public void HistoricoAlumnosAtras() {
 		miHistoricoAlumnos.setVisible(false);
 		menuAdmin.setVisible(true);
 
 	}
+
 	public void HistoricoTurtor(String user) {
 		menuTutor.setVisible(false);
 		historico_Tutor.setUser(user);
 		historico_Tutor.setVisible(true);
 
 	}
+
 	public void HistoricoTurtorAtras() {
 		historico_Tutor.setVisible(false);
 		menuTutor.setVisible(true);
@@ -211,7 +215,6 @@ public class Controlador {
 		tutores.setVisible(false);
 		menuAdmin.setVisible(true);
 	}
-
 
 	public void asgGrupo(String dni) {
 		tutores.setVisible(false);
@@ -246,7 +249,9 @@ public class Controlador {
 
 	}
 
-;	public void Opciones() {
+	;
+
+	public void Opciones() {
 		miLogin.setVisible(false);
 		opciones.setVisible(true);
 
@@ -339,9 +344,9 @@ public class Controlador {
 		int mes = LocalDate.now().getMonthValue();
 		int año = LocalDate.now().getYear();
 		if (mes < 6) {
-			return String.valueOf(año - 1) + "-" + String.valueOf(año);
+			return String.valueOf(año - 1) + "/" + String.valueOf(año);
 		} else
-			return String.valueOf(año) + "-" + String.valueOf(año + 1);
+			return String.valueOf(año) + "/" + String.valueOf(año + 1);
 
 	}
 
@@ -388,10 +393,26 @@ public class Controlador {
 		for (int i = 1; i < grupos.length; i++) {
 			grupos[i] = grup.get(i - 1);
 		}
-		grupos[grupos.length-1]=grup.get(grup.size()-1);
+		grupos[grupos.length - 1] = grup.get(grup.size() - 1);
 		System.out.println(grup.toString());
 		System.out.println(Arrays.toString(grupos));
 		return grupos;
+
+	}
+
+	public String[] getAños() {
+		String[] añosAcad = new String[10];
+		int mes = LocalDate.now().getMonthValue();
+		int año = LocalDate.now().getYear();
+		for (int i = 0; i < añosAcad.length; i++) {
+			if (mes < 6) {
+				añosAcad[i] = String.valueOf(año - i - 1) + "/" + String.valueOf(año - i);
+			} else {
+				añosAcad[i] = String.valueOf(año - i) + "/" + String.valueOf(año - i + 1);
+			}
+		}
+
+		return añosAcad;
 
 	}
 
@@ -411,8 +432,21 @@ public class Controlador {
 
 	public TableModel getAlumnosByTutor(String user) {
 		return miModelo.getAlumnosTutor(user);
-	}	
-	
+	}
+
+	public String getCodigoGrupo(String nomgrupo) {
+		return miModelo.getCodigoGrupo(nomgrupo);
+	}
+
+	public DefaultTableModel getAlumnosByGrupoYAño(String user, String codigoGrupo, String año) {
+		return miModelo.getAlumnosByGrupoYAño(user, codigoGrupo, año);
+	}
+
+	public DefaultTableModel getAlumnosByTutorYaño(String user, String año) {
+
+		return miModelo.getAlumnosByTutorYaño(user, año);
+	}
+
 //	public int closeAplication(Component parentComponent) {
 //		int i = JOptionPane.showConfirmDialog(parentComponent, "¿Quiere cerrar la aplicacion?", "ventana de cierre", 0);
 //		System.out.println(JFrame.EXIT_ON_CLOSE);

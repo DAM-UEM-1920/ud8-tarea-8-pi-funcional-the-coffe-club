@@ -32,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
@@ -263,6 +264,12 @@ public class Modelo {
 
 	}
 
+	/**
+	 * devuelve el numero de columnas de una tabla
+	 * 
+	 * @param tabla
+	 * @return int
+	 */
 	private int getNumColumnas(String tabla) {
 		int num = 0;
 		try {
@@ -343,6 +350,11 @@ public class Modelo {
 
 	}
 
+	/**
+	 * deelve los codigos de los centros que se encuentran en la base de datos
+	 * 
+	 * @return ArrayList
+	 */
 	public ArrayList<String> getCentros() {
 		ArrayList<String> centro = new ArrayList<String>();
 		try {
@@ -415,6 +427,90 @@ public class Modelo {
 				miTabla.addRow(contenido);
 			}
 		} catch (SQLException e) {
+
+		}
+		return miTabla;
+	}
+
+	/**
+	 * devuelve tabla filtrando por el tutor, el grupo y el año al que los alumnos
+	 * pertenecieron a un grupo
+	 * 
+	 * @param user
+	 * @param grupo
+	 * @param año
+	 * @return DefaultTableModel
+	 */
+	public DefaultTableModel getAlumnosByGrupoYAño(String user, String grupo, String año) {
+		miTabla = new DefaultTableModel();
+		int numColumnas = getNumColumnas("alumno");
+		Object[] contenido = new Object[numColumnas];
+		PreparedStatement pstmt;
+		try {
+			pstmt = conexion.prepareStatement("SELECT alumno.* FROM alumno " + "LEFT JOIN pertenece "
+					+ "ON alumno.num_exp = pertenece.alumno_num_exp " + "LEFT JOIN GRUPO "
+					+ "ON pertenece.grupo_cod_grupo = grupo.cod_grupo " + "LEFT JOIN GESTIONA "
+					+ "ON grupo.cod_grupo = gestiona.grupo_cod_grupo " + "LEFT JOIN TUTOR "
+					+ "ON gestiona.tutor_dni_tutor = tutor.dni_tutor " + "LEFT JOIN EJERCE "
+					+ "ON tutor.dni_tutor = ejerce.e_dni_tutor "
+					+ "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
+					+ user + "') AND grupo.cod_grupo = " + grupo + " AND pertenece.ano_acad = '" + año + "'");
+			System.out.println(grupo);
+			ResultSet rset = pstmt.executeQuery();
+			ResultSetMetaData rsmd = rset.getMetaData();
+
+			for (int i = 0; i < numColumnas; i++) {
+				miTabla.addColumn(rsmd.getColumnName(i + 1));
+			}
+			while (rset.next()) {
+				for (int col = 1; col <= numColumnas; col++) {
+					contenido[col - 1] = rset.getString(col);
+				}
+				miTabla.addRow(contenido);
+			}
+		} catch (SQLException e) {
+			System.out.println("error");
+
+		}
+		return miTabla;
+	}
+
+	/**
+	 * obtiene tabla filtrando por tutor y por año al que un alumno pertenecio al
+	 * grupo
+	 * 
+	 * @param user
+	 * @param año
+	 * @return DefaultTableMode
+	 */
+	public DefaultTableModel getAlumnosByTutorYaño(String user, String año) {
+		miTabla = new DefaultTableModel();
+		int numColumnas = getNumColumnas("alumno");
+		Object[] contenido = new Object[numColumnas];
+		PreparedStatement pstmt;
+		try {
+			pstmt = conexion.prepareStatement("SELECT alumno.* FROM alumno " + "LEFT JOIN pertenece "
+					+ "ON alumno.num_exp = pertenece.alumno_num_exp " + "LEFT JOIN GRUPO "
+					+ "ON pertenece.grupo_cod_grupo = grupo.cod_grupo " + "LEFT JOIN GESTIONA "
+					+ "ON grupo.cod_grupo = gestiona.grupo_cod_grupo " + "LEFT JOIN TUTOR "
+					+ "ON gestiona.tutor_dni_tutor = tutor.dni_tutor " + "LEFT JOIN EJERCE "
+					+ "ON tutor.dni_tutor = ejerce.e_dni_tutor "
+					+ "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
+					+ user + "') AND pertenece.ano_acad = '" + año + "'");
+			ResultSet rset = pstmt.executeQuery();
+			ResultSetMetaData rsmd = rset.getMetaData();
+
+			for (int i = 0; i < numColumnas; i++) {
+				miTabla.addColumn(rsmd.getColumnName(i + 1));
+			}
+			while (rset.next()) {
+				for (int col = 1; col <= numColumnas; col++) {
+					contenido[col - 1] = rset.getString(col);
+				}
+				miTabla.addRow(contenido);
+			}
+		} catch (SQLException e) {
+			System.out.println("error");
 
 		}
 		return miTabla;
