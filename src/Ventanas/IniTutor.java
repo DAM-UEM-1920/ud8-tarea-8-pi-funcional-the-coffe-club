@@ -33,6 +33,7 @@ import javax.swing.table.TableModel;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import controller.Controlador;
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import model.Modelo;
 import model.Tablas;
 
@@ -45,6 +46,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import java.awt.Toolkit;
@@ -59,7 +61,7 @@ public class IniTutor {
 	private JTable table_1;
 	private JButton btnLogOut;
 	private JScrollPane scrollPane;
-	private JLabel lblNewLabel;
+	private JLabel lblBienvenida;
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JLabel lblFondo;
@@ -81,6 +83,7 @@ public class IniTutor {
 	private Tablas tabla;
 	private boolean carga = true;
 	private int selectedValue = 0;
+	private JButton btnHistoricoAlumnos;
 
 	/**
 	 * Create the application.
@@ -102,17 +105,46 @@ public class IniTutor {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(IniTutor.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
+		
+		btnHistoricoAlumnos = new JButton("Historico Alumnos");
+		btnHistoricoAlumnos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+		});
+		btnHistoricoAlumnos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.HistoricoAlumnos();
+			}
+		});
+		btnHistoricoAlumnos.setToolTipText("Ventana con la informacion historica de los tutores");
+		btnHistoricoAlumnos.setForeground(Color.WHITE);
+		btnHistoricoAlumnos.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
+		btnHistoricoAlumnos.setBackground(Color.BLACK);
+		btnHistoricoAlumnos.setBounds(653, 527, 117, 25);
+		frame.getContentPane().add(btnHistoricoAlumnos);
 
 		JComboBox<String> comboBoxGrupos = new JComboBox();
+		comboBoxGrupos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+		});
 		comboBoxGrupos.setBackground(Color.WHITE);
-		comboBoxGrupos.setBounds(134, 95, 110, 22);
+		comboBoxGrupos.setBounds(41, 127, 110, 22);
 		frame.getContentPane().add(comboBoxGrupos);
 
 		comboBoxGrupos.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(comboBoxGrupos.getSelectedItem().toString());
-				if (comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
+				if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
 					table.setModel(miModelo.getAlumnosTutor(user));
 				} else {
 					table.setModel(miControlador.getAlumnosByGrupo(user,
@@ -124,6 +156,7 @@ public class IniTutor {
 		});
 
 		textFieldFechaNacimiento = new JTextField();
+		textFieldFechaNacimiento.setCaretColor(Color.CYAN);
 		textFieldFechaNacimiento.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldFechaNacimiento.setOpaque(false);
 		textFieldFechaNacimiento.setHorizontalAlignment(SwingConstants.CENTER);
@@ -137,10 +170,11 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"Fecha Nacimiento", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldFechaNacimiento.setBounds(381, 369, 131, 48);
+		textFieldFechaNacimiento.setBounds(425, 430, 143, 48);
 		frame.getContentPane().add(textFieldFechaNacimiento);
 
 		textFieldNacionalidad = new JTextField();
+		textFieldNacionalidad.setCaretColor(Color.CYAN);
 		textFieldNacionalidad.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldNacionalidad.setOpaque(false);
 		textFieldNacionalidad.setHorizontalAlignment(SwingConstants.CENTER);
@@ -154,7 +188,7 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"Nacionalidad", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldNacionalidad.setBounds(517, 369, 160, 48);
+		textFieldNacionalidad.setBounds(573, 430, 160, 48);
 		frame.getContentPane().add(textFieldNacionalidad);
 		textFieldNacionalidad.addKeyListener(new KeyAdapter() {
 
@@ -166,6 +200,7 @@ public class IniTutor {
 		});
 
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.setCaretColor(Color.CYAN);
 		textFieldTelefono.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldTelefono.setOpaque(false);
 		textFieldTelefono.setHorizontalAlignment(SwingConstants.CENTER);
@@ -179,10 +214,11 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"Telefono", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldTelefono.setBounds(237, 369, 138, 48);
+		textFieldTelefono.setBounds(262, 430, 160, 48);
 		frame.getContentPane().add(textFieldTelefono);
 
 		textFieldEmail = new JTextField();
+		textFieldEmail.setCaretColor(Color.CYAN);
 		textFieldEmail.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldEmail.setOpaque(false);
 		textFieldEmail.setHorizontalAlignment(SwingConstants.CENTER);
@@ -196,22 +232,23 @@ public class IniTutor {
 										new Color(160, 160, 160)),
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"E-mail", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		textFieldEmail.setBounds(12, 369, 217, 48);
+		textFieldEmail.setBounds(41, 430, 217, 48);
 		frame.getContentPane().add(textFieldEmail);
 
-		lblNewLabel = new JLabel();
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 28));
-		lblNewLabel.setBounds(193, 11, 293, 72);
-		frame.getContentPane().add(lblNewLabel);
+		lblBienvenida = new JLabel();
+		lblBienvenida.setToolTipText("Nombre Tutor");
+		lblBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBienvenida.setForeground(Color.WHITE);
+		lblBienvenida.setFont(new Font("Dialog", Font.BOLD, 48));
+		lblBienvenida.setBounds(231, 13, 293, 72);
+		frame.getContentPane().add(lblBienvenida);
 
 		lblLogoBoton = new JLabel("");
 		lblLogoBoton.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/LoUEBoton.png")));
-		lblLogoBoton.setToolTipText("Volver al menu principal");
+		lblLogoBoton.setToolTipText("");
 		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY,
 				Color.LIGHT_GRAY));
-		lblLogoBoton.setBounds(12, 11, 110, 110);
+		lblLogoBoton.setBounds(41, 23, 110, 93);
 		frame.getContentPane().add(lblLogoBoton);
 
 		table_1 = new JTable();
@@ -222,17 +259,17 @@ public class IniTutor {
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+				miControlador.SoundLogAtras();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();;
 			}
 		});
 		btnLogOut.setToolTipText("Desconectarse de la sesion");
 		btnLogOut.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnLogOut.setBounds(581, 13, 83, 28);
+		btnLogOut.setBounds(689, 20, 83, 28);
 		btnLogOut.setForeground(Color.WHITE);
 		btnLogOut.setBackground(Color.BLACK);
 		frame.getContentPane().add(btnLogOut);
@@ -259,19 +296,19 @@ public class IniTutor {
 		btnEliminar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();;
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnEliminar.setEnabled(false);
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnEliminar.setBackground(Color.BLACK);
-		btnEliminar.setBounds(507, 422, 117, 35);
+		btnEliminar.setBounds(516, 489, 131, 35);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (miControlador.askWindow(frame)) {
@@ -287,7 +324,7 @@ public class IniTutor {
 					miControlador.limpiar(textFieldNacionalidad);
 					miControlador.limpiar(textFieldTelefono);
 					miControlador.limpiar(textFieldFechaNacimiento);
-					if (comboBoxGrupos.getSelectedItem().toString().equals("todos")) {
+					if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
 						table.setModel(miModelo.getAlumnosTutor(user));
 					} else {
 						table.setModel(miControlador.getAlumnosByGrupo(user,
@@ -306,12 +343,12 @@ public class IniTutor {
 		btnGuardarCambios.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnGuardarCambios.setEnabled(false);
@@ -319,7 +356,7 @@ public class IniTutor {
 		btnGuardarCambios
 				.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnGuardarCambios.setBackground(Color.BLACK);
-		btnGuardarCambios.setBounds(280, 422, 168, 35);
+		btnGuardarCambios.setBounds(285, 489, 210, 35);
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (miControlador.askWindow(frame)) {
@@ -351,6 +388,7 @@ public class IniTutor {
 		frame.getContentPane().add(btnGuardarCambios);
 
 		textFieldNombre = new JTextField();
+		textFieldNombre.setCaretColor(Color.CYAN);
 		textFieldNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldNombre
@@ -364,7 +402,7 @@ public class IniTutor {
 		textFieldNombre.setOpaque(false);
 		textFieldNombre.setToolTipText("Introduzca el nombre del alumno");
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(167, 308, 114, 48);
+		textFieldNombre.setBounds(195, 369, 150, 48);
 		frame.getContentPane().add(textFieldNombre);
 		textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
@@ -375,6 +413,7 @@ public class IniTutor {
 		});
 
 		textFieldApellidos = new JTextField();
+		textFieldApellidos.setCaretColor(Color.CYAN);
 		textFieldApellidos.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldApellidos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldApellidos
@@ -388,7 +427,7 @@ public class IniTutor {
 		textFieldApellidos.setOpaque(false);
 		textFieldApellidos.setToolTipText("Introduzca los apellidos del alumno");
 		textFieldApellidos.setColumns(10);
-		textFieldApellidos.setBounds(287, 308, 217, 48);
+		textFieldApellidos.setBounds(351, 369, 217, 48);
 		frame.getContentPane().add(textFieldApellidos);
 		textFieldApellidos.addKeyListener(new KeyAdapter() {
 			@Override
@@ -399,6 +438,7 @@ public class IniTutor {
 		});
 
 		textFieldEmpresa = new JTextField();
+		textFieldEmpresa.setCaretColor(Color.CYAN);
 		textFieldEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldEmpresa.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldEmpresa
@@ -412,7 +452,7 @@ public class IniTutor {
 		textFieldEmpresa.setOpaque(false);
 		textFieldEmpresa.setToolTipText("Introduzca en nombre de la empresa");
 		textFieldEmpresa.setColumns(10);
-		textFieldEmpresa.setBounds(507, 308, 157, 48);
+		textFieldEmpresa.setBounds(573, 369, 160, 48);
 		frame.getContentPane().add(textFieldEmpresa);
 		textFieldEmpresa.addKeyListener(new KeyAdapter() {
 			@Override
@@ -423,6 +463,7 @@ public class IniTutor {
 		});
 
 		textFieldDni = new JTextField();
+		textFieldDni.setCaretColor(Color.CYAN);
 		textFieldDni.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldDni.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldDni.setOpaque(false);
@@ -435,7 +476,7 @@ public class IniTutor {
 						"DNI", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldDni.setForeground(Color.WHITE);
 		textFieldDni.setToolTipText("Introduzca el numero de expediente del alumno");
-		textFieldDni.setBounds(12, 307, 150, 49);
+		textFieldDni.setBounds(41, 369, 150, 49);
 		frame.getContentPane().add(textFieldDni);
 		textFieldDni.setColumns(10);
 		textFieldDni.addKeyListener(new KeyAdapter() {
@@ -451,19 +492,19 @@ public class IniTutor {
 		btnAadir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAadir.setEnabled(false);
 		btnAadir.setForeground(Color.WHITE);
 		btnAadir.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAadir.setBackground(Color.BLACK);
-		btnAadir.setBounds(97, 421, 117, 37);
+		btnAadir.setBounds(135, 489, 131, 35);
 		btnAadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DefaultTableModel tabla = (DefaultTableModel) table.getModel();
@@ -497,7 +538,7 @@ public class IniTutor {
 		frame.getContentPane().add(btnAadir);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 159, 582, 135);
+		scrollPane.setBounds(41, 154, 692, 191);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
@@ -526,27 +567,57 @@ public class IniTutor {
 		JLabel lblGrupo = new JLabel("Mi Grupo:");
 		lblGrupo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGrupo.setForeground(Color.WHITE);
-		lblGrupo.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblGrupo.setBounds(237, 131, 160, 25);
+		lblGrupo.setFont(new Font("Dialog", Font.BOLD, 36));
+		lblGrupo.setBounds(195, 96, 240, 53);
 		frame.getContentPane().add(lblGrupo);
 
 		JButton btnAlumno = new JButton("Buscar");
+		btnAlumno.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.SoundSend();
+					String numexp = textFieldExp.getText();
+					miControlador.limpiar(textFieldDni);
+					miControlador.limpiar(textFieldNombre);
+					miControlador.limpiar(textFieldApellidos);
+					miControlador.limpiar(textFieldEmpresa);
+					miControlador.limpiar(textFieldExp);
+					miControlador.limpiar(textFieldEmail);
+					miControlador.limpiar(textFieldNacionalidad);
+					miControlador.limpiar(textFieldTelefono);
+					miControlador.limpiar(textFieldFechaNacimiento);
+					miControlador.vistaAlumno(numexp);
+					
+
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
+
+				}
+				
+			}
+		});
 		btnAlumno.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAlumno.setToolTipText("Buscar por numero de expediente del alumno");
 		btnAlumno.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnAlumno.setBackground(Color.BLACK);
 		btnAlumno.setForeground(Color.WHITE);
-		btnAlumno.setBounds(536, 85, 131, 43);
+		btnAlumno.setBounds(602, 107, 131, 37);
 		frame.getContentPane().add(btnAlumno);
 
 		textFieldExp = new JTextField();
@@ -562,14 +633,26 @@ public class IniTutor {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Introduzca N\u00BA Expediente", TitledBorder.CENTER, TitledBorder.TOP, null,
 				new Color(255, 255, 255)));
-		textFieldExp.setBounds(358, 77, 168, 51);
+		textFieldExp.setBounds(425, 96, 168, 51);
 		frame.getContentPane().add(textFieldExp);
 		textFieldExp.addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				updateAlta();
-				updateModificar();
+				
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					miControlador.SoundSend();
+					btnAlumno.requestFocus();
+
+				}
+
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					if (miControlador.askWindow(frame)) {
+						JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+						System.exit(0);
+					}
+
+				}
 			}
 		});
 
@@ -578,7 +661,7 @@ public class IniTutor {
 		lblFondo.setToolTipText("");
 		lblFondo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFondo.setIcon(new ImageIcon(IniTutor.class.getResource("/Img/Fondogrande.jpg")));
-		lblFondo.setBounds(0, 0, 703, 492);
+		lblFondo.setBounds(0, 0, 794, 571);
 		frame.getContentPane().add(lblFondo);
 
 		JLabel lblNewLabelCod_grupo = new JLabel("New label");
@@ -602,16 +685,26 @@ public class IniTutor {
 
 		});
 
-		frame.setBounds(550, 250, 710, 510);
+		frame.setBounds(550, 250, 800, 600);
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				lblNewLabel.setText("Welcome " + user);
+				lblBienvenida.setText(user);
 				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 				comboBoxGrupos.setSelectedIndex(selectedValue);
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 

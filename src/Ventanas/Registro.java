@@ -54,10 +54,12 @@ import javax.swing.event.AncestorEvent;
 import java.awt.Cursor;
 import java.awt.ComponentOrientation;
 import javax.swing.DebugGraphics;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Registro {
 
-	private JFrame Frame;
+	private JFrame frame;
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JTextField textNombreUser;
@@ -95,8 +97,20 @@ public class Registro {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Frame = new JFrame();
-		Frame.addKeyListener(new KeyAdapter() {
+		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
+			}
+		});
+		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -105,14 +119,14 @@ public class Registro {
 				}
 			}
 		});
-		Frame.setTitle("Opciones de la Aplicacion");
+		frame.setTitle("Opciones de la Aplicacion");
 
-		Frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Registro.class.getResource("/Img/UEM-simbolo.jpg")));
-		Frame.setResizable(false);
-		Frame.getContentPane().setMinimumSize(new Dimension(75, 23));
-		Frame.getContentPane().setMaximumSize(new Dimension(75, 23));
-		Frame.getContentPane().setBackground(Color.ORANGE);
-		Frame.getContentPane().setLayout(null);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Registro.class.getResource("/Img/UEM-simbolo.jpg")));
+		frame.setResizable(false);
+		frame.getContentPane().setMinimumSize(new Dimension(75, 23));
+		frame.getContentPane().setMaximumSize(new Dimension(75, 23));
+		frame.getContentPane().setBackground(Color.ORANGE);
+		frame.getContentPane().setLayout(null);
 
 		lblLogoBoton = new JLabel("");
 		lblLogoBoton.addMouseListener(new MouseAdapter() {
@@ -144,7 +158,7 @@ public class Registro {
 		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY,
 				Color.LIGHT_GRAY));
 		lblLogoBoton.setBounds(49, 40, 110, 110);
-		Frame.getContentPane().add(lblLogoBoton);
+		frame.getContentPane().add(lblLogoBoton);
 
 		JLabel lblOpciones = new JLabel("Registro Nuevo Usuario");
 		lblOpciones.addKeyListener(new KeyAdapter() {
@@ -157,7 +171,7 @@ public class Registro {
 		lblOpciones.setForeground(Color.WHITE);
 		lblOpciones.setBackground(Color.WHITE);
 		lblOpciones.setBounds(193, 23, 543, 84);
-		Frame.getContentPane().add(lblOpciones);
+		frame.getContentPane().add(lblOpciones);
 		SpringLayout springLayout = new SpringLayout();
 
 		btnAtrs = new JButton("Volver");
@@ -195,7 +209,7 @@ public class Registro {
 		});
 		btnAtrs.setForeground(Color.WHITE);
 		btnAtrs.setBackground(Color.BLACK);
-		Frame.getContentPane().add(btnAtrs);
+		frame.getContentPane().add(btnAtrs);
 
 		textNombreUser = new JTextField();
 		textNombreUser.addKeyListener(new KeyAdapter() {
@@ -238,7 +252,7 @@ public class Registro {
 
 				"Nombre de Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
 		textNombreUser.setBounds(507, 118, 191, 49);
-		Frame.getContentPane().add(textNombreUser);
+		frame.getContentPane().add(textNombreUser);
 
 		txtPasswordUser = new JPasswordField();
 
@@ -280,7 +294,7 @@ public class Registro {
 
 				"Contrase\u00F1a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		txtPasswordUser.setBounds(258, 190, 191, 48);
-		Frame.getContentPane().add(txtPasswordUser);
+		frame.getContentPane().add(txtPasswordUser);
 
 		textEmail = new JTextField();
 		textEmail.addKeyListener(new KeyAdapter() {
@@ -320,13 +334,13 @@ public class Registro {
 				"Direcci\u00F3n de Correo Electronico", TitledBorder.CENTER, TitledBorder.TOP, null,
 				new Color(255, 255, 255)));
 		textEmail.setBounds(333, 283, 276, 47);
-		Frame.getContentPane().add(textEmail);
+		frame.getContentPane().add(textEmail);
 
 		lblResultado = new JLabel("");
 		lblResultado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado.setForeground(Color.GREEN);
 		lblResultado.setBounds(333, 407, 276, 14);
-		Frame.getContentPane().add(lblResultado);
+		frame.getContentPane().add(lblResultado);
 
 		btnGuardar = new JButton("Registrar");
 		btnGuardar.addMouseListener(new MouseAdapter() {
@@ -383,10 +397,10 @@ public class Registro {
 		btnGuardar.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnGuardar.setBackground(Color.BLACK);
 		btnGuardar.setBounds(389, 355, 153, 47);
-		Frame.getContentPane().add(btnGuardar);
-		Frame.setBackground(Color.ORANGE);
-		Frame.setBounds(550, 250, 786, 487);
-		Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(btnGuardar);
+		frame.setBackground(Color.ORANGE);
+		frame.setBounds(550, 250, 786, 487);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		btnGuardar.setEnabled(true);
 
 		txtPasswordConfirmar = new JPasswordField();
@@ -435,7 +449,7 @@ public class Registro {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Confirmar Contrase\u00F1a", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		txtPasswordConfirmar.setBounds(507, 190, 191, 48);
-		Frame.getContentPane().add(txtPasswordConfirmar);
+		frame.getContentPane().add(txtPasswordConfirmar);
 
 		textFieldDNI = new JTextField();
 		textFieldDNI.addKeyListener(new KeyAdapter() {
@@ -475,7 +489,7 @@ public class Registro {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"DNI del Usuario", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		textFieldDNI.setBounds(258, 119, 191, 47);
-		Frame.getContentPane().add(textFieldDNI);
+		frame.getContentPane().add(textFieldDNI);
 
 		comboBoxRol = new JComboBox();
 		comboBoxRol.addKeyListener(new KeyAdapter() {
@@ -510,51 +524,51 @@ public class Registro {
 				TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
 		comboBoxRol.setModel(new DefaultComboBoxModel(new String[] { "--------", "ADMIN", "TUTOR" }));
 		comboBoxRol.setBounds(64, 232, 153, 45);
-		Frame.getContentPane().add(comboBoxRol);
+		frame.getContentPane().add(comboBoxRol);
 
 		lblResultado_DNI = new JLabel("");
 		lblResultado_DNI.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado_DNI.setForeground(Color.WHITE);
 		lblResultado_DNI.setBounds(258, 166, 191, 14);
-		Frame.getContentPane().add(lblResultado_DNI);
+		frame.getContentPane().add(lblResultado_DNI);
 
 		lblResultado_Nombre = new JLabel("");
 		lblResultado_Nombre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado_Nombre.setForeground(Color.GREEN);
 		lblResultado_Nombre.setBounds(507, 166, 191, 14);
-		Frame.getContentPane().add(lblResultado_Nombre);
+		frame.getContentPane().add(lblResultado_Nombre);
 
 		lblResultado_pass = new JLabel("");
 		lblResultado_pass.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado_pass.setForeground(Color.GREEN);
 		lblResultado_pass.setBounds(258, 239, 191, 14);
-		Frame.getContentPane().add(lblResultado_pass);
+		frame.getContentPane().add(lblResultado_pass);
 
 		lblResultado_ConfirmarPass = new JLabel("");
 		lblResultado_ConfirmarPass.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado_ConfirmarPass.setForeground(Color.GREEN);
 		lblResultado_ConfirmarPass.setBounds(507, 239, 191, 14);
-		Frame.getContentPane().add(lblResultado_ConfirmarPass);
+		frame.getContentPane().add(lblResultado_ConfirmarPass);
 
 		lblResultado_Email = new JLabel("");
 		lblResultado_Email.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado_Email.setForeground(Color.GREEN);
 		lblResultado_Email.setBounds(343, 330, 262, 14);
-		Frame.getContentPane().add(lblResultado_Email);
+		frame.getContentPane().add(lblResultado_Email);
 
 		lblResultado_Procesado = new JLabel("");
 		lblResultado_Procesado.setToolTipText("");
 		lblResultado_Procesado.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado_Procesado.setForeground(Color.GREEN);
 		lblResultado_Procesado.setBounds(389, 407, 153, 14);
-		Frame.getContentPane().add(lblResultado_Procesado);
+		frame.getContentPane().add(lblResultado_Procesado);
 
 		lblResultado_Combo = new JLabel("");
 		lblResultado_Combo.setToolTipText("");
 		lblResultado_Combo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResultado_Combo.setForeground(Color.GREEN);
 		lblResultado_Combo.setBounds(64, 283, 153, 14);
-		Frame.getContentPane().add(lblResultado_Combo);
+		frame.getContentPane().add(lblResultado_Combo);
 
 		lblfondo = new JLabel("");
 		lblfondo.addKeyListener(new KeyAdapter() {
@@ -568,7 +582,7 @@ public class Registro {
 		});
 		lblfondo.setBounds(0, -24, 780, 482);
 		lblfondo.setIcon(new ImageIcon(Registro.class.getResource("/Img/Fondogrande.jpg")));
-		Frame.getContentPane().add(lblfondo);
+		frame.getContentPane().add(lblfondo);
 
 	}
  public void aniadir() {
@@ -616,7 +630,7 @@ public class Registro {
 	}
 
 	public void setVisible(boolean b) {
-		Frame.setVisible(b);
+		frame.setVisible(b);
 
 	}
 }

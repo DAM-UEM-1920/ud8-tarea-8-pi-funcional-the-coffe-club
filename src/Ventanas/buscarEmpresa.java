@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
@@ -76,13 +77,23 @@ public class buscarEmpresa {
 			@Override
 			public void windowActivated(WindowEvent e) {
 			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
+			}
 		});
 		frame.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(buscarEmpresa.class.getResource("/Img/UEM-simbolo.jpg")));
 
 		frame.setTitle("Empresas");
 		frame.setBounds(550, 250, 852, 598);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		textFieldEmail = new JTextField();
@@ -92,7 +103,7 @@ public class buscarEmpresa {
 		textFieldEmail.setForeground(Color.WHITE);
 		textFieldEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textFieldEmail.setColumns(10);
-		textFieldEmail.setCaretColor(Color.WHITE);
+		textFieldEmail.setCaretColor(Color.CYAN);
 		textFieldEmail.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "E-mail",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
@@ -130,17 +141,17 @@ public class buscarEmpresa {
 		txtBuscarEmpresa.setColumns(10);
 
 		btnAniadirEmpresa = new JButton("A\u00F1adir empresa");
-		btnAniadirEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnAniadirEmpresa.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		btnAniadirEmpresa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAniadirEmpresa
@@ -176,17 +187,17 @@ public class buscarEmpresa {
 		});
 
 		btnEliminarEmpresa = new JButton("Eliminar Empresa");
-		btnEliminarEmpresa.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnEliminarEmpresa.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		btnEliminarEmpresa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnEliminarEmpresa
@@ -219,17 +230,17 @@ public class buscarEmpresa {
 		frame.getContentPane().add(btnAniadirEmpresa);
 
 		btnGuardarCambios = new JButton("Guardar Cambios");
-		btnGuardarCambios.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnGuardarCambios.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		btnGuardarCambios.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnGuardarCambios
@@ -270,6 +281,16 @@ public class buscarEmpresa {
 		frame.getContentPane().add(btnGuardarCambios);
 
 		JButton btnGuardarTabla = new JButton("Guardar Tabla");
+		btnGuardarTabla.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+			}
+		});
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.guardarObjeto("empresa");
@@ -283,6 +304,16 @@ public class buscarEmpresa {
 		frame.getContentPane().add(btnGuardarTabla);
 
 		JButton btnCargarTabla = new JButton("Cargar Tabla");
+		btnCargarTabla.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				miControlador.SoundSobreBoton();
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				miControlador.SoundSend();
+			}
+		});
 		btnCargarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				carga = false;
@@ -332,7 +363,7 @@ public class buscarEmpresa {
 		txtAddEmpNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtAddEmpNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		txtAddEmpNombre.setForeground(Color.WHITE);
-		txtAddEmpNombre.setCaretColor(Color.WHITE);
+		txtAddEmpNombre.setCaretColor(Color.CYAN);
 		txtAddEmpNombre.setOpaque(false);
 		txtAddEmpNombre.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Nombre",
@@ -356,7 +387,7 @@ public class buscarEmpresa {
 		txtAddEmpDireccion.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Direcci\u00F3n", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
-		txtAddEmpDireccion.setCaretColor(Color.WHITE);
+		txtAddEmpDireccion.setCaretColor(Color.CYAN);
 		txtAddEmpDireccion.setOpaque(false);
 		txtAddEmpDireccion.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
@@ -370,16 +401,16 @@ public class buscarEmpresa {
 		frame.getContentPane().add(txtAddEmpDireccion);
 
 		btnAtras = new JButton("Atras");
-		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnAtras.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+				miControlador.SoundLogAtras();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAtras.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
@@ -401,7 +432,7 @@ public class buscarEmpresa {
 		txtAddEmpTelefono.setForeground(Color.WHITE);
 		txtAddEmpTelefono.setBorder(
 				new TitledBorder(null, "Telefono", TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
-		txtAddEmpTelefono.setCaretColor(Color.WHITE);
+		txtAddEmpTelefono.setCaretColor(Color.CYAN);
 		txtAddEmpTelefono.setOpaque(false);
 		txtAddEmpTelefono.addKeyListener(new KeyAdapter() {
 			@Override
@@ -423,7 +454,7 @@ public class buscarEmpresa {
 		txtAddEmpLocalidad.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Localidad",
 				TitledBorder.CENTER, TitledBorder.TOP, null, Color.WHITE));
-		txtAddEmpLocalidad.setCaretColor(Color.WHITE);
+		txtAddEmpLocalidad.setCaretColor(Color.CYAN);
 		txtAddEmpLocalidad.setOpaque(false);
 		txtAddEmpLocalidad.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
@@ -436,15 +467,16 @@ public class buscarEmpresa {
 		txtAddEmpLocalidad.setBounds(257, 394, 244, 45);
 		frame.getContentPane().add(txtAddEmpLocalidad);
 		btnBuscarEmpresas = new JButton("Buscar NIF");
+		btnBuscarEmpresas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnBuscarEmpresas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnBuscarEmpresas.addActionListener(new ActionListener() {
@@ -476,7 +508,7 @@ public class buscarEmpresa {
 		textRepresentante.setToolTipText("Departamento o persona de contacto");
 		textRepresentante.setOpaque(false);
 		textRepresentante.setColumns(10);
-		textRepresentante.setCaretColor(Color.WHITE);
+		textRepresentante.setCaretColor(Color.CYAN);
 		textRepresentante.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Representante", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));

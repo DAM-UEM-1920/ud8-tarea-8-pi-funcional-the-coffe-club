@@ -12,6 +12,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.GroupLayout;
@@ -115,12 +117,12 @@ public class AsignarGrupo {
 		btnAsignar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAsignar.setToolTipText("Asigna el tutor al grupo elegido");
@@ -136,12 +138,12 @@ public class AsignarGrupo {
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+				miControlador.SoundLogAtras();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 		});
 		btnAtras.setToolTipText("Te lleva a la pantalla anterior");
@@ -196,7 +198,7 @@ public class AsignarGrupo {
 		lblFondo.setBounds(0, 0, 996, 573);
 		panel.add(lblFondo);
 		frame.setBounds(550, 250, 997, 588);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		btnAsignar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -216,6 +218,16 @@ public class AsignarGrupo {
 				lblNombreTutor.setText(tutor);
 				lblApellido.setText(apellido);
 				lbldni.setText(dni);
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 

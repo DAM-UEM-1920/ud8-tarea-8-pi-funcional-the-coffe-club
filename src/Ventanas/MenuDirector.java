@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -69,13 +71,13 @@ public class MenuDirector {
 				Toolkit.getDefaultToolkit().getImage(MenuDirector.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.setTitle("P\u00E1gina principal");
 		frame.getContentPane().setBackground(Color.ORANGE);
-		frame.setBounds(550, 250, 818, 502);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(550, 250, 800, 600);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JLabel lblLogoBoton = new JLabel("");
 		lblLogoBoton.setIcon(new ImageIcon(MenuDirector.class.getResource("/Img/LoUEBoton.png")));
-		lblLogoBoton.setToolTipText("Volver al menu principal");
+		lblLogoBoton.setToolTipText("");
 		lblLogoBoton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.LIGHT_GRAY,
 				Color.LIGHT_GRAY));
 		lblLogoBoton.setBounds(46, 35, 110, 110);
@@ -92,29 +94,29 @@ public class MenuDirector {
 		label_1.setOpaque(true);
 		label_1.setFocusable(false);
 		label_1.setBackground(Color.BLACK);
-		label_1.setBounds(77, 362, 695, 6);
+		label_1.setBounds(61, 374, 695, 6);
 		frame.getContentPane().add(label_1);
 
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(125, 224, 60, 141);
+		progressBar.setBounds(109, 236, 60, 141);
 		frame.getContentPane().add(progressBar);
 		progressBar.setValue(50);
 		progressBar.setOrientation(SwingConstants.VERTICAL);
 
 		JProgressBar progressBar_1 = new JProgressBar();
-		progressBar_1.setBounds(269, 225, 60, 141);
+		progressBar_1.setBounds(253, 237, 60, 141);
 		frame.getContentPane().add(progressBar_1);
 		progressBar_1.setValue(30);
 		progressBar_1.setOrientation(SwingConstants.VERTICAL);
 
 		JProgressBar progressBar_1_1 = new JProgressBar();
-		progressBar_1_1.setBounds(412, 224, 60, 141);
+		progressBar_1_1.setBounds(396, 236, 60, 141);
 		frame.getContentPane().add(progressBar_1_1);
 		progressBar_1_1.setValue(70);
 		progressBar_1_1.setOrientation(SwingConstants.VERTICAL);
 
 		JProgressBar progressBar_1_2 = new JProgressBar();
-		progressBar_1_2.setBounds(541, 224, 60, 141);
+		progressBar_1_2.setBounds(525, 236, 60, 141);
 		frame.getContentPane().add(progressBar_1_2);
 		progressBar_1_2.setValue(30);
 		progressBar_1_2.setOrientation(SwingConstants.VERTICAL);
@@ -124,26 +126,26 @@ public class MenuDirector {
 		lblNewLabel_1_3.setBorder(new LineBorder(new Color(0, 0, 0), 5, true));
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1_3.setForeground(Color.WHITE);
-		lblNewLabel_1_3.setBounds(515, 364, 110, 26);
+		lblNewLabel_1_3.setBounds(499, 376, 110, 26);
 		frame.getContentPane().add(lblNewLabel_1_3);
 
 		JButton btnNewButton = new JButton("Logout");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+				miControlador.SoundLogAtras();
 			}
 		});
 		btnNewButton.setToolTipText("Desconectarse de la sesion");
 		btnNewButton.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnNewButton.setBackground(Color.BLACK);
 		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setBounds(663, 33, 96, 26);
+		btnNewButton.setBounds(647, 33, 112, 26);
 		frame.getContentPane().add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -155,40 +157,42 @@ public class MenuDirector {
 
 		});
 
-		JButton btnNewButton_1 = new JButton("Busqueda Personalizada");
+		JButton btnNewButton_1 = new JButton("Historico Tutores");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 		});
-		btnNewButton_1.setToolTipText("Busqueda avanzada");
+		btnNewButton_1.setToolTipText("Ventana con la informacion historica de los tutores");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.busquedaPersonalizada();
+				miControlador.HistoricoTurtor();
 			}
 		});
 		btnNewButton_1.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnNewButton_1.setBackground(Color.BLACK);
 		btnNewButton_1.setForeground(Color.WHITE);
-		btnNewButton_1.setBounds(119, 401, 181, 35);
+		btnNewButton_1.setBounds(78, 464, 181, 35);
 		frame.getContentPane().add(btnNewButton_1);
 
 		JButton btnTutores = new JButton("Buscar Tutor\r\n");
+		btnTutores.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnTutores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 		});
 		btnTutores.setToolTipText("Busqueda de tutores");
@@ -201,19 +205,20 @@ public class MenuDirector {
 		});
 		btnTutores.setBackground(Color.BLACK);
 		btnTutores.setForeground(Color.WHITE);
-		btnTutores.setBounds(371, 401, 150, 35);
+		btnTutores.setBounds(330, 464, 150, 35);
 		frame.getContentPane().add(btnTutores);
 
 		JButton btnBuscarEmpresas = new JButton("Buscar Empresa");
+		btnBuscarEmpresas.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnBuscarEmpresas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundSend();
+				miControlador.SoundSend();
 			}
 		});
 		btnBuscarEmpresas.setToolTipText("Busqueda de Empresas");
@@ -221,7 +226,7 @@ public class MenuDirector {
 				.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
 		btnBuscarEmpresas.setBackground(Color.BLACK);
 		btnBuscarEmpresas.setForeground(Color.WHITE);
-		btnBuscarEmpresas.setBounds(599, 401, 162, 35);
+		btnBuscarEmpresas.setBounds(558, 464, 162, 35);
 		btnBuscarEmpresas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.buscarEmpre();
@@ -232,13 +237,13 @@ public class MenuDirector {
 		JLabel lblbarra = new JLabel("");
 		lblbarra.setBackground(Color.BLACK);
 		lblbarra.setOpaque(true);
-		lblbarra.setBounds(74, 198, 9, 170);
+		lblbarra.setBounds(58, 210, 9, 170);
 		frame.getContentPane().add(lblbarra);
 
 		JProgressBar progressBar_1_2_1 = new JProgressBar();
 		progressBar_1_2_1.setValue(50);
 		progressBar_1_2_1.setOrientation(SwingConstants.VERTICAL);
-		progressBar_1_2_1.setBounds(663, 225, 60, 141);
+		progressBar_1_2_1.setBounds(647, 237, 60, 141);
 		frame.getContentPane().add(progressBar_1_2_1);
 
 		JLabel lblNewLabel_1_3_1 = new JLabel("Alumnos aptos");
@@ -246,7 +251,7 @@ public class MenuDirector {
 		lblNewLabel_1_3_1.setForeground(Color.WHITE);
 		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1_3_1.setBorder(new LineBorder(new Color(0, 0, 0), 5, true));
-		lblNewLabel_1_3_1.setBounds(635, 364, 119, 26);
+		lblNewLabel_1_3_1.setBounds(619, 376, 119, 26);
 		frame.getContentPane().add(lblNewLabel_1_3_1);
 
 		JLabel lblNewLabel_1_3_2 = new JLabel("Alumnos trabajando");
@@ -254,7 +259,7 @@ public class MenuDirector {
 		lblNewLabel_1_3_2.setForeground(Color.WHITE);
 		lblNewLabel_1_3_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1_3_2.setBorder(new LineBorder(new Color(0, 0, 0), 4, true));
-		lblNewLabel_1_3_2.setBounds(378, 363, 127, 26);
+		lblNewLabel_1_3_2.setBounds(362, 375, 127, 26);
 		frame.getContentPane().add(lblNewLabel_1_3_2);
 
 		JLabel lblNewLabel_1_3_2_1 = new JLabel("Alumnos sin empresa");
@@ -262,7 +267,7 @@ public class MenuDirector {
 		lblNewLabel_1_3_2_1.setForeground(Color.WHITE);
 		lblNewLabel_1_3_2_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1_3_2_1.setBorder(new LineBorder(new Color(0, 0, 0), 5, true));
-		lblNewLabel_1_3_2_1.setBounds(230, 364, 138, 26);
+		lblNewLabel_1_3_2_1.setBounds(214, 376, 138, 26);
 		frame.getContentPane().add(lblNewLabel_1_3_2_1);
 
 		JLabel lblNewLabel_1_3_2_2 = new JLabel("Realizando practicas");
@@ -270,18 +275,28 @@ public class MenuDirector {
 		lblNewLabel_1_3_2_2.setForeground(Color.WHITE);
 		lblNewLabel_1_3_2_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1_3_2_2.setBorder(new LineBorder(new Color(0, 0, 0), 5, true));
-		lblNewLabel_1_3_2_2.setBounds(93, 364, 127, 26);
+		lblNewLabel_1_3_2_2.setBounds(77, 376, 127, 26);
 		frame.getContentPane().add(lblNewLabel_1_3_2_2);
 
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setIcon(new ImageIcon(MenuDirector.class.getResource("/Img/Fondogrande.jpg")));
-		lblFondo.setBounds(0, 0, 812, 473);
+		lblFondo.setBounds(0, 0, 794, 571);
 		frame.getContentPane().add(lblFondo);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
 				
 				lblNewLabel.setText("Welcome " + user);
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 	}

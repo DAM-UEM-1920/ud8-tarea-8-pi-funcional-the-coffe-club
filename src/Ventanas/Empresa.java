@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.GroupLayout;
@@ -62,12 +64,14 @@ public class Empresa {
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				miModelo.soundLogAtras();
+				miControlador.SoundLogAtras();
+				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				miModelo.soundSobreBoton();
+				miControlador.SoundSobreBoton();
+				
 			}
 		});
 		btnAtras.setToolTipText("Te lleva a la pantalla anterior");
@@ -192,7 +196,7 @@ public class Empresa {
 		lblFondo.setBounds(0, 0, 863, 466);
 		frame.getContentPane().add(lblFondo);
 		frame.setBounds(550, 250, 869, 495);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
@@ -205,6 +209,16 @@ public class Empresa {
 				lblNacion_1.setText(miModelo.getDato("empresa", "cif", cif, 4));
 				lblContacto.setText(miModelo.getDato("empresa", "cif", cif, 7));
 				lblEmail.setText(miModelo.getDato("empresa", "cif", cif, 6));
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				miControlador.SoundLogAtras();
+				if (miControlador.askWindow(frame)) {
+
+					JOptionPane.showMessageDialog(frame, "Recuerda, quedate en casa");
+					System.exit(0);
+
+				}
 			}
 		});
 

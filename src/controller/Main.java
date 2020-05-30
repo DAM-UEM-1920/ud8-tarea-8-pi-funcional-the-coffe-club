@@ -5,7 +5,8 @@ import javax.swing.Icon;
 import Ventanas.Alumno;
 import Ventanas.AsignarEmpresa;
 import Ventanas.AsignarGrupo;
-import Ventanas.Historico;
+import Ventanas.HistoricoAlumnos;
+import Ventanas.Historico_Tutor;
 import Ventanas.IniTutor;
 import Ventanas.Login;
 import Ventanas.MenuDirector;
@@ -25,7 +26,8 @@ public class Main {
 		IniTutor menuTutor = new IniTutor();
 		MenuDirector menuAdmin = new MenuDirector();
 		Tutores tutores = new Tutores();
-		Historico miBusqueda = new Historico();
+		HistoricoAlumnos miHistoricoAlumnos = new HistoricoAlumnos();
+		Historico_Tutor miHistoricoTutor = new Historico_Tutor();
 		AsignarGrupo asgGrupo = new AsignarGrupo();
 		AsignarEmpresa asgEmpresa = new AsignarEmpresa();
 		Alumno alumno = new Alumno();
@@ -41,12 +43,14 @@ public class Main {
 		miControlador.setAsgGrupo(asgGrupo);
 		miControlador.setMenuAdmin(menuAdmin);
 		miControlador.setMenuTutor(menuTutor);
-		miControlador.setBusqueda(miBusqueda);
+		miControlador.setHistoricoAlumnos(miHistoricoAlumnos);
+		miControlador.setHistoricoTutor(miHistoricoTutor);
 		miControlador.setTutores(tutores);
 		miControlador.setBuscarEmpresa(buscEmpresa);
 		miControlador.setEmpresa(empresa);
 		miControlador.setOpciones(opciones);
 		miControlador.setRegistro(registro);
+
 
 		miModelo.setLogin(miLogin);
 		miModelo.setAlumno(alumno);
@@ -54,7 +58,8 @@ public class Main {
 		miModelo.setAsgGrupo(asgGrupo);
 		miModelo.setMenuAdmin(menuAdmin);
 		miModelo.setMenuTutor(menuTutor);
-		miModelo.setMiBusqueda(miBusqueda);
+		miModelo.setMiHistoricoAlumnos(miHistoricoAlumnos);
+		miModelo.setMiHistoricoTutor(miHistoricoTutor);
 		miModelo.setTutores(tutores);
 		miModelo.setBuscarEmpresa(buscEmpresa);
 		miModelo.setEmpresa(empresa);
@@ -73,8 +78,10 @@ public class Main {
 		menuAdmin.setModelo(miModelo);
 		tutores.setControlador(miControlador);
 		tutores.setModelo(miModelo);
-		miBusqueda.setControlador(miControlador);
-		miBusqueda.setModelo(miModelo);
+		miHistoricoAlumnos.setControlador(miControlador);
+		miHistoricoAlumnos.setModelo(miModelo);
+		miHistoricoTutor.setControlador(miControlador);
+		miHistoricoTutor.setModelo(miModelo);
 		asgGrupo.setControlador(miControlador);
 		asgGrupo.setModelo(miModelo);
 		asgEmpresa.setControlador(miControlador);
