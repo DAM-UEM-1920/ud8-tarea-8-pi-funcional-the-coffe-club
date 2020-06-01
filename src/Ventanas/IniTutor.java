@@ -144,10 +144,11 @@ public class IniTutor {
 
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
-					table.setModel(miModelo.getAlumnosTutor(user));
+					table.setModel(miControlador.getAlumnosByTutorYaño(user, miControlador.getYear()));
 				} else {
-					table.setModel(miControlador.getAlumnosByGrupo(user,
-							miModelo.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString())));
+					table.setModel(miControlador.getAlumnosByGrupoYAño(user,
+							miControlador.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()),
+							miControlador.getYear()));
 				}
 				selectedValue=comboBoxGrupos.getSelectedIndex();
 

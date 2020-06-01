@@ -343,7 +343,7 @@ public class Controlador {
 	public String getYear() {
 		int mes = LocalDate.now().getMonthValue();
 		int año = LocalDate.now().getYear();
-		if (mes < 6) {
+		if (mes < 8) {
 			return String.valueOf(año - 1) + "/" + String.valueOf(año);
 		} else
 			return String.valueOf(año) + "/" + String.valueOf(año + 1);
