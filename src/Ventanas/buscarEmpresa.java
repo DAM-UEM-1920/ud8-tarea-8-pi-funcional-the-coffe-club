@@ -293,7 +293,7 @@ public class buscarEmpresa {
 		});
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.guardarObjeto("empresa");
+//				miControlador.guardarObjeto("empresa");
 			}
 		});
 		btnGuardarTabla.setToolTipText("Guarda la tabla en un fichero");
@@ -573,7 +573,7 @@ public class buscarEmpresa {
 			int seleccion = fc.showOpenDialog(frame);
 			if (seleccion == JFileChooser.APPROVE_OPTION) {
 				File fichero = fc.getSelectedFile();
-				tblEmpresas.setModel(miControlador.cargarFichero(fichero));
+//				tblEmpresas.setModel(miControlador.cargarFichero(fichero));
 			}
 		}
 

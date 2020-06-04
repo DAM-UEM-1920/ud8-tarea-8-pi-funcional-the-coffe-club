@@ -350,10 +350,10 @@ public class Controlador {
 
 	}
 
-	public DefaultTableModel cargarFichero(File fichero) {
-		return miModelo.cargarObjeto(fichero);
-
-	}
+//	public DefaultTableModel cargarFichero(File fichero) {
+//		return miModelo.cargarObjeto(fichero);
+//
+//	}
 
 	public void guardarObjetoTutor(String user) {
 		miModelo.guardarObjetoTutor(user);
@@ -365,10 +365,10 @@ public class Controlador {
 
 	}
 
-	public void guardarObjeto(String tabla) {
-		miModelo.guardarObjeto(tabla);
-
-	}
+//	public void guardarObjeto(String tabla) {
+//		miModelo.guardarObjeto(tabla);
+//
+//	}
 
 	public int insertar(String tabla, String values) {
 		return miModelo.insert(tabla, values);

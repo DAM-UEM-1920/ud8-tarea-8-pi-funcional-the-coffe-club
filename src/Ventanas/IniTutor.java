@@ -762,7 +762,7 @@ public class IniTutor {
 			int seleccion = fc.showOpenDialog(frame);
 			if (seleccion == JFileChooser.APPROVE_OPTION) {
 				File fichero = fc.getSelectedFile();
-				table.setModel(miControlador.cargarFichero(fichero));
+//				table.setModel(miControlador.cargarFichero(fichero));
 			}
 		}
 

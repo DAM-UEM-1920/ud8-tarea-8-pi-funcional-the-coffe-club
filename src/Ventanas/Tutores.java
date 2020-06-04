@@ -96,7 +96,7 @@ public class Tutores {
 		});
 		btnGuardarTabla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				miControlador.guardarObjeto("tutor");
+//				miControlador.guardarObjeto("tutor");
 			}
 		});
 		btnGuardarTabla.setToolTipText("Guarda la tabla en un fichero");
@@ -570,7 +570,7 @@ public class Tutores {
 			int seleccion = fc.showOpenDialog(frame);
 			if (seleccion == JFileChooser.APPROVE_OPTION) {
 				File fichero = fc.getSelectedFile();
-				table.setModel(miControlador.cargarFichero(fichero));
+//				table.setModel(miControlador.cargarFichero(fichero));
 			}
 		}
 

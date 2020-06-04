@@ -82,7 +82,9 @@ public class Modelo {
 	public Modelo() {
 
 	}
-
+/**
+ * Inicializa la conexión a la BBDD Oracle
+ */
 	public void conexion() {
 		try {
 
@@ -97,7 +99,9 @@ public class Modelo {
 			System.out.println("Error general de Conexión");
 		}
 	}
-
+/**
+ * Finaliza la conexión con la BBDD Oracle
+ */
 	public void terminar() {
 		try {
 			conexion.close();
@@ -105,78 +109,15 @@ public class Modelo {
 		}
 	}
 
-	public void consultaStatement(String query, int columna) {
-		try {
-			Statement stmt = conexion.createStatement();
-			ResultSet rset = stmt.executeQuery(query);
-			while (rset.next())
-				System.out.println(rset.getString(columna));
-			rset.close();
-			stmt.close();
-		} catch (SQLException s) {
-			s.printStackTrace();
-		}
-	}
-
-	public void consultaPrepared(String query, int cod, int columna) {
-		try {
-			PreparedStatement pstmt = conexion.prepareStatement(query);
-			pstmt.setInt(1, cod);
-			ResultSet rset = pstmt.executeQuery();
-			while (rset.next())
-				System.out.println(rset.getString(columna));
-			rset.close();
-			pstmt.close();
-		} catch (SQLException s) {
-
-		}
-	}
-
-	public int modificar(String pwd) {
-		int resultado = 0;
-		try {
-			String query = "UPDATE COFFE.users SET pwd = ?";
-			PreparedStatement pstmt = conexion.prepareStatement(query);
-			pstmt.setString(1, pwd);
-			resultado = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return resultado;
-	}
-
-	public int borrar(String usr) {
-		int resultado = 0;
-		try {
-			String query = "DELETE FROM COFFE.users WHERE usr = ?";
-			PreparedStatement pstmt = conexion.prepareStatement(query);
-			pstmt.setString(1, usr);
-			resultado = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-		return resultado;
-	}
-
-	public void infoBaseDatos() {
-		try {
-			DatabaseMetaData dbmd = conexion.getMetaData();
-			System.out.println("URL: " + dbmd.getURL());
-			System.out.println("Usuario: " + dbmd.getUserName());
-			System.out.println("Driver: " + dbmd.getDriverName());
-			// Catalogo - Esquema - Tabla - Tipo
-			ResultSet misTablas = dbmd.getTables("COFFE", "COFFE", null, null);
-			System.out.println("TABLAS");
-			while (misTablas.next()) {
-				System.out.println("-> " + misTablas.getString("TABLE_NAME"));
-			}
-			misTablas.close();
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-	}
 
 	// Cambiar la palabra COFFE por el workspace de cada base de datos!!!
+	/**
+	 * Devuelve el rol del usuario logueado
+	 * 
+	 * @param usr el usuario que se loguea
+	 * @param pwd la constraseña del user
+	 * @return devuelve el rol si se ha logueado correctamente y si hay un fallo devuelve ERROR
+	 */
 	public String getRol(String usr, String pwd) {
 		try {
 			Statement stmt = conexion.createStatement();
@@ -194,7 +135,7 @@ public class Modelo {
 	/**
 	 * Devuelve toda la tabla seleccionada
 	 * 
-	 * @param tabla
+	 * @param tabla nombre de la tabla de la BBDD que se quiere extraer
 	 * @return
 	 */
 	public DefaultTableModel getTabla(String tabla) {
@@ -227,7 +168,7 @@ public class Modelo {
 	/**
 	 * Devuelve los alumnos que supervisa el usuario
 	 * 
-	 * @param user, usuario logueado
+	 * @param user usuario logueado
 	 * @return tabla con los alumnos y todos sus datos
 	 */
 	public DefaultTableModel getAlumnosTutor(String user) {
@@ -265,10 +206,10 @@ public class Modelo {
 	}
 
 	/**
-	 * devuelve el numero de columnas de una tabla
+	 * Obtiene el numero de columnas de una tabla
 	 * 
-	 * @param tabla
-	 * @return int
+	 * @param tabla nombre de la tabla en la BBDD que se quiere extraer el número de las columnas
+	 * @return int la cantidad de columnas de la tabla especificada
 	 */
 	private int getNumColumnas(String tabla) {
 		int num = 0;
@@ -307,7 +248,7 @@ public class Modelo {
 	/**
 	 * Devuelve la empresa en la que el alumno esta realizando sus practicas
 	 * 
-	 * @param alumno
+	 * @param alumno nombre del alumno del que se quiere obtener la empresa
 	 * @return nombre de empresa
 	 */
 	public String getEmpresa(String alumno) {
@@ -317,8 +258,8 @@ public class Modelo {
 					+ " WHERE alumno.num_exp = practica.alumno_num_exp AND practica.empresa_cif = empresa.cif "
 					+ "AND alumno.nombre= '" + alumno + "'");
 			rset.next();
-			String rol = rset.getString(1);
-			return rol;
+			String empresa = rset.getString(1);
+			return empresa;
 		} catch (SQLException e) {
 			return "ERROR";
 		}
@@ -328,7 +269,7 @@ public class Modelo {
 	 * devuelve los nombres de los grupos que supervisa el tutos a traves del nombre
 	 * de usuario
 	 * 
-	 * @param user
+	 * @param user el nombre de usuario
 	 * @return arraylist de nombres de grupos que supervisa un usuario
 	 */
 	public ArrayList<String> getGrupos(String user) {
@@ -353,7 +294,7 @@ public class Modelo {
 	/**
 	 * deelve los codigos de los centros que se encuentran en la base de datos
 	 * 
-	 * @return ArrayList
+	 * @return ArrayList de los centros almacenados en la BBDD
 	 */
 	public ArrayList<String> getCentros() {
 		ArrayList<String> centro = new ArrayList<String>();
@@ -374,7 +315,7 @@ public class Modelo {
 	/**
 	 * devuelve el codigo del grupo a traves de su nombre
 	 * 
-	 * @param nomgrupo
+	 * @param nomgrupo nombre del grupo del que se quiere obtener el código
 	 * @return codigo del grupo
 	 */
 
@@ -395,8 +336,8 @@ public class Modelo {
 	/**
 	 * Obtenemos la tabla de alumnos filtrando por grupo y usuario(tutor) logueado
 	 * 
-	 * @param user
-	 * @param grupo
+	 * @param user el nombre de usuario
+	 * @param grupo el nombre del grupo del que extraer los alumnos
 	 * @return
 	 */
 	public DefaultTableModel getAlumnosByGrupo(String user, String grupo) {
@@ -436,10 +377,10 @@ public class Modelo {
 	 * devuelve tabla filtrando por el tutor, el grupo y el año al que los alumnos
 	 * pertenecieron a un grupo
 	 * 
-	 * @param user
-	 * @param grupo
-	 * @param año
-	 * @return DefaultTableModel
+	 * @param user nombre de usuario logueado
+	 * @param grupo nombre del grupo a extraer datos
+	 * @param año año por el que filtrar
+	 * @return DefaultTableModel el modelo de la tabla
 	 */
 	public DefaultTableModel getAlumnosByGrupoYAño(String user, String grupo, String año) {
 		miTabla = new DefaultTableModel();
@@ -566,6 +507,13 @@ public class Modelo {
 		return resultado;
 	}
 
+	/**
+	 * Lanza una sentencia delete a la BBDD con los parámetros establecidos
+	 * @param tabla tabla objetivo del delete
+	 * @param pk Primary Key de la tabla específica
+	 * @param cod valor de la PK para elegir el borrado de un dato en concreto
+	 * @return
+	 */
 	public int delete(String tabla, String pk, String cod) {
 		int resultado = 0;
 		try {
@@ -581,11 +529,11 @@ public class Modelo {
 	}
 
 	/**
-	 * elije a que ventana mandaremos al usuario segun sus permisos o si cerrara la
+	 * elige a que ventana mandaremos al usuario segun sus permisos o si cerrara la
 	 * aplicacicio por fallar varias veces
 	 * 
-	 * @param usr
-	 * @param pwd
+	 * @param usr usuario logueado en al app
+	 * @param pwd contraseña del usuario logueado
 	 */
 	public void login(String usr, String pwd) {
 		String rol = getRol(usr, pwd);
@@ -719,28 +667,28 @@ public class Modelo {
 	 * 
 	 * @param tabla
 	 */
-	public void guardarObjeto(String tabla) {
-		File rutaProyecto = new File(System.getProperty("user.dir"));
-		JFileChooser fc = new JFileChooser(rutaProyecto);
-		int seleccion = fc.showSaveDialog(table);
-		if (seleccion == JFileChooser.APPROVE_OPTION) {
-			File fichero = fc.getSelectedFile();
-			try {
-				FileOutputStream fos = new FileOutputStream(fichero);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				Tablas miTabla = new Tablas(getTabla(tabla));
-				oos.writeObject(miTabla);
-				fos.close();
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	public void guardarObjeto(String tabla) {
+//		File rutaProyecto = new File(System.getProperty("user.dir"));
+//		JFileChooser fc = new JFileChooser(rutaProyecto);
+//		int seleccion = fc.showSaveDialog(table);
+//		if (seleccion == JFileChooser.APPROVE_OPTION) {
+//			File fichero = fc.getSelectedFile();
+//			try {
+//				FileOutputStream fos = new FileOutputStream(fichero);
+//				ObjectOutputStream oos = new ObjectOutputStream(fos);
+//				Tablas miTabla = new Tablas(getTabla(tabla));
+//				oos.writeObject(miTabla);
+//				fos.close();
+//				oos.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (NumberFormatException e) {
+//				e.printStackTrace();
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 	/**
 	 * guarda una tabla con todos los alumnos del usuario logueado
@@ -800,27 +748,27 @@ public class Modelo {
 	 * @param fichero
 	 * @return
 	 */
-	public DefaultTableModel cargarObjeto(File fichero) {
-		FileInputStream fis;
-		DefaultTableModel result = null;
-		try {
-			fis = new FileInputStream(fichero);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			Tablas miTabla = (Tablas) ois.readObject();
-			result = miTabla.getTabla();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-
-	}
+//	public DefaultTableModel cargarObjeto(File fichero) {
+//		FileInputStream fis;
+//		DefaultTableModel result = null;
+//		try {
+//			fis = new FileInputStream(fichero);
+//			ObjectInputStream ois = new ObjectInputStream(fis);
+//			Tablas miTabla = (Tablas) ois.readObject();
+//			result = miTabla.getTabla();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return result;
+//
+//	}
 
 	public void setMenuTutor(IniTutor menuTutor) {
 		this.menuTutor = menuTutor;
