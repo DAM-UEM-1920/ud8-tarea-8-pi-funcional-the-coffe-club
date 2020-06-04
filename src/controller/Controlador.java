@@ -340,6 +340,7 @@ public class Controlador {
 
 	}
 
+	
 	public String getYear() {
 		int mes = LocalDate.now().getMonthValue();
 		int año = LocalDate.now().getYear();
@@ -385,6 +386,7 @@ public class Controlador {
 
 	}
 
+	
 	public String[] getGrupos(String user) {
 		ArrayList<String> grup = miModelo.getGrupos(user);
 		int a = grup.size() + 1;
@@ -400,6 +402,7 @@ public class Controlador {
 
 	}
 
+	
 	public String[] getAños() {
 		String[] añosAcad = new String[10];
 		int mes = LocalDate.now().getMonthValue();
