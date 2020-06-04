@@ -606,7 +606,11 @@ public class Modelo {
 		miLogin.actualaizar(resultado);
 	}
 
-	// Sonido de acceso correcto
+	/**
+	 * Se cargan los sonido y se mandan segun los necesiten en la aplicacion
+	 * 
+	 * Activa el sonido de acceso correcto
+	 */
 	public void soundAcceso() {
 
 		try {
@@ -622,7 +626,9 @@ public class Modelo {
 		}
 	}
 
-	// Sonido de acceso incorrecto
+	/**
+	 * Activa el sonido de Error de acceso
+	 */
 	public void soundErrorAcceso() {
 
 		try {
@@ -640,7 +646,9 @@ public class Modelo {
 
 	}
 
-	// Sonido pasar por el boton
+	/**
+	 * Efecto de sondo al pasar el raton por el boton
+	 */
 	public void soundSobreBoton() {
 
 		try {
@@ -658,7 +666,9 @@ public class Modelo {
 		}
 	}
 
-	// Sonido logoff
+	/**
+	 * Activa el sonido de de log of o pulsar atras
+	 */
 	public void soundLogAtras() {
 		try {
 			AudioInputStream audio = AudioSystem
@@ -674,7 +684,9 @@ public class Modelo {
 		}
 	}
 
-	// Sonido ClickBoton
+	/**
+	 * Activa el sonido de de click en el boton
+	 */
 	public void soundSend() {
 
 		try {

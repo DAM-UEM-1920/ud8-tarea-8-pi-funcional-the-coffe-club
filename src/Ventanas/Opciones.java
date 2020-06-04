@@ -89,13 +89,7 @@ public class Opciones {
 		frame = new JFrame();
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowActivated(WindowEvent e) {
-				// Sincroniza los CheckBox
-
-				if (miControlador.getBoxselect()) {
-
-				} else
-					checkbox.setSelected(false);
+			public void windowActivated(WindowEvent e) {				
 
 			}
 			@Override
@@ -156,9 +150,13 @@ public class Opciones {
 		checkbox = new JCheckBox("Sonido");
 		checkbox.setToolTipText("Activa o desactiva todos los sonidos de la aplicacion");
 		checkbox.addKeyListener(new KeyAdapter() {
+			
+			/**
+			 * Activa o desactiva el checkbox de sonido con la tecla enter
+			 */
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// Cambiamos la seleccion del check
+				
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (checkbox.isSelected()) {
 						checkbox.setSelected(false);
@@ -175,6 +173,9 @@ public class Opciones {
 			}
 		});
 		checkbox.addActionListener(new ActionListener() {
+			/**
+			 * Le dice al controlador si el checkbox esta activo y si lo esta la aplicacion tiene sonido
+			 */
 			public void actionPerformed(ActionEvent e) {
 				miControlador.setSonidos(checkbox.isSelected());
 			}
@@ -548,7 +549,7 @@ public class Opciones {
 	}
 
 	private void metodoEscritura() {
-		// Exception e = new Exception("Este es mi propio error.");
+
 		int cont = 0;
 		if (check == true) {
 

@@ -298,11 +298,19 @@ public class Controlador {
 		empresa.setVisible(true);
 	}
 
+	/**
+	 * Comprueba la respuesta del checkbox en opciones
+	 * 
+	 * @param activo si esta en true permite sonido
+	 */
 	public void setSonidos(boolean activo) {
 		this.activo = activo;
 
 	}
 
+	/**
+	 * Si Activo es true le solicita el sonido al modelo y se lo manda aquien se lo pida
+	 */
 	public void SoundAcceso() {
 
 		if (activo == true) {
@@ -310,6 +318,9 @@ public class Controlador {
 		}
 
 	}
+	/**
+	 * Si Activo es true le solicita el sonido al modelo y se lo manda aquien se lo pida
+	 */
 
 	public void SoundSobreBoton() {
 		if (activo == true) {
@@ -317,28 +328,33 @@ public class Controlador {
 		}
 	}
 
+	/**
+	 * Si Activo es true le solicita el sonido al modelo y se lo manda aquien se lo pida
+	 */
 	public void SoundError() {
 		if (activo == true) {
 			miModelo.soundErrorAcceso();
 		}
 	}
 
+	/**
+	 * Si Activo es true le solicita el sonido al modelo y se lo manda aquien se lo pida
+	 */
 	public void SoundSend() {
 		if (activo == true) {
 			miModelo.soundSend();
 		}
 	}
 
+	/**
+	 * Si Activo es true le solicita el sonido al modelo y se lo manda aquien se lo pida
+	 */
 	public void SoundLogAtras() {
 		if (activo == true) {
 			miModelo.soundLogAtras();
 		}
 	}
 
-	public boolean getBoxselect() {
-		return activo;
-
-	}
 
 	public String getYear() {
 		int mes = LocalDate.now().getMonthValue();
@@ -446,12 +462,5 @@ public class Controlador {
 
 		return miModelo.getAlumnosByTutorYaño(user, año);
 	}
-
-//	public int closeAplication(Component parentComponent) {
-//		int i = JOptionPane.showConfirmDialog(parentComponent, "¿Quiere cerrar la aplicacion?", "ventana de cierre", 0);
-//		System.out.println(JFrame.EXIT_ON_CLOSE);
-//		return JFrame.EXIT_ON_CLOSE;
-//
-//	}
 
 }
