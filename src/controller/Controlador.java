@@ -400,12 +400,54 @@ public class Controlador {
 
 	}
 
+	/**
+	 * Método que convierte el arraylist que hemos creado y que coge los datos del arrayList generado previamente con el métod getGruposNoTutor()
+	 * El método getGruposNoTutor devuelve nombre del grupo sin tutor
+	 * @return String []
+	 */
+	public String[] getGruposNoTutor() {
+		ArrayList<String> grup = miModelo.getGruposNoTutor();
+		int a = grup.size() + 1;
+		String[] grupos = new String[a];
+		grupos[0] = "Todos";
+		for (int i = 1; i < grupos.length; i++) {
+			grupos[i] = grup.get(i - 1);
+		}
+		grupos[grupos.length - 1] = grup.get(grup.size() - 1);
+		System.out.println(grup.toString()+"FALLO!-1");
+		System.out.println(Arrays.toString(grupos)+"FALLO!0");
+		return grupos;
+
+	}
+
+	/**
+	 * Método que convierte a String el arraylist que hemos creado y que coge los
+	 * datos del Arraylist generado previamente con el método getTutor()
+	 * El método getTutor devuelve el nombre del tutor
+	 * 
+	 * @return String[]
+	 */
+	public String[] getTutores() {
+		ArrayList<String> tutores = miModelo.getTutor();
+		int a = tutores.size() + 1;
+		String[] tutor = new String[a];
+		tutor[0] = "Todos";
+		for (int i = 1; i < tutor.length; i++) {
+			tutor[i] = tutores.get(i - 1);
+		}
+		tutor[tutor.length - 1] = tutores.get(tutores.size() - 1);
+		System.out.println(tutores.toString()+"FALLO!");
+		System.out.println(Arrays.toString(tutor)+"FALLO!2");
+		return tutor;
+
+	}
+
 	public String[] getAños() {
 		String[] añosAcad = new String[10];
 		int mes = LocalDate.now().getMonthValue();
 		int año = LocalDate.now().getYear();
 		for (int i = 0; i < añosAcad.length; i++) {
-			if (mes < 6) {
+			if (mes < 7) {
 				añosAcad[i] = String.valueOf(año - i - 1) + "/" + String.valueOf(año - i);
 			} else {
 				añosAcad[i] = String.valueOf(año - i) + "/" + String.valueOf(año - i + 1);
@@ -419,6 +461,10 @@ public class Controlador {
 	public DefaultTableModel getAlumnosByGrupo(String user, String grupo) {
 		return miModelo.getAlumnosByGrupo(user, grupo);
 
+	}
+
+	public DefaultTableModel getAlumnosByNombreTutorYAño(String tutor, String grupo, String año) {
+		return miModelo.getAlumnosByNombreTutorYAño(tutor, grupo, año);
 	}
 
 	public boolean askWindow(Component parentComponent) {

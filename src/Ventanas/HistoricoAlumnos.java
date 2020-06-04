@@ -42,6 +42,10 @@ public class HistoricoAlumnos {
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JTable table;
+	private int selectedValueAño = 0;
+	private int selectedgrupo = 0;
+	private int selectedValueTutor = 0;
+	private String tutor;
 
 	/**
 	 * Create the application.
@@ -94,36 +98,44 @@ public class HistoricoAlumnos {
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null },
-						{ null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, },
-				new String[] { "New column", "New column", "New column", "New column", "New column", "New column",
-						"New column" }));
+
 		scrollPane.setViewportView(table);
 
 		JScrollBar scrollBar = new JScrollBar();
 		scrollPane.setColumnHeaderView(scrollBar);
 
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(507, 178, 140, 29);
-		frame.getContentPane().add(comboBox_2);
+		JComboBox comboBox_2_tutor = new JComboBox();
+		comboBox_2_tutor.setBounds(507, 178, 140, 29);
+		frame.getContentPane().add(comboBox_2_tutor);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(306, 178, 140, 29);
-		frame.getContentPane().add(comboBox_1);
+		JComboBox comboBox_1_grupo = new JComboBox();
+		comboBox_1_grupo.setBounds(306, 178, 140, 29);
+		frame.getContentPane().add(comboBox_1_grupo);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.addMouseListener(new MouseAdapter() {
+		JComboBox comboBox_anio = new JComboBox();
+		comboBox_anio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				miControlador.SoundSend();
 			}
-		});
-		comboBox.setBounds(96, 178, 140, 29);
-		frame.getContentPane().add(comboBox);
+		});	
+		
+		comboBox_anio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selectedValueAño = comboBox_anio.getSelectedIndex();
+				if (comboBox_anio.getSelectedItem().toString().equals("Todos")) {
+					table.setModel(
+							miControlador.getAlumnosByNombreTutorYAño(comboBox_2_tutor.getSelectedItem().toString(),comboBox_1_grupo.getSelectedItem().toString() ,comboBox_anio.getSelectedItem().toString()));
+				} else {
+					table.setModel(miControlador.getAlumnosByGrupoYAño(tutor,
+							miControlador.getCodigoGrupo(comboBox_1_grupo.getSelectedItem().toString()),
+							comboBox_anio.getSelectedItem().toString()));
+				}
+			}
+		});	
+
+		comboBox_anio.setBounds(96, 178, 140, 29);
+		frame.getContentPane().add(comboBox_anio);
 
 		JLabel lblLogoBoton = new JLabel("");
 		lblLogoBoton.setIcon(new ImageIcon(HistoricoAlumnos.class.getResource("/Img/LoUEBoton.png")));
@@ -190,9 +202,14 @@ public class HistoricoAlumnos {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				
+				comboBox_anio.setModel(new DefaultComboBoxModel<String>(miControlador.getAños()));
+				comboBox_1_grupo.setModel(new DefaultComboBoxModel<String>(miControlador.getGruposNoTutor()));
+				comboBox_2_tutor.setModel(new DefaultComboBoxModel<String>(miControlador.getTutores()));
+				comboBox_anio.setSelectedIndex(selectedValueAño);
+				comboBox_1_grupo.setSelectedIndex(selectedgrupo);
+				comboBox_2_tutor.setSelectedIndex(selectedValueTutor);
 			}
-			
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				miControlador.SoundLogAtras();
@@ -217,6 +234,5 @@ public class HistoricoAlumnos {
 	public void setVisible(boolean b) {
 		frame.setVisible(b);
 	}
-
 
 }

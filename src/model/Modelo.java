@@ -331,6 +331,7 @@ public class Modelo {
 	 * @param user
 	 * @return arraylist de nombres de grupos que supervisa un usuario
 	 */
+
 	public ArrayList<String> getGrupos(String user) {
 		ArrayList<String> grupos = new ArrayList<String>();
 		try {
@@ -351,7 +352,27 @@ public class Modelo {
 	}
 
 	/**
-	 * deelve los codigos de los centros que se encuentran en la base de datos
+	 * Devuelve los nombres de los grupos y los añade en un arraylist
+	 * @return Arraylist
+	 */
+	public ArrayList<String> getGruposNoTutor() {
+		ArrayList<String> grupos = new ArrayList<String>();
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT nom_grupo FROM grupo");
+
+			while (rset.next()) {
+				grupos.add(rset.getString(1));
+			}
+			return grupos;
+		} catch (SQLException e) {
+			return grupos;
+		}
+
+	}
+
+	/**
+	 * develve los codigos de los centros que se encuentran en la base de datos
 	 * 
 	 * @return ArrayList
 	 */
@@ -360,14 +381,32 @@ public class Modelo {
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rset = stmt.executeQuery("SELECT cod_centro FROM centro");
-			do {
-				rset.next();
-				centro.add(rset.getString(1));
 
-			} while (rset.next());
+			while (rset.next()) {
+				centro.add(rset.getString(1));
+			}
 			return centro;
 		} catch (SQLException e) {
 			return centro;
+		}
+	}
+
+	/**
+	 * Método que muestra todos los tutores y los añade uno a uno en un arraylist
+	 * @return Arraylist
+	 */
+	public ArrayList<String> getTutor() {
+		ArrayList<String> tutor = new ArrayList<String>();
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery("SELECT nombre FROM tutor");
+
+			while (rset.next()) {
+				tutor.add(rset.getString(1));
+			}
+			return tutor;
+		} catch (SQLException e) {
+			return tutor;
 		}
 	}
 
@@ -455,6 +494,45 @@ public class Modelo {
 					+ "ON tutor.dni_tutor = ejerce.e_dni_tutor "
 					+ "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
 					+ user + "') AND grupo.cod_grupo = " + grupo + " AND pertenece.ano_acad = '" + año + "'");
+			System.out.println(grupo);
+			ResultSet rset = pstmt.executeQuery();
+			ResultSetMetaData rsmd = rset.getMetaData();
+
+			for (int i = 0; i < numColumnas; i++) {
+				miTabla.addColumn(rsmd.getColumnName(i + 1));
+			}
+			while (rset.next()) {
+				for (int col = 1; col <= numColumnas; col++) {
+					contenido[col - 1] = rset.getString(col);
+				}
+				miTabla.addRow(contenido);
+			}
+		} catch (SQLException e) {
+			System.out.println("error");
+
+		}
+		return miTabla;
+	}
+	/**
+	 * Método que obtiene todo el histórico de alumnos filtrado por el nombre de su tutor
+	 * @param tutor
+	 * @param grupo
+	 * @param año
+	 * @return DefaultTableModel
+	 */
+	public DefaultTableModel getAlumnosByNombreTutorYAño(String tutor, String grupo, String año) {
+		miTabla = new DefaultTableModel();
+		int numColumnas = getNumColumnas("alumno");
+		Object[] contenido = new Object[numColumnas];
+		PreparedStatement pstmt;
+		try {
+			pstmt = conexion.prepareStatement("SELECT alumno.* FROM alumno LEFT JOIN pertenece"
+					+"ON alumno.num_exp = pertenece.alumno_num_exp " + "LEFT JOIN GRUPO"
+					+"ON pertenece.grupo_cod_grupo = grupo.cod_grupo " + "LEFT JOIN GESTIONA"
+					+"ON grupo.cod_grupo = gestiona.grupo_cod_grupo " + "LEFT JOIN TUTOR"
+					+"ON gestiona.tutor_dni_tutor = tutor.dni_tutor"
+					+"WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
+					+ tutor + "') AND grupo.cod_grupo = " + grupo + " AND pertenece.ano_acad = '" + año + "'");
 			System.out.println(grupo);
 			ResultSet rset = pstmt.executeQuery();
 			ResultSetMetaData rsmd = rset.getMetaData();
