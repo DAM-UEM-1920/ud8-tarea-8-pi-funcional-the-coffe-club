@@ -342,11 +342,11 @@ public class Controlador {
 
 	public String getYear() {
 		int mes = LocalDate.now().getMonthValue();
-		int año = LocalDate.now().getYear();
+		int anio = LocalDate.now().getYear();
 		if (mes < 8) {
-			return String.valueOf(año - 1) + "/" + String.valueOf(año);
+			return String.valueOf(anio - 1) + "/" + String.valueOf(anio);
 		} else
-			return String.valueOf(año) + "/" + String.valueOf(año + 1);
+			return String.valueOf(anio) + "/" + String.valueOf(anio + 1);
 
 	}
 
@@ -400,19 +400,19 @@ public class Controlador {
 
 	}
 
-	public String[] getAños() {
-		String[] añosAcad = new String[10];
+	public String[] getAnios() {
+		String[] aniosAcad = new String[10];
 		int mes = LocalDate.now().getMonthValue();
-		int año = LocalDate.now().getYear();
-		for (int i = 0; i < añosAcad.length; i++) {
+		int anio = LocalDate.now().getYear();
+		for (int i = 0; i < aniosAcad.length; i++) {
 			if (mes < 6) {
-				añosAcad[i] = String.valueOf(año - i - 1) + "/" + String.valueOf(año - i);
+				aniosAcad[i] = String.valueOf(anio - i - 1) + "/" + String.valueOf(anio - i);
 			} else {
-				añosAcad[i] = String.valueOf(año - i) + "/" + String.valueOf(año - i + 1);
+				aniosAcad[i] = String.valueOf(anio - i) + "/" + String.valueOf(anio - i + 1);
 			}
 		}
 
-		return añosAcad;
+		return aniosAcad;
 
 	}
 
@@ -438,17 +438,17 @@ public class Controlador {
 		return miModelo.getCodigoGrupo(nomgrupo);
 	}
 
-	public DefaultTableModel getAlumnosByGrupoYAño(String user, String codigoGrupo, String año) {
-		return miModelo.getAlumnosByGrupoYAño(user, codigoGrupo, año);
+	public DefaultTableModel getAlumnosByGrupoYAnio(String user, String codigoGrupo, String anio) {
+		return miModelo.getAlumnosByGrupoYAnio(user, codigoGrupo, anio);
 	}
 
-	public DefaultTableModel getAlumnosByTutorYaño(String user, String año) {
+	public DefaultTableModel getAlumnosByTutorYanio(String user, String anio) {
 
-		return miModelo.getAlumnosByTutorYaño(user, año);
+		return miModelo.getAlumnosByTutorYanio(user, anio);
 	}
 
 //	public int closeAplication(Component parentComponent) {
-//		int i = JOptionPane.showConfirmDialog(parentComponent, "¿Quiere cerrar la aplicacion?", "ventana de cierre", 0);
+//		int i = JOptionPane.showConfirmDialog(parentComponent, "ï¿½Quiere cerrar la aplicacion?", "ventana de cierre", 0);
 //		System.out.println(JFrame.EXIT_ON_CLOSE);
 //		return JFrame.EXIT_ON_CLOSE;
 //

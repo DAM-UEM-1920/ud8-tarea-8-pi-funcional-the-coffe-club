@@ -144,9 +144,9 @@ public class IniTutor {
 
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
-					table.setModel(miControlador.getAlumnosByTutorYaño(user, miControlador.getYear()));
+					table.setModel(miControlador.getAlumnosByTutorYanio(user, miControlador.getYear()));
 				} else {
-					table.setModel(miControlador.getAlumnosByGrupoYAño(user,
+					table.setModel(miControlador.getAlumnosByGrupoYAnio(user,
 							miControlador.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()),
 							miControlador.getYear()));
 				}

@@ -83,24 +83,24 @@ public class Modelo {
 
 	}
 /**
- * Inicializa la conexión a la BBDD Oracle
+ * Inicializa la conexiï¿½n a la BBDD Oracle
  */
 	public void conexion() {
 		try {
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conexion = DriverManager.getConnection(url, usuario, passwd);
-			System.out.println("-> Conexión con ORACLE establecida");
+			System.out.println("-> Conexiï¿½n con ORACLE establecida");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver JDBC No encontrado");
 		} catch (SQLException e) {
 			System.out.println("Error al conectarse a la BD");
 		} catch (Exception e) {
-			System.out.println("Error general de Conexión");
+			System.out.println("Error general de Conexiï¿½n");
 		}
 	}
 /**
- * Finaliza la conexión con la BBDD Oracle
+ * Finaliza la conexiï¿½n con la BBDD Oracle
  */
 	public void terminar() {
 		try {
@@ -115,7 +115,7 @@ public class Modelo {
 	 * Devuelve el rol del usuario logueado
 	 * 
 	 * @param usr el usuario que se loguea
-	 * @param pwd la constraseña del user
+	 * @param pwd la constraseï¿½a del user
 	 * @return devuelve el rol si se ha logueado correctamente y si hay un fallo devuelve ERROR
 	 */
 	public String getRol(String usr, String pwd) {
@@ -208,7 +208,7 @@ public class Modelo {
 	/**
 	 * Obtiene el numero de columnas de una tabla
 	 * 
-	 * @param tabla nombre de la tabla en la BBDD que se quiere extraer el número de las columnas
+	 * @param tabla nombre de la tabla en la BBDD que se quiere extraer el nï¿½mero de las columnas
 	 * @return int la cantidad de columnas de la tabla especificada
 	 */
 	private int getNumColumnas(String tabla) {
@@ -315,7 +315,7 @@ public class Modelo {
 	/**
 	 * devuelve el codigo del grupo a traves de su nombre
 	 * 
-	 * @param nomgrupo nombre del grupo del que se quiere obtener el código
+	 * @param nomgrupo nombre del grupo del que se quiere obtener el cï¿½digo
 	 * @return codigo del grupo
 	 */
 
@@ -374,15 +374,15 @@ public class Modelo {
 	}
 
 	/**
-	 * devuelve tabla filtrando por el tutor, el grupo y el año al que los alumnos
+	 * devuelve tabla filtrando por el tutor, el grupo y el aï¿½o al que los alumnos
 	 * pertenecieron a un grupo
 	 * 
 	 * @param user nombre de usuario logueado
 	 * @param grupo nombre del grupo a extraer datos
-	 * @param año año por el que filtrar
+	 * @param aï¿½o aï¿½o por el que filtrar
 	 * @return DefaultTableModel el modelo de la tabla
 	 */
-	public DefaultTableModel getAlumnosByGrupoYAño(String user, String grupo, String año) {
+	public DefaultTableModel getAlumnosByGrupoYAnio(String user, String grupo, String anio) {
 		miTabla = new DefaultTableModel();
 		int numColumnas = getNumColumnas("alumno");
 		Object[] contenido = new Object[numColumnas];
@@ -395,7 +395,7 @@ public class Modelo {
 					+ "ON gestiona.tutor_dni_tutor = tutor.dni_tutor " + "LEFT JOIN EJERCE "
 					+ "ON tutor.dni_tutor = ejerce.e_dni_tutor "
 					+ "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
-					+ user + "') AND grupo.cod_grupo = " + grupo + " AND pertenece.ano_acad = '" + año + "'");
+					+ user + "') AND grupo.cod_grupo = " + grupo + " AND pertenece.ano_acad = '" + anio + "'");
 			System.out.println(grupo);
 			ResultSet rset = pstmt.executeQuery();
 			ResultSetMetaData rsmd = rset.getMetaData();
@@ -417,14 +417,14 @@ public class Modelo {
 	}
 
 	/**
-	 * obtiene tabla filtrando por tutor y por año al que un alumno pertenecio al
+	 * obtiene tabla filtrando por tutor y por aï¿½o al que un alumno pertenecio al
 	 * grupo
 	 * 
 	 * @param user
-	 * @param año
+	 * @param aï¿½o
 	 * @return DefaultTableMode
 	 */
-	public DefaultTableModel getAlumnosByTutorYaño(String user, String año) {
+	public DefaultTableModel getAlumnosByTutorYanio(String user, String anio) {
 		miTabla = new DefaultTableModel();
 		int numColumnas = getNumColumnas("alumno");
 		Object[] contenido = new Object[numColumnas];
@@ -437,7 +437,7 @@ public class Modelo {
 					+ "ON gestiona.tutor_dni_tutor = tutor.dni_tutor " + "LEFT JOIN EJERCE "
 					+ "ON tutor.dni_tutor = ejerce.e_dni_tutor "
 					+ "WHERE e_dni_tutor = (SELECT tutor.dni_tutor FROM tutor, users, ejerce WHERE tutor.dni_tutor = ejerce.e_dni_tutor AND ejerce.e_usr_users = users.usr AND users.usr = '"
-					+ user + "') AND pertenece.ano_acad = '" + año + "'");
+					+ user + "') AND pertenece.ano_acad = '" + anio + "'");
 			ResultSet rset = pstmt.executeQuery();
 			ResultSetMetaData rsmd = rset.getMetaData();
 
@@ -482,10 +482,10 @@ public class Modelo {
 	}
 
 	/**
-	 * Actualiza en la base de datos en la tabla que se le pase por parámetro y
-	 * rellena el resto del UPDATE con el resto de parámetros
+	 * Actualiza en la base de datos en la tabla que se le pase por parï¿½metro y
+	 * rellena el resto del UPDATE con el resto de parï¿½metros
 	 * 
-	 * @param tabla   tabla en la que se actúa
+	 * @param tabla   tabla en la que se actï¿½a
 	 * @param valores el cuerpo del UPDATE, incluye todas las columnas
 	 * @param pk      Primary Key de la tabla
 	 * @param cod     identificador de la fila en la que queremos actuar, coincide
@@ -508,9 +508,9 @@ public class Modelo {
 	}
 
 	/**
-	 * Lanza una sentencia delete a la BBDD con los parámetros establecidos
+	 * Lanza una sentencia delete a la BBDD con los parï¿½metros establecidos
 	 * @param tabla tabla objetivo del delete
-	 * @param pk Primary Key de la tabla específica
+	 * @param pk Primary Key de la tabla especï¿½fica
 	 * @param cod valor de la PK para elegir el borrado de un dato en concreto
 	 * @return
 	 */
@@ -520,7 +520,7 @@ public class Modelo {
 			String query = "DELETE FROM " + tabla + " WHERE " + pk + " = " + cod;
 			PreparedStatement pstmt = conexion.prepareStatement(query);
 			resultado = pstmt.executeUpdate();
-			System.out.println(tabla + " eliminado con éxito");
+			System.out.println(tabla + " eliminado con ï¿½xito");
 		} catch (SQLException e) {
 			System.out.println();
 			e.printStackTrace();
@@ -533,7 +533,7 @@ public class Modelo {
 	 * aplicacicio por fallar varias veces
 	 * 
 	 * @param usr usuario logueado en al app
-	 * @param pwd contraseña del usuario logueado
+	 * @param pwd contraseï¿½a del usuario logueado
 	 */
 	public void login(String usr, String pwd) {
 		String rol = getRol(usr, pwd);

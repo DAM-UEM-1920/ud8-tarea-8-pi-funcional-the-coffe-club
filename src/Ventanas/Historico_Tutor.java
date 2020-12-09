@@ -44,7 +44,7 @@ public class Historico_Tutor {
 	private Modelo miModelo;
 	private JTable table;
 	private String user;
-	private int selectedValueAño = 0;
+	private int selectedValueAnio = 0;
 	private int selectedgrupo = 0;
 
 	/**
@@ -104,19 +104,19 @@ public class Historico_Tutor {
 		comboBoxGrupos.setBounds(508, 178, 140, 29);
 		frame.getContentPane().add(comboBoxGrupos);
 
-		JComboBox<String> comboBoxAño = new JComboBox<String>();
-		comboBoxAño.setBounds(96, 178, 140, 29);
-		frame.getContentPane().add(comboBoxAño);
-		comboBoxAño.addActionListener(new ActionListener() {
+		JComboBox<String> comboBoxAnio = new JComboBox<String>();
+		comboBoxAnio.setBounds(96, 178, 140, 29);
+		frame.getContentPane().add(comboBoxAnio);
+		comboBoxAnio.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				selectedValueAño=comboBoxGrupos.getSelectedIndex();
+				selectedValueAnio=comboBoxGrupos.getSelectedIndex();
 				if(comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
-					table.setModel(miControlador.getAlumnosByTutorYaño(user, comboBoxAño.getSelectedItem().toString()));
+					table.setModel(miControlador.getAlumnosByTutorYanio(user, comboBoxAnio.getSelectedItem().toString()));
 				}else {
-					table.setModel(miControlador.getAlumnosByGrupoYAño(user,
+					table.setModel(miControlador.getAlumnosByGrupoYAnio(user,
 							miControlador.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()),
-							comboBoxAño.getSelectedItem().toString()));
+							comboBoxAnio.getSelectedItem().toString()));
 				}
 			}
 		});
@@ -128,9 +128,9 @@ public class Historico_Tutor {
 				if(comboBoxGrupos.getSelectedItem().toString().equals("Todos")) {
 					table.setModel(miControlador.getAlumnosByTutor(user));
 				}else {
-					table.setModel(miControlador.getAlumnosByGrupoYAño(user,
+					table.setModel(miControlador.getAlumnosByGrupoYAnio(user,
 							miControlador.getCodigoGrupo(comboBoxGrupos.getSelectedItem().toString()),
-							comboBoxAño.getSelectedItem().toString()));
+							comboBoxAnio.getSelectedItem().toString()));
 				}
 			}
 		});
@@ -208,10 +208,10 @@ public class Historico_Tutor {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
-				comboBoxAño.setModel(new DefaultComboBoxModel<String>(miControlador.getAños()));
+				comboBoxAnio.setModel(new DefaultComboBoxModel<String>(miControlador.getAnios()));
 				comboBoxGrupos.setModel(new DefaultComboBoxModel<String>(miControlador.getGrupos(user)));
 				
-				comboBoxGrupos.setSelectedIndex(selectedValueAño);
+				comboBoxGrupos.setSelectedIndex(selectedValueAnio);
 				comboBoxGrupos.setSelectedIndex(selectedgrupo);
 			}
 

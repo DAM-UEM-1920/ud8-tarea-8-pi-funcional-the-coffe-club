@@ -132,16 +132,16 @@ public class Empresa {
 		lblNombre.setBounds(130, 225, 163, 45);
 		frame.getContentPane().add(lblNombre);
 
-		JLabel lblDirección = new JLabel("C/Falsa N\u00BA123");
-		lblDirección.setToolTipText("Direccion fiscal de la Empresa");
-		lblDirección.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDirección.setForeground(Color.WHITE);
-		lblDirección.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblDirección.setBorder(new TitledBorder(
+		JLabel lblDireccion = new JLabel("C/Falsa N\u00BA123");
+		lblDireccion.setToolTipText("Direccion fiscal de la Empresa");
+		lblDireccion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDireccion.setForeground(Color.WHITE);
+		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDireccion.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Domicilio Fiscal", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
-		lblDirección.setBounds(338, 153, 191, 45);
-		frame.getContentPane().add(lblDirección);
+		lblDireccion.setBounds(338, 153, 191, 45);
+		frame.getContentPane().add(lblDireccion);
 
 		JLabel lblEmail = new JLabel("TeVamos@TodoYloSab.es");
 		lblEmail.setToolTipText("Direccion de correo electronico");
@@ -203,7 +203,7 @@ public class Empresa {
 
 				lblNewLabel_Nombre_Empresa.setText(miModelo.getDato("empresa", "cif", cif, 2));
 				lblDNI2.setText(cif);
-				lblDirección.setText(miModelo.getDato("empresa", "cif", cif, 3));
+				lblDireccion.setText(miModelo.getDato("empresa", "cif", cif, 3));
 				lblLocalidad.setText(miModelo.getDato("empresa", "cif", cif, 5));
 				lblNombre.setText(miModelo.getDato("empresa", "cif", cif, 2));
 				lblNacion_1.setText(miModelo.getDato("empresa", "cif", cif, 4));
