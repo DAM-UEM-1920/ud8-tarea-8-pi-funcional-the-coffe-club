@@ -1,16 +1,11 @@
 package model;
 
 import java.awt.Checkbox;
-import java.awt.Label;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,20 +14,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
@@ -52,7 +43,6 @@ import Ventanas.buscarEmpresa;
 import Ventanas.Opciones;
 import Ventanas.Registro;
 
-import java.sql.SQLException;
 
 public class Modelo {
 	private Login miLogin;
@@ -690,56 +680,56 @@ public class Modelo {
 //		}
 //	}
 
-	/**
-	 * guarda una tabla con todos los alumnos del usuario logueado
-	 * 
-	 * @param user
-	 */
-	public void guardarObjetoTutor(String user) {
-		File rutaProyecto = new File(System.getProperty("user.dir"));
-		JFileChooser fc = new JFileChooser(rutaProyecto);
-		int seleccion = fc.showSaveDialog(table);
-		if (seleccion == JFileChooser.APPROVE_OPTION) {
-			File fichero = fc.getSelectedFile();
-			try {
-				FileOutputStream fos = new FileOutputStream(fichero);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				Tablas miTabla = new Tablas(getAlumnosTutor(user));
-				oos.writeObject(miTabla);
-				fos.close();
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void guardarObjetoTutorYGrupo(String user, String grupo) {
-		File rutaProyecto = new File(System.getProperty("user.dir"));
-		JFileChooser fc = new JFileChooser(rutaProyecto);
-		int seleccion = fc.showSaveDialog(table);
-		if (seleccion == JFileChooser.APPROVE_OPTION) {
-			File fichero = fc.getSelectedFile();
-			try {
-				FileOutputStream fos = new FileOutputStream(fichero);
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				Tablas miTabla = new Tablas(getAlumnosByGrupo(user, grupo));
-				oos.writeObject(miTabla);
-				fos.close();
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	/**
+//	 * guarda una tabla con todos los alumnos del usuario logueado
+//	 * 
+//	 * @param user
+//	 */
+//	public void guardarObjetoTutor(String user) {
+//		File rutaProyecto = new File(System.getProperty("user.dir"));
+//		JFileChooser fc = new JFileChooser(rutaProyecto);
+//		int seleccion = fc.showSaveDialog(table);
+//		if (seleccion == JFileChooser.APPROVE_OPTION) {
+//			File fichero = fc.getSelectedFile();
+//			try {
+//				FileOutputStream fos = new FileOutputStream(fichero);
+//				ObjectOutputStream oos = new ObjectOutputStream(fos);
+//				Tablas miTabla = new Tablas(getAlumnosTutor(user));
+//				oos.writeObject(miTabla);
+//				fos.close();
+//				oos.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (NumberFormatException e) {
+//				e.printStackTrace();
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+//
+//	public void guardarObjetoTutorYGrupo(String user, String grupo) {
+//		File rutaProyecto = new File(System.getProperty("user.dir"));
+//		JFileChooser fc = new JFileChooser(rutaProyecto);
+//		int seleccion = fc.showSaveDialog(table);
+//		if (seleccion == JFileChooser.APPROVE_OPTION) {
+//			File fichero = fc.getSelectedFile();
+//			try {
+//				FileOutputStream fos = new FileOutputStream(fichero);
+//				ObjectOutputStream oos = new ObjectOutputStream(fos);
+//				Tablas miTabla = new Tablas(getAlumnosByGrupo(user, grupo));
+//				oos.writeObject(miTabla);
+//				fos.close();
+//				oos.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} catch (NumberFormatException e) {
+//				e.printStackTrace();
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 	/**
 	 * carga una tabla guardada anteriormente en local, se selecciona dicho archivo

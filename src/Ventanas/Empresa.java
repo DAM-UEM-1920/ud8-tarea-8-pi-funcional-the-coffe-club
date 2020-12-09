@@ -1,12 +1,7 @@
 package Ventanas;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
-import java.awt.GridBagLayout;
-import java.awt.Window;
 import java.awt.Color;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -14,27 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.JTable;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.table.DefaultTableModel;
 
 import controller.Controlador;
 import model.Modelo;
 
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.JFormattedTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JEditorPane;
-import javax.swing.DropMode;
-import javax.swing.JRadioButton;
 import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.Toolkit;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JProgressBar;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.MouseAdapter;
@@ -65,13 +47,13 @@ public class Empresa {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				miControlador.SoundLogAtras();
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				miControlador.SoundSobreBoton();
-				
+
 			}
 		});
 		btnAtras.setToolTipText("Te lleva a la pantalla anterior");
@@ -103,7 +85,9 @@ public class Empresa {
 
 		JLabel lblDNI2 = new JLabel("B-43564366");
 		lblDNI2.setToolTipText("N\u00FAmero de Identificaci\u00F3n Fiscal");
-		lblDNI2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "NIF", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		lblDNI2.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "NIF",
+				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		lblDNI2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDNI2.setForeground(Color.WHITE);
 		lblDNI2.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -181,7 +165,9 @@ public class Empresa {
 		lblContacto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblContacto.setForeground(Color.WHITE);
 		lblContacto.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblContacto.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Representante", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
+		lblContacto.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"Representante", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		lblContacto.setBounds(579, 225, 148, 45);
 		frame.getContentPane().add(lblContacto);
 
@@ -210,6 +196,7 @@ public class Empresa {
 				lblContacto.setText(miModelo.getDato("empresa", "cif", cif, 7));
 				lblEmail.setText(miModelo.getDato("empresa", "cif", cif, 6));
 			}
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				miControlador.SoundLogAtras();

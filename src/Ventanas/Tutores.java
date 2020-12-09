@@ -1,10 +1,8 @@
 package Ventanas;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Color;
-import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,13 +11,11 @@ import java.awt.event.KeyAdapter;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import controller.Controlador;
 import model.Modelo;
 
 import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,18 +25,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import java.awt.Toolkit;
-import javax.swing.JFormattedTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.DefaultComboBoxModel;
 
 public class Tutores {
 
@@ -82,54 +74,6 @@ public class Tutores {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Tutores.class.getResource("/Img/UEM-simbolo.jpg")));
 		frame.getContentPane().setBackground(Color.ORANGE);
 		frame.getContentPane().setLayout(null);
-
-		JButton btnGuardarTabla = new JButton("Guardar Tabla");
-		btnGuardarTabla.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				miControlador.SoundSend();
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				miControlador.SoundSobreBoton();
-			}
-		});
-		btnGuardarTabla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				miControlador.guardarObjeto("tutor");
-			}
-		});
-		btnGuardarTabla.setToolTipText("Guarda la tabla en un fichero");
-		btnGuardarTabla.setForeground(Color.WHITE);
-		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnGuardarTabla.setBackground(Color.BLACK);
-		btnGuardarTabla.setBounds(756, 180, 110, 31);
-		frame.getContentPane().add(btnGuardarTabla);
-
-		JButton btnCargarTabla = new JButton("Cargar Tabla");
-		btnCargarTabla.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				miControlador.SoundSend();
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				miControlador.SoundSobreBoton();
-			}
-		});
-		btnCargarTabla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				carga = false;
-				refrescar();
-
-			}
-		});
-		btnCargarTabla.setToolTipText("Carga la tabla de un fichero seleccionado");
-		btnCargarTabla.setForeground(Color.WHITE);
-		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnCargarTabla.setBackground(Color.BLACK);
-		btnCargarTabla.setBounds(756, 243, 110, 31);
-		frame.getContentPane().add(btnCargarTabla);
 
 		textFieldCentro = new JTextField();
 		textFieldCentro.setToolTipText("\u00C1rea academica del tutor");
@@ -322,7 +266,7 @@ public class Tutores {
 		frame.getContentPane().add(lblTutores);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 168, 706, 126);
+		scrollPane.setBounds(52, 168, 771, 126);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();

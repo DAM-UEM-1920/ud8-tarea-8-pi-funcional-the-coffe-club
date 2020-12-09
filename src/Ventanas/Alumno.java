@@ -1,12 +1,7 @@
 package Ventanas;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
-import java.awt.GridBagLayout;
-import java.awt.Window;
 import java.awt.Color;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -16,26 +11,15 @@ import javax.swing.JPanel;
 
 import java.awt.Font;
 import javax.swing.JTable;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.table.DefaultTableModel;
 
 import controller.Controlador;
 import model.Modelo;
 
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.JFormattedTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JEditorPane;
-import javax.swing.DropMode;
 import javax.swing.JRadioButton;
 import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.Toolkit;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JProgressBar;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.MouseAdapter;

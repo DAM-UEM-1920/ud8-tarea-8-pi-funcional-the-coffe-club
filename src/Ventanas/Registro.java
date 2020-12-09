@@ -1,21 +1,17 @@
 package Ventanas;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import java.awt.Font;
-import java.awt.Frame;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -25,23 +21,14 @@ import javax.swing.border.BevelBorder;
 
 import controller.Controlador;
 import model.Modelo;
-import sun.java2d.pipe.TextPipe;
 
 import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Scanner;
 
 import javax.swing.border.TitledBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javax.swing.border.EtchedBorder;
 import javax.swing.JPasswordField;
@@ -49,11 +36,8 @@ import javax.swing.JPasswordField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
 import java.awt.Cursor;
 import java.awt.ComponentOrientation;
-import javax.swing.DebugGraphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -264,7 +248,7 @@ public class Registro {
 					if (txtPasswordUser.getText().length() == 0) {
 						lblResultado_pass.setForeground(Color.YELLOW);
 						miControlador.SoundLogAtras();
-						lblResultado_pass.setText("Introduce una contraseña valida");
+						lblResultado_pass.setText("Introduce una contraseï¿½a valida");
 
 					} else {
 						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -414,7 +398,7 @@ public class Registro {
 						if (txtPasswordConfirmar.getText().length() == 0) {
 							lblResultado_ConfirmarPass.setForeground(Color.YELLOW);
 							miControlador.SoundLogAtras();
-							lblResultado_ConfirmarPass.setText("Introduce una contraseña valida");
+							lblResultado_ConfirmarPass.setText("Introduce una contraseï¿½a valida");
 
 						} else {
 							if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -428,7 +412,7 @@ public class Registro {
 					} else {
 						lblResultado_ConfirmarPass.setForeground(Color.RED);
 						miControlador.SoundLogAtras();
-						lblResultado_ConfirmarPass.setText("La contraseñas no coinciden");
+						lblResultado_ConfirmarPass.setText("La contraseï¿½as no coinciden");
 					}
 
 				}
@@ -608,7 +592,7 @@ public class Registro {
 					}
 			}else {
 				lblResultado.setForeground(Color.YELLOW);
-				lblResultado.setText("La Contraseña no coincide ");
+				lblResultado.setText("La Contraseï¿½a no coincide ");
 			}
 			
 		}else {

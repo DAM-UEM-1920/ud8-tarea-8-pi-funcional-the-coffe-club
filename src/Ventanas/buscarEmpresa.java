@@ -1,7 +1,5 @@
 package Ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -9,7 +7,6 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import controller.Controlador;
 import model.Modelo;
@@ -31,7 +28,6 @@ import java.io.File;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.Toolkit;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
@@ -77,6 +73,7 @@ public class buscarEmpresa {
 			@Override
 			public void windowActivated(WindowEvent e) {
 			}
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				miControlador.SoundLogAtras();
@@ -280,59 +277,11 @@ public class buscarEmpresa {
 		btnGuardarCambios.setBounds(561, 515, 188, 31);
 		frame.getContentPane().add(btnGuardarCambios);
 
-		JButton btnGuardarTabla = new JButton("Guardar Tabla");
-		btnGuardarTabla.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				miControlador.SoundSend();
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				miControlador.SoundSobreBoton();
-			}
-		});
-		btnGuardarTabla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				miControlador.guardarObjeto("empresa");
-			}
-		});
-		btnGuardarTabla.setToolTipText("Guarda la tabla en un fichero");
-		btnGuardarTabla.setForeground(Color.WHITE);
-		btnGuardarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnGuardarTabla.setBackground(Color.BLACK);
-		btnGuardarTabla.setBounds(696, 218, 127, 31);
-		frame.getContentPane().add(btnGuardarTabla);
-
-		JButton btnCargarTabla = new JButton("Cargar Tabla");
-		btnCargarTabla.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				miControlador.SoundSobreBoton();
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				miControlador.SoundSend();
-			}
-		});
-		btnCargarTabla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				carga = false;
-				refrescar();
-
-			}
-		});
-		btnCargarTabla.setToolTipText("Carga la tabla de un fichero seleccionado");
-		btnCargarTabla.setForeground(Color.WHITE);
-		btnCargarTabla.setBorder(new BevelBorder(BevelBorder.RAISED, Color.LIGHT_GRAY, Color.LIGHT_GRAY, null, null));
-		btnCargarTabla.setBackground(Color.BLACK);
-		btnCargarTabla.setBounds(696, 260, 127, 31);
-		frame.getContentPane().add(btnCargarTabla);
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setOpaque(false);
 		scrollPane.setViewportBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 
-		scrollPane.setBounds(27, 160, 644, 219);
+		scrollPane.setBounds(86, 161, 644, 219);
 
 		frame.getContentPane().add(scrollPane);
 

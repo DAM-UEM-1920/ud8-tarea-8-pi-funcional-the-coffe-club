@@ -1,24 +1,11 @@
 package controller;
 
-import java.awt.Checkbox;
 import java.awt.Component;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -37,7 +24,6 @@ import Ventanas.Registro;
 import Ventanas.Tutores;
 import Ventanas.buscarEmpresa;
 import model.Modelo;
-import model.Tablas;
 
 public class Controlador {
 	private Modelo miModelo;
@@ -355,15 +341,15 @@ public class Controlador {
 //
 //	}
 
-	public void guardarObjetoTutor(String user) {
-		miModelo.guardarObjetoTutor(user);
-
-	}
-
-	public void guardarObjetoTutorYGrupo(String user, String grupo) {
-		miModelo.guardarObjetoTutorYGrupo(user, grupo);
-
-	}
+//	public void guardarObjetoTutor(String user) {
+//		miModelo.guardarObjetoTutor(user);
+//
+//	}
+//
+//	public void guardarObjetoTutorYGrupo(String user, String grupo) {
+//		miModelo.guardarObjetoTutorYGrupo(user, grupo);
+//
+//	}
 
 //	public void guardarObjeto(String tabla) {
 //		miModelo.guardarObjeto(tabla);
